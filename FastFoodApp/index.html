@@ -7,162 +7,14 @@
 	<meta name="description" content="Restaurante" />
 	<meta name="keywords" content="El mejor restaurante del país" />
 	<title>La Parada</title>
+	<link rel="stylesheet" type="text/css" href="styles/header-menu.css">
 	<link rel="stylesheet" type="text/css" href="styles/stylesIndex.css">
+	<link rel="stylesheet" type="text/css" href="styles/login-modal.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-
-		body {
-			font-family: 'Source Sans Pro', sans-serif;
-		}
-
-		/* New Header Styles - Similar to reference image */
-		header {
-			position: relative;
-			width: 100%;
-			height: 100vh;
-			background-image: url('images/slider/slider1.jpg');
-			background-size: cover;
-			background-position: center;
-			background-repeat: no-repeat;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-		}
-
-		header::before {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: rgba(0, 0, 0, 0.5);
-			z-index: 1;
-		}
-
-		/* Navigation Menu */
-		nav {
-			position: absolute;
-			top: 30px;
-			width: 100%;
-			z-index: 100;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			background: transparent;
-		}
-
-		.menu_list {
-			list-style: none;
-			display: flex;
-			gap: 40px;
-			align-items: center;
-			flex-wrap: wrap;
-			justify-content: center;
-			padding: 20px;
-			background: transparent;
-		}
-
-		.list_item {
-			position: relative;
-		}
-
-		.list_item .link {
-			color: #ffffff;
-			text-decoration: none;
-			font-size: 16px;
-			font-weight: 500;
-			text-transform: uppercase;
-			letter-spacing: 1px;
-			transition: all 0.3s ease;
-			padding: 10px 15px;
-			display: block;
-		}
-
-		.list_item .link:hover {
-			color: #EE9B14;
-			transform: translateY(-2px);
-		}
-
-		.list_item .link::after {
-			content: '';
-			position: absolute;
-			bottom: 5px;
-			left: 50%;
-			transform: translateX(-50%);
-			width: 0;
-			height: 2px;
-			background: #EE9B14;
-			transition: width 0.3s ease;
-		}
-
-		.list_item .link:hover::after {
-			width: 80%;
-		}
-
-		/* Header Content */
-		.header-content {
-			position: relative;
-			z-index: 10;
-			text-align: center;
-			color: #ffffff;
-			max-width: 800px;
-			padding: 20px;
-		}
-
-		.header-content h1 {
-			font-family: 'Satisfy', cursive;
-			font-size: 80px;
-			margin-bottom: 20px;
-			color: #ffffff;
-			text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-		}
-
-		.header-content p {
-			font-size: 24px;
-			margin-bottom: 30px;
-			text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-		}
-
-		/* Section Styles */
-		h1 {
-			color: #EE9B14;
-			font-family: 'Satisfy', cursive;
-			font-size: 80px;
-			text-align: center;
-			margin-top: 40px;
-			margin-bottom: 80px;
-		}
-
-		@media (max-width: 768px) {
-			.menu_list {
-				gap: 20px;
-				padding: 15px;
-			}
-
-			.list_item .link {
-				font-size: 14px;
-			}
-
-			.header-content h1 {
-				font-size: 50px;
-			}
-
-			.header-content p {
-				font-size: 18px;
-			}
-		}
-	</style>
 </head>
 
 <body>
@@ -177,6 +29,7 @@
 				<li class="list_item"><a href="html/quienesSomos.html" class="link">Quiénes Somos</a></li>
 				<li class="list_item"><a href="html/contactenos.html" class="link">Contáctenos</a></li>
 				<li class="list_item"><a href="html/trabajaConNosotros.html" class="link">Trabaja con Nosotros</a></li>
+				<li class="list_item"><a href="#" class="login-btn" id="loginBtn">Ingresar</a></li>
 			</ul>
 		</nav>
 
@@ -185,6 +38,27 @@
 			<p>Experiencia Gastronómica Única</p>
 		</div>
 	</header>
+
+	<!-- Login Modal -->
+	<div id="loginModal" class="login-modal">
+		<div class="login-modal-content">
+			<span class="close-modal" id="closeModal">&times;</span>
+			<h2>Iniciar Sesión</h2>
+			<div class="login-option google-login">
+				<i class="fa fa-google"></i>
+				<span>Continuar con Google</span>
+			</div>
+			<div class="login-option facebook-login">
+				<i class="fa fa-facebook"></i>
+				<span>Continuar con Facebook</span>
+			</div>
+			<div class="login-option email-login">
+				<i class="fa fa-envelope"></i>
+				<span>Continuar con Correo Electrónico</span>
+			</div>
+		</div>
+	</div>
+
 	<div class="container_slider">
 		<div class="slider" id="slider">
 			<div class="slider_section">
@@ -232,8 +106,8 @@
 			<p>copyright &copy;2021 La Parada. Inc</p>
 		</div>
 	</footer>
-	<script src="js/menu.js"></script> <!--Script del menú de naveación para darle el efecto sticky
-	se ubica en esta sección para evitar sobrecargar al navegador al momento de cargar la página-->
+	<script src="js/menu.js"></script>
+	<script src="js/login-modal.js"></script>
 </body>
 
 </html>

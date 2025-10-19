@@ -7,38 +7,18 @@
 	<meta name="description" content="Restaurante" />
 	<meta name="keywords" content="El mejor restaurante del país" />
 	<title>La Parada</title>
+	<link rel="stylesheet" type="text/css" href="../styles/header-menu.css">
 	<link rel="stylesheet" type="text/css" href="../styles/stylesUbicaciones.css">
+	<link rel="stylesheet" type="text/css" href="../styles/login-modal.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
-	<style>
-		h1 {
-			color: #EE9B14;
-			font-family: 'Satisfy', cursive;
-			font-size: 80px;
-			text-align: center;
-			margin-top: 120px;
-			margin-bottom: 80px;
-		}
-		.logo {
-			width: 250px; 
-			height: auto;
-		}
-	</style>
 </head>
 
 <body>
 	<header>
-		<img class="logo" src="../images/logo2.png" alt="logo">
-		<div class="redes-encabezado">
-			<ul>
-				<li><a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a></li>
-				<li><a href="https://www.instagram.com"><i class="fa fa-instagram"></i></a></li>
-				<li><a href="https://www.twitter.com"><i class="fa fa-twitter"></i></a></li>
-			</ul>
-		</div>
 		<nav>
 			<ul class="menu_list" id="menu_list">
 				<li class="list_item"><a href="../index.html" class="link">Inicio</a></li>
@@ -49,9 +29,36 @@
 				<li class="list_item"><a href="quienesSomos.html" class="link">Quiénes Somos</a></li>
 				<li class="list_item"><a href="contactenos.html" class="link">Contáctenos</a></li>
 				<li class="list_item"><a href="trabajaConNosotros.html" class="link">Trabaja con Nosotros</a></li>
+				<li class="list_item"><a href="#" class="login-btn" id="loginBtn">Ingresar</a></li>
 			</ul>
 		</nav>
+
+		<div class="header-content">
+			<h1>Ubicaciones</h1>
+			<p>Encuéntranos Fácilmente</p>
+		</div>
 	</header>
+
+	<!-- Login Modal -->
+	<div id="loginModal" class="login-modal">
+		<div class="login-modal-content">
+			<span class="close-modal" id="closeModal">&times;</span>
+			<h2>Iniciar Sesión</h2>
+			<div class="login-option google-login">
+				<i class="fa fa-google"></i>
+				<span>Continuar con Google</span>
+			</div>
+			<div class="login-option facebook-login">
+				<i class="fa fa-facebook"></i>
+				<span>Continuar con Facebook</span>
+			</div>
+			<div class="login-option email-login">
+				<i class="fa fa-envelope"></i>
+				<span>Continuar con Correo Electrónico</span>
+			</div>
+		</div>
+	</div>
+
 	<h1>Ubicaciones</h1>
 	<section class="contenedor_ubicaciones">
 		<div class="texto_ubicaciones">
@@ -80,8 +87,8 @@
 			<p>copyright &copy;2021 La Parada. Inc</p>
 		</div>
 	</footer>
-	<script src="../js/menu.js"></script><!--Script del menú de naveación para darle el efecto sticky
-	se ubica en esta sección para evitar sobrecargar al navegador al momento de cargar la página-->
+	<script src="../js/menu.js"></script>
+	<script src="../js/login-modal.js"></script>
 </body>
 
 </html>

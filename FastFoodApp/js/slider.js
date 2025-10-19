@@ -31,13 +31,18 @@ function Anterior(){
 	}, 500);
 }
 
-btnDerecha.addEventListener('click', function(){
-	Siguiente();
-});
+// Only add event listeners if buttons exist
+if(btnDerecha) {
+	btnDerecha.addEventListener('click', function(){
+		Siguiente();
+	});
+}
 
-btnIzquierda.addEventListener('click', function(){
-	Anterior();
-});
+if(btnIzquierda) {
+	btnIzquierda.addEventListener('click', function(){
+		Anterior();
+	});
+}
 
 setInterval(function(){
 	Siguiente();
