@@ -7,7 +7,7 @@
 	<meta name="description" content="Restaurante" />
 	<meta name="keywords" content="El mejor restaurante del país" />
 	<title>La Parada</title>
-	<link rel="stylesheet" type="text/css" href="estilos/estilosOfertas.css">
+	<link rel="stylesheet" type="text/css" href="../estilos/estilosUbicaciones.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
@@ -31,7 +31,7 @@
 
 <body>
 	<header>
-		<img class="logo" src="img/logo2.png" alt="logo">
+		<img class="logo" src="../img/logo2.png" alt="logo">
 		<div class="redes-encabezado">
 			<ul>
 				<li><a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a></li>
@@ -41,7 +41,7 @@
 		</div>
 		<nav>
 			<ul class="menu_list" id="menu_list">
-				<li class="list_item"><a href="index.html" class="link">Inicio</a></li>
+				<li class="list_item"><a href="../index.html" class="link">Inicio</a></li>
 				<li class="list_item"><a href="menu.html" class="link">Menú</a></li>
 				<li class="list_item"><a href="reservaciones.html" class="link">Reservaciones</a></li>
 				<li class="list_item"><a href="ofertas.html" class="link">Ofertas</a></li>
@@ -52,48 +52,19 @@
 			</ul>
 		</nav>
 	</header>
-	<section class="ofertas">
-		<h1>Nuestras Ofertas</h1>
-		<div class="contenedor-ofertas" id="primero">
-			<img src="img/promociones/promo1.jpeg" alt="promo" class="contenedor-imagen">
-			<div class="texto-imagen">
-				<h2>Lunes</h2>
-				<p style="text-shadow: 0 0 3px #b6b5b5">20% de Descuento en Todos los Platos</p>
-				<p style="text-shadow: 0 0 3px #b6b5b5">Jarro de cerveza 0.99 ctvs</p>
-			</div>
+	<h1>Ubicaciones</h1>
+	<section class="contenedor_ubicaciones">
+		<div class="texto_ubicaciones">
+			<h2 class="titulo_ubicaciones">La Parada Puerto Santa Ana</h2>
+			<p>Restaurante 9, edificio Riverfront II local 5 y 9</p>
+			<h2 class="titulo_ubicaciones">La Parada Guayarte</h2>
+			<p>Restaurante Plaza Guayarte, Av Carlos Julio Arosemena</p>
+			<h2 class="titulo_ubicaciones">La Parada Samborondón</h2>
+			<p>Av Samborondón</p>
 		</div>
-		<div class="contenedor-ofertas" id="segundo">
-			<img src="img/promociones/promo2.jpeg" alt="promo" class="contenedor-imagen">
-			<div class="texto-imagen">
-				<h2>Martes</h2>
-				<p style="text-shadow: 0 0 3px #b6b5b5">10% en piqueos</p>
-				<p style="text-shadow: 0 0 3px #b6b5b5">2x1 en Cocteles y Mojitos</p>
-			</div>
-		</div>
-		<div class="contenedor-ofertas" id="tercero">
-			<img src="img/promociones/promo3.jpeg" alt="promo" class="contenedor-imagen">
-			<div class="texto-imagen">
-				<h2>Miércoles</h2>
-				<p style="text-shadow: 0 0 3px #b6b5b5">Alitas 0.50 ctvs c/u</p>
-				<p style="text-shadow: 0 0 3px #b6b5b5">Michelada $1.95</p>
-			</div>
-		</div>
-		<div class="contenedor-ofertas" id="cuarto">
-			<img src="img/promociones/promo4.jpeg" alt="promo" class="contenedor-imagen">
-			<div class="texto-imagen">
-				<h2>Jueves</h2>
-				<p style="text-shadow: 0 0 3px #b6b5b5">Burguer Bites 20% de Descuento</p>
-				<p style="text-shadow: 0 0 3px #b6b5b5">Jarro de Cerverza 0.99 ctvs</p>
-			</div>
-		</div>
-		<div class="contenedor-ofertas" id="quinto">
-			<img src="img/promociones/promo5.jpeg" alt="promo" class="contenedor-imagen">
-			<div class="texto-imagen">
-				<h2>Sábado</h2>
-				<p style="text-shadow: 0 0 3px #b6b5b5">Rockin Pops 20% de Descuento</p>
-				<p style="text-shadow: 0 0 3px #b6b5b5">Jarro de Cerverza 0.99 ctvs</p>
-			</div>
-		</div>
+		<iframe
+			src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d127585.11102560056!2d-79.9557809563689!3d-2.140374651150466!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1smami%20t!5e0!3m2!1ses!2sec!4v1626627577764!5m2!1ses!2sec"
+			width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" class="mapa"></iframe>
 	</section>
 	<footer>
 		<div class="footer-content">
@@ -109,8 +80,8 @@
 			<p>copyright &copy;2021 La Parada. Inc</p>
 		</div>
 	</footer>
-	<script src="js/menu.js"></script><!--Script del menú de naveación para darle el efecto sticky
-		se ubica en esta sección para evitar sobrecargar al navegador al momento de cargar la página-->
+	<script src="../js/menu.js"></script><!--Script del menú de naveación para darle el efecto sticky
+	se ubica en esta sección para evitar sobrecargar al navegador al momento de cargar la página-->
 </body>
 
 </html>
