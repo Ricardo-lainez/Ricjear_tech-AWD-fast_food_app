@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Restaurante" />
+    <meta name="keywords" content="El mejor restaurante del país" />
+    <title>La Parada</title>
+    <link rel="stylesheet" type="text/css" href="estilos/estilosReservaciones.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <style>
+        h1 {
+            color: #EE9B14;
+            font-family: 'Satisfy', sans-serif;
+            font-size: 80px;
+            text-align: center;
+            margin-top: 80px;
+            margin-bottom: 30px;
+        }
+    	.logo {
+			width: 250px; 
+			height: auto;
+		}
+    </style>
+</head>
+
+<body>
+    <header>
+        <img class="logo" src="img/logo2.png" alt="logo">
+        <div class="redes-encabezado">
+            <ul>
+                <li><a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a></li>
+				<li><a href="https://www.instagram.com"><i class="fa fa-instagram"></i></a></li>
+				<li><a href="https://www.twitter.com"><i class="fa fa-twitter"></i></a></li>
+            </ul>
+        </div>
+        <nav>
+            <ul class="menu_list" id="menu_list">
+                <li class="list_item"><a href="index.html" class="link">Inicio</a></li>
+                <li class="list_item"><a href="menu.html" class="link">Menú</a></li>
+                <li class="list_item"><a href="reservaciones.html" class="link">Reservaciones</a></li>
+                <li class="list_item"><a href="ofertas.html" class="link">Ofertas</a></li>
+                <li class="list_item"><a href="ubicaciones.html" class="link">Ubicaciones</a></li>
+                <li class="list_item"><a href="quienesSomos.html" class="link">Quiénes Somos</a></li>
+                <li class="list_item"><a href="contactenos.html" class="link">Contáctenos</a></li>
+                <li class="list_item"><a href="trabajaConNosotros.html" class="link">Trabaja con Nosotros</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="encabezado">
+        <h1>Reservaciones</h1>
+    </div>
+    <div class="contenedor-reserva">
+        <form id="formReserva" onsubmit="return validarReserva()">
+            <div class="elemento-form">
+                <label>Nombres:</label>
+                <input type="text" name="nombres" id="nombres" class="form-control textbox" />
+            </div>
+            <div class="elemento-form">
+                <label>Apellidos:</label>
+                <input type="text" name="apellidos" id="apellidos" class="form-control textbox" />
+            </div>
+            <div class="elemento-form">
+                <label>Email:</label>
+                <input type="email" name="correo" id="correo" class="form-control textbox" />
+            </div>
+            <div class="elemento-form">
+                <label>Telefono:</label>
+                <input type="text" name="telefono" id="telefono" class="form-control textbox" />
+            </div>
+            <div class="elemento-form">
+                <label>Fecha de reserva:</label>
+                <input type="date" name="fecha" id="fecha" class="formItem textbox" />
+            </div>
+            <div class="elemento-form">
+                <label>Hora:</label>
+                <input type="time" name="hora" id="hora" class="formItem textbox" />
+            </div>
+            <div class="elemento-form">
+                <label>Número de adultos:</label>
+                <select name="adulto" id="adulto" class="formItem comboBox">
+                    <option value="0">Seleccione..</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+            <div class="elemento-form">
+                <label>Número de niños:</label>
+                <select name="ninio" id="ninio" class="formItem comboBox">
+                    <option value="0">Seleccione..</option>
+                    <option value="1">0</option>
+                    <option value="2">1</option>
+                    <option value="3">2</option>
+                    <option value="4">3</option>
+                    <option value="5">4</option>
+                    <option value="6">5</option>
+                    <option value="7">6</option>
+                    <option value="8">7</option>
+                    <option value="9">8</option>
+                    <option value="10">9</option>
+                    <option value="11">10</option>
+                </select>
+            </div>
+            <div class="elemento-form">
+                <label>¿Está celebrando una ocasión especial?</label>
+                <div class="check">
+                    <input type="checkbox" name="ocasion" id="ocasion1" class="formItem oca" value="1"
+                        onclick="seleccionarCheck()" />
+                    <label for="ocasion1"> Si</label>
+                </div>
+                <div class="check">
+                    <input type="checkbox" name="ocasion" id="ocasion2" class="formItem oca" value="2"
+                        onclick="seleccionarCheck()" />
+                    <label for="ocasion2"> No</label>
+                </div>
+            </div>
+            <div class="elemento-form">
+                <label>Pedidos adicionales</label>
+                <label>Por favor, déjenos saber si tiene alguna restricción alimenticia, si requiere de alguna
+                    asistencia,
+                    etc.</label>
+                <textarea id="texto" rows="5" class="texto form-control"></textarea>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Enviar" style="margin-right: 40px">
+            <input type="reset" class="btn btn-primary" value="Cancelar" onclick="limpiarTodo()">
+        </form>
+    </div>
+    <footer>
+        <div class="footer-content">
+            <h3>Síguenos en nuestras redes sociales</h3>
+            <ul class="redes_sociales">
+                <li><a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a></li>
+				<li><a href="https://www.instagram.com"><i class="fa fa-instagram"></i></a></li>
+				<li><a href="https://www.twitter.com"><i class="fa fa-twitter"></i></a></li>
+            </ul>
+        </div>
+        <div class="derechos">
+            <p>reCAPTCHA y Google protegen este sitio</p>
+            <p>copyright &copy;2021 La Parada. Inc</p>
+        </div>
+    </footer>
+    <script src="js/menu.js"></script><!--Script del menú de naveación para darle el efecto sticky
+	se ubica en esta sección para evitar sobrecargar al navegador al momento de cargar la página-->
+    <script src="js/validaciones/validacionReserva.js"></script><!--Script encargado de realizar las
+        validaciiones del formulario-->
+</body>
+
+</html>

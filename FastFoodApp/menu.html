@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="Restaurante" />
+	<meta name="keywords" content="El mejor restaurante del país" />
+	<title>La Parada</title>
+	<link rel="stylesheet" type="text/css" href="estilos/estilosMenu.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+	<style>
+		.logo {
+			width: 250px; 
+			height: auto;
+		}
+		h1 {
+			color: #EE9B14;
+			font-family: 'Satisfy', cursive;
+			font-size: 80px;
+			text-align: center;
+			margin-top: 120px;
+			margin-bottom: 60px;
+		}
+		     /* Estilos básicos del modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background: rgba(0,0,0,0.6);
+        }
+		        .modal-content {
+            background: #fff;
+            margin: 6% auto;
+            padding: 20px;
+            border-radius: 6px;
+            max-width: 720px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .modal-content img { max-width: 200px; float: left; margin-right: 20px; border-radius:4px; }
+        .modal-content h2 { margin-top: 0; color:#333; }
+        .modal-content p { color:#555; }
+        .modal .close {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+            color:#999;
+        }
+		.modal .controls { margin-top: 12px; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+        .modal input[type="number"]{ width:72px; padding:6px; }
+        .modal textarea{ width:100%; resize:vertical; }
+        .modal button{ background:#EE9B14; border:none; color:#fff; padding:10px 16px; cursor:pointer; border-radius:4px; }
+	</style>
+</head>
+
+<body>
+	<header>
+		<img class="logo" src="img/logo2.png" alt="logo">
+		<div class="redes-encabezado">
+			<ul>
+				<li><a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a></li>
+				<li><a href="https://www.instagram.com"><i class="fa fa-instagram"></i></a></li>
+				<li><a href="https://www.twitter.com"><i class="fa fa-twitter"></i></a></li>
+			</ul>
+		</div>
+		<nav>
+			<ul class="menu_list" id="menu_list">
+				<li class="list_item"><a href="index.html" class="link">Inicio</a></li>
+				<li class="list_item"><a href="menu.html" class="link">Menú</a></li>
+				<li class="list_item"><a href="reservaciones.html" class="link">Reservaciones</a></li>
+				<li class="list_item"><a href="ofertas.html" class="link">Ofertas</a></li>
+				<li class="list_item"><a href="ubicaciones.html" class="link">Ubicaciones</a></li>
+				<li class="list_item"><a href="quienesSomos.html" class="link">Quiénes Somos</a></li>
+				<li class="list_item"><a href="contactenos.html" class="link">Contáctenos</a></li>
+				<li class="list_item"><a href="trabajaConNosotros.html" class="link">Trabaja con Nosotros</a></li>
+			</ul>
+		</nav>
+	</header>
+	<div class="contenedor">
+		<h1>Nuestro Menú</h1>
+		<div class="contenedor-platos">
+			<ul class="tipo-plato">
+				<li class="tipo-item tipo-item_activado" data-categoria="Todo">Todo</li>
+				<li class="tipo-item" data-categoria="Desayunos">Desayunos</li>
+				<li class="tipo-item" data-categoria="Almuerzos">Almuerzos</li>
+				<li class="tipo-item" data-categoria="Meriendas">Meriendas</li>
+				<li class="tipo-item" data-categoria="Postres">Postres</li>
+			</ul>
+			<div class="lista-platos">
+				<div class="item" data-categoria="Desayunos" data-descripcion="Crujiente de avena con pomelo, yogur natural y semillas">
+					<img src="img/platos/desayunos/desayuno1.jpg" alt="desayuno1">
+					<a href="#">Crujiente acompañado con pomelo y yogur en vasito</a>
+					<a href="#">$6.50</a>
+				</div>
+				<div class="item" data-categoria="Desayunos">
+					<img src="img/platos/desayunos/desayuno2.jpg" alt="desayuno2">
+					<a href="#">Pudding de chía, café y chocolate</a>
+					<a href="#">$7.80</a>
+				</div>
+				<div class="item" data-categoria="Desayunos">
+					<img src="img/platos/desayunos/desayuno3.jpg" alt="desayuno3">
+					<a href="#">Sándwich de pollo asado con tomates y canónigos</a>
+					<a href="#">$9.90</a>
+				</div>
+				<div class="item" data-categoria="Desayunos">
+					<img src="img/platos/desayunos/desayuno4.jpg" alt="desayuno4">
+					<a href="#">Tostadas de aguacate, bacalao y espárragos</a>
+					<a href="#">$5.50</a>
+				</div>
+				<div class="item" data-categoria="Almuerzos">
+					<img src="img/platos/almuerzos/almuerzo1.jpg" alt="almuerzo1">
+					<a href="#">Ensalada de pollo con cuscús</a>
+					<a href="#">$18.45</a>
+				</div>
+				<div class="item" data-categoria="Almuerzos">
+					<img src="img/platos/almuerzos/almuerzo2.jpg" alt="almuerzo2">
+					<a href="#">Pechugas de pollo a la plancha</a>
+					<a href="#">$16.80</a>
+				</div>
+				<div class="item" data-categoria="Almuerzos">
+					<img src="img/platos/almuerzos/almuerzo3.jpg" alt="almuerzo3">
+					<a href="#">Burritos gluten free con pechuga de pollo</a>
+					<a href="#">$14.90</a>
+				</div>
+				<div class="item" data-categoria="Almuerzos">
+					<img src="img/platos/almuerzos/almuerzo4.jpg" alt="almuerzo4">
+					<a href="#">Atún salteado con verduras y miel</a>
+					<a href="#">$19.99</a>
+				</div>
+				<div class="item" data-categoria="Meriendas">
+					<img src="img/platos/meriendas/merienda1.jpg" alt="merienda1">
+					<a href="#">Crema fría de aguacate y limón</a>
+					<a href="#">$14.45</a>
+				</div>
+				<div class="item" data-categoria="Meriendas">
+					<img src="img/platos/meriendas/merienda2.jpg" alt="merienda2">
+					<a href="#">Atún en salsa teriyaki y sésamo</a>
+					<a href="#">$18.80</a>
+				</div>
+				<div class="item" data-categoria="Meriendas">
+					<img src="img/platos/meriendas/merienda3.jpg" alt="merienda3">
+					<a href="#">Crema fría de calabacín con aguacate</a>
+					<a href="#">$15.90</a>
+				</div>
+				<div class="item" data-categoria="Meriendas">
+					<img src="img/platos/meriendas/merienda4.jpg" alt="merienda4">
+					<a href="#">Ensalada de atún baja en calorías</a>
+					<a href="#">$11.99</a>
+				</div>
+				<div class="item" data-categoria="Postres">
+					<img src="img/platos/postres/postre1.jpg" alt="postre1">
+					<a href="#">Flan Vegano de vainilla y caramelo</a>
+					<a href="#">$4.45</a>
+				</div>
+				<div class="item" data-categoria="Postres">
+					<img src="img/platos/postres/postre2.jpg" alt="postre2">
+					<a href="#">Cubitos de rompope y cajeta</a>
+					<a href="#">$3.80</a>
+				</div>
+				<div class="item" data-categoria="Postres">
+					<img src="img/platos/postres/postre3.jpg" alt="postre3">
+					<a href="#">Crepa de queso cottage y pera</a>
+					<a href="#">$5.90</a>
+				</div>
+				<div class="item" data-categoria="Postres">
+					<img src="img/platos/postres/postre4.jpg" alt="postre4">
+					<a href="#">Platanos con caramelo salado y granola</a>
+					<a href="#">$5.99</a>
+				</div>
+			</div>
+		</div>
+	</div>
+    <!-- Modal para detalle del plato -->
+    <div id="modalPlato" class="modal" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-nombre">
+            <span class="close" id="modal-close" title="Cerrar">&times;</span>
+            <div style="overflow:auto;">
+                <img id="modal-img" src="" alt="">
+                <div>
+                    <h2 id="modal-nombre">Nombre Plato</h2>
+                    <p id="modal-descripcion">Descripción / contenido del plato</p>
+                    <p id="modal-precio" style="font-weight:700;">$0.00</p>
+
+                    <label for="modal-comentarios">Comentarios (opcional)</label>
+                    <textarea id="modal-comentarios" rows="3" placeholder="P. ej. sin sal, sin cebolla..."></textarea>
+
+                    <div class="controls">
+                        <label for="modal-cantidad">Cantidad</label>
+                        <input id="modal-cantidad" type="number" min="1" value="1">
+                        <button id="modal-agregar">Agregar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<script src="js/filtro-platos.js"></script>
+	<script src="js/modal-plato.js"></script>
+	<footer>
+		<div class="footer-content">
+			<h3>Síguenos en nuestras redes sociales</h3>
+			<ul class="redes_sociales">
+				<li><a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a></li>
+				<li><a href="https://www.instagram.com"><i class="fa fa-instagram"></i></a></li>
+				<li><a href="https://www.twitter.com"><i class="fa fa-twitter"></i></a></li>
+			</ul>
+		</div>
+		<div class="derechos">
+			<p>reCAPTCHA y Google protegen este sitio</p>
+			<p>copyright &copy;2021 La Parada. Inc</p>
+		</div>
+	</footer>
+	<script src="js/menu.js"></script>
+	<!--Script del menú de naveación para darle el efecto sticky
+	se ubica en esta sección para evitar sobrecargar al navegador al momento de cargar la página-->
+</body>
+
+</html>

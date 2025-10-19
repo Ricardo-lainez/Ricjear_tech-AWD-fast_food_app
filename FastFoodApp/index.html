@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="Restaurante" />
+	<meta name="keywords" content="El mejor restaurante del país" />
+	<title>La Parada</title>
+	<link rel="stylesheet" type="text/css" href="estilos/estilosIndex.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+	<style>
+		h1 {
+			color: #EE9B14;
+			font-family: 'Satisfy', cursive;
+			font-size: 80px;
+			text-align: center;
+			margin-top: 40px;
+			margin-bottom: 80px;
+		}
+		.logo {
+			width: 250px; 
+			height: auto;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<img class="logo" src="img/logo2.png" alt="logo">
+		<div class="redes-encabezado">
+			<ul>
+				<li><a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a></li>
+				<li><a href="https://www.instagram.com"><i class="fa fa-instagram"></i></a></li>
+				<li><a href="https://www.twitter.com"><i class="fa fa-twitter"></i></a></li>
+			</ul>
+		</div>
+		<nav>
+			<ul class="menu_list" id="menu_list">
+				<li class="list_item"><a href="index.html" class="link">Inicio</a></li>
+				<li class="list_item"><a href="menu.html" class="link">Menú</a></li>
+				<li class="list_item"><a href="reservaciones.html" class="link">Reservaciones</a></li>
+				<li class="list_item"><a href="ofertas.html" class="link">Ofertas</a></li>
+				<li class="list_item"><a href="ubicaciones.html" class="link">Ubicaciones</a></li>
+				<li class="list_item"><a href="quienesSomos.html" class="link">Quiénes Somos</a></li>
+				<li class="list_item"><a href="contactenos.html" class="link">Contáctenos</a></li>
+				<li class="list_item"><a href="trabajaConNosotros.html" class="link">Trabaja con Nosotros</a></li>
+			</ul>
+		</nav>
+	</header>
+	<div class="container_slider">
+		<div class="slider" id="slider">
+			<div class="slider_section">
+				<img src="img/slider/slider1.jpg" alt="img1" class="slider_img">
+			</div>
+			<div class="slider_section">
+				<img src="img/slider/slider2.jpg" alt="img2" class="slider_img">
+			</div>
+			<div class="slider_section">
+				<img src="img/slider/slider3.jpg" alt="img3" class="slider_img">
+			</div>
+			<div class="slider_section">
+				<img src="img/slider/slider4.jpg" alt="img4" class="slider_img">
+			</div>
+		</div>
+		<div class="slider__btn slider__btn--derecha" id="btn_derecha"><i class="fa fa-chevron-right"
+				aria-hidden="true"></i></div>
+		<div class="slider__btn slider__btn--izquierda" id="btn_izquierda"><i class="fa fa-chevron-left"
+				aria-hidden="true"></i></div>
+	</div>
+	<script src="js/slider.js"></script>
+	<section class="laParada">
+		<h1>Restaurante La Parada</h1>
+		<div class="contenedor-laParada">
+			<img src="img/home/menu.jpg" alt="img1" class="contenedor-imagen">
+			<div class="texo-de-imagen">
+				<h2>Menú</h2>
+				<p>"No dejes para mañana lo que puedas comer hoy"</p>
+			</div>
+		</div>
+		<div class="contenedor-laParada">
+			<div class="texo-de-imagen">
+				<h2>Postres</h2>
+				<p>"Todo lo que necesitas es amor. Pero un poco de chocolate de vez en cuando no hace daño"</p>
+			</div>
+			<img src="img/home/postres.jpg" alt="img1" class="contenedor-imagen">
+		</div>
+		<div class="contenedor-laParada">
+			<img src="img/home/reservaciones.jpg" alt="img1" class="contenedor-imagen">
+			<div class="texo-de-imagen">
+				<h2>Reservaciones</h2>
+				<p>"Alegrar corazones por intermedio de nuestra comida es nuestro propósito de vida"</p>
+			</div>
+		</div>
+	</section>
+	<footer>
+		<div class="footer-content">
+			<h3>Síguenos en nuestras redes sociales</h3>
+			<ul class="redes_sociales">
+				<li><a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a></li>
+				<li><a href="https://www.instagram.com"><i class="fa fa-instagram"></i></a></li>
+				<li><a href="https://www.twitter.com"><i class="fa fa-twitter"></i></a></li>
+			</ul>
+		</div>
+		<div class="derechos">
+			<p>reCAPTCHA y Google protegen este sitio</p>
+			<p>copyright &copy;2021 La Parada. Inc</p>
+		</div>
+	</footer>
+	<script src="js/menu.js"></script> <!--Script del menú de naveación para darle el efecto sticky
+	se ubica en esta sección para evitar sobrecargar al navegador al momento de cargar la página-->
+</body>
+
+</html>
