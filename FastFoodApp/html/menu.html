@@ -159,20 +159,25 @@
     <div id="modalPlato" class="modal" aria-hidden="true">
         <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-nombre">
             <span class="close" id="modal-close" title="Cerrar">&times;</span>
-            <div style="overflow:auto;">
-                <img id="modal-img" src="" alt="">
-                <div>
-                    <h2 id="modal-nombre">Nombre Plato</h2>
-                    <p id="modal-descripcion">Descripción / contenido del plato</p>
-                    <p id="modal-precio" style="font-weight:700;">$0.00</p>
+            <div class="modal-body">
+                <div class="modal-image-section">
+                    <img id="modal-img" src="" alt="">
+                </div>
+                <div class="modal-info-section">
+                    <div class="modal-details">
+                        <h2 id="modal-nombre">Nombre Plato</h2>
+                        <p id="modal-descripcion">Descripción / contenido del plato</p>
+                        <p id="modal-precio" class="precio">$0.00</p>
 
-                    <label for="modal-comentarios">Comentarios (opcional)</label>
-                    <textarea id="modal-comentarios" rows="3" placeholder="P. ej. sin sal, sin cebolla..."></textarea>
-
-                    <div class="controls">
-                        <label for="modal-cantidad">Cantidad</label>
-                        <input id="modal-cantidad" type="number" min="1" value="1">
-                        <button id="modal-agregar">Agregar</button>
+                        <label for="modal-comentarios">Comentarios (opcional)</label>
+                        <textarea id="modal-comentarios" rows="3" placeholder="P. ej. sin sal, sin cebolla..."></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="cantidad-control">
+                            <label for="modal-cantidad">Cantidad</label>
+                            <input id="modal-cantidad" type="number" min="1" value="1">
+                        </div>
+                        <button id="modal-agregar">Agregar al Carrito</button>
                     </div>
                 </div>
             </div>

@@ -1,2 +1,2 @@
-# LaParada.github.io
-PROYECTO DEL PRIMER PARCIAL
+# Ricjear_tech-AWD-fast_food_app
+advanced web programming project
