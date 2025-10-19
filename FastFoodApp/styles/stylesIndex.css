@@ -96,7 +96,9 @@ a[href="https://www.twitter.com"],i[class="fa fa-twitter"]:hover{
 
 /*Estilos del slider*/
 .container_slider{
-    width: 100%;
+    width: 70%;
+    height: 70%;
+    border-radius: 30px;
     margin: auto;
     overflow: hidden;
 }
@@ -178,6 +180,7 @@ a[href="https://www.twitter.com"],i[class="fa fa-twitter"]:hover{
 }
 
 .contenedor-imagen{
+    border-radius: 10px;
     width: 42.5%;
 }
 
