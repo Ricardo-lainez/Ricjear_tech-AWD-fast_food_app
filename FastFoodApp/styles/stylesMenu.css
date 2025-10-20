@@ -55,7 +55,7 @@ h1 {
 	margin: 2% auto;
 	padding: 0;
 	border-radius: 12px;
-	max-width: 600px;
+	max-width: 480px;
 	width: 90%;
 	box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 	overflow: hidden;
@@ -90,12 +90,12 @@ h1 {
 .modal-body {
 	display: flex;
 	flex-direction: column;
-	min-height: 500px;
+	min-height: 640px;
 }
 
 .modal-image-section {
 	width: 100%;
-	height: 250px;
+	height: 380px;
 	background: #f8f8f8;
 	display: flex;
 	align-items: center;
@@ -328,7 +328,7 @@ h1 {
 	}
 	
 	.modal-image-section {
-		height: 200px;
+		height: 280px;
 		padding: 15px;
 	}
 	
