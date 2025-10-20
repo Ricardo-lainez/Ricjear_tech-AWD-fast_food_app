@@ -27,7 +27,7 @@ h1 {
 	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Estilo mejorado para el título del contenedor */
+
 .contenedor h1 {
 	color: #333333;
 	font-size: 2.5rem;
@@ -52,13 +52,16 @@ h1 {
 
 .modal-content {
 	background: #fff;
-	margin: 3% auto;
+	margin: 2% auto;
 	padding: 0;
 	border-radius: 12px;
-	max-width: 800px;
+	max-width: 600px;
+	width: 90%;
 	box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 	overflow: hidden;
 	position: relative;
+	max-height: 90vh;
+	overflow-y: auto;
 }
 
 .modal .close {
@@ -86,21 +89,25 @@ h1 {
 
 .modal-body {
 	display: flex;
-	min-height: 400px;
+	flex-direction: column;
+	min-height: 500px;
 }
 
 .modal-image-section {
-	flex: 0 0 300px;
+	width: 100%;
+	height: 250px;
 	background: #f8f8f8;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	padding: 20px;
+	border-radius: 12px 12px 0 0;
+	overflow: hidden;
 }
 
 .modal-image-section img {
-	max-width: 100%;
-	max-height: 280px;
+	width: 100%;
+	height: 100%;
 	object-fit: cover;
 	border-radius: 8px;
 	box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -110,7 +117,7 @@ h1 {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	padding: 30px;
+	padding: 25px 30px 30px 30px;
 }
 
 .modal-details {
@@ -118,10 +125,11 @@ h1 {
 }
 
 .modal-details h2 {
-	margin: 0 0 15px 0;
+	margin: 0 0 12px 0;
 	color: #333;
-	font-size: 1.8rem;
+	font-size: 1.6rem;
 	font-weight: 600;
+	text-align: center;
 }
 
 .modal-details p {
@@ -131,10 +139,11 @@ h1 {
 }
 
 .modal-details .precio {
-	font-size: 1.5rem;
+	font-size: 1.4rem;
 	font-weight: 700;
 	color: #EE9B14;
-	margin-bottom: 20px;
+	margin-bottom: 18px;
+	text-align: center;
 }
 
 .modal-details label {
@@ -160,19 +169,107 @@ h1 {
 	border-color: #EE9B14;
 }
 
-.modal-footer {
+/* Estilos para la sección de extras */
+.extras-section {
+	margin: 20px 0;
+	padding: 20px;
+	background: #f9f9f9;
+	border-radius: 8px;
+	border: 1px solid #e0e0e0;
+}
+
+.extras-section h3 {
+	margin: 0 0 15px 0;
+	color: #333;
+	font-size: 1.1rem;
+	font-weight: 600;
+}
+
+.extras-list {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.extra-item {
 	display: flex;
 	align-items: center;
+	gap: 10px;
+}
+
+.extra-item input[type="checkbox"] {
+	width: 18px;
+	height: 18px;
+	accent-color: #EE9B14;
+	cursor: pointer;
+}
+
+.extra-item label {
+	display: flex;
 	justify-content: space-between;
+	align-items: center;
+	flex: 1;
+	cursor: pointer;
+	font-size: 0.95rem;
+	color: #555;
+	margin: 0;
+}
+
+.extra-precio {
+	font-weight: 600;
+	color: #EE9B14;
+}
+
+/* Estilos para el desglose de precios */
+.precio-total-section {
+	background: #f0f8ff;
+	padding: 15px;
+	border-radius: 8px;
+	border: 1px solid #e0f2ff;
+	margin-bottom: 15px;
+}
+
+.precio-breakdown {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.precio-breakdown span {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.95rem;
+}
+
+.precio-base, .precio-extras {
+	color: #666;
+}
+
+.precio-total {
+	font-weight: 700;
+	font-size: 1.1rem;
+	color: #333;
+	border-top: 1px solid #ddd;
+	padding-top: 8px;
+}
+
+.precio-total span {
+	color: #EE9B14;
+}
+
+.modal-footer {
+	display: flex;
+	flex-direction: column;
 	margin-top: 25px;
 	padding-top: 20px;
 	border-top: 1px solid #eee;
-	gap: 20px;
+	gap: 15px;
 }
 
-.cantidad-control {
+.modal-footer .cantidad-control {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	gap: 10px;
 }
 
@@ -207,7 +304,7 @@ h1 {
 	font-size: 1rem;
 	font-weight: 600;
 	transition: background-color 0.3s ease;
-	min-width: 160px;
+	width: 100%;
 }
 
 .modal button:hover {
@@ -221,29 +318,39 @@ h1 {
 		max-width: 95%;
 	}
 	
+	.modal-content {
+		width: 95%;
+		margin: 5% auto;
+	}
+	
 	.modal-body {
-		flex-direction: column;
 		min-height: auto;
 	}
 	
 	.modal-image-section {
-		flex: none;
 		height: 200px;
 		padding: 15px;
 	}
 	
 	.modal-info-section {
-		padding: 20px;
+		padding: 20px 25px 25px 25px;
 	}
 	
 	.modal-footer {
-		flex-direction: column;
-		gap: 15px;
-		align-items: stretch;
+		gap: 10px;
 	}
 	
 	.cantidad-control {
 		justify-content: center;
+	}
+	
+	.extras-section {
+		padding: 15px;
+		margin: 15px 0;
+	}
+	
+	.precio-total-section {
+		padding: 12px;
 	}
 }
 
@@ -391,8 +498,7 @@ a[href="https://www.twitter.com"],i[class="fa fa-twitter"]:hover{
     min-width: fit-content;
 }
 
-/*Estilo del botón del tipo de plato que se selecciona, se agrega en el html solo cuando 
-se presiona el botón (Para esto se hace usl de javascript, el scrip de nombre "menu.js")*/
+
 .tipo-plato .tipo-item_activado{
     background: linear-gradient(145deg, #EE9B14, #fca311);
     color: #ffffff;
@@ -411,7 +517,7 @@ se presiona el botón (Para esto se hace usl de javascript, el scrip de nombre "
 .lista-platos{
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 30px;
     padding: 20px 0;
 }
@@ -426,6 +532,9 @@ se presiona el botón (Para esto se hace usl de javascript, el scrip de nombre "
     transition: all 0.3s ease;
     cursor: pointer;
     border: 1px solid rgba(238, 155, 20, 0.1);
+    position: relative;
+    min-height: 350px;
+    height: 100%;
 }
 
 .lista-platos .item:hover {
@@ -434,8 +543,7 @@ se presiona el botón (Para esto se hace usl de javascript, el scrip de nombre "
     border: 1px solid rgba(238, 155, 20, 0.3);
 }
 
-/*Clase que oculta los items de acuerdo a la selección realizada, se agrega en el html solo cuando 
-se presiona el botón (Para esto se hace usl de javascript, el scrip de nombre "menu.js")*/
+
 .lista-platos .item.oculto{
     display: none;
 }
@@ -445,16 +553,18 @@ se presiona el botón (Para esto se hace usl de javascript, el scrip de nombre "
     height: 200px;
     object-fit: cover;
     transition: transform 0.3s ease;
+    border-radius: 15px 15px 0 0;
+    flex-shrink: 0;
+    display: block;
 }
 
 .lista-platos .item:hover img {
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 .lista-platos .item a{
     display: block;
     width: 100%;
-    padding: 15px 20px;
     text-decoration: none;
     transition: all 0.3s ease;
 }
@@ -464,9 +574,13 @@ se presiona el botón (Para esto se hace usl de javascript, el scrip de nombre "
     font-weight: 600;
     font-size: 1.1rem;
     text-align: left;
+    padding: 15px 20px 10px 20px;
     border-bottom: 1px solid #eee;
-    margin-bottom: 0;
-    padding-bottom: 10px;
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    min-height: 60px;
+    line-height: 1.4;
 }
 
 .lista-platos .item a:last-of-type {
@@ -474,8 +588,23 @@ se presiona el botón (Para esto se hace usl de javascript, el scrip de nombre "
     font-weight: 700;
     font-size: 1.3rem;
     text-align: right;
-    padding-top: 10px;
+    padding: 10px 20px 15px 20px;
     background: linear-gradient(145deg, #f8f9fa, #ffffff);
+    margin-top: auto;
+    border-radius: 0 0 15px 15px;
+}
+
+/* Asegurar que la imagen esté siempre arriba */
+.lista-platos .item > img {
+    order: -1;
+}
+
+/* Contenedor de información del plato */
+.lista-platos .item .item-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 120px;
 }
 
 .lista-platos .item:hover a:first-of-type {
@@ -513,7 +642,7 @@ se presiona el botón (Para esto se hace usl de javascript, el scrip de nombre "
     }
     
     .lista-platos {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
     
@@ -558,5 +687,15 @@ se presiona el botón (Para esto se hace usl de javascript, el scrip de nombre "
     
     .lista-platos {
         grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}
+
+/* Media query para pantallas muy grandes */
+@media (min-width: 1400px) {
+    .lista-platos {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 1200px;
+        margin: 0 auto;
     }
 }

@@ -91,7 +91,7 @@
 					<a href="#">Hamburguesa Angus Premium</a>
 					<a href="#">$12.50</a>
 				</div>
-				<div class="item" data-categoria="Platos Principales" data-descripcion="Filete de pollo marinado a la parrilla con arroz pilaf y vegetales salteados">
+				<div class="item" data-categoria="Platos Principales" data-descripcion="Piernas de pollo marinado a la parrilla pilaf y vegetales salteados">
 					<img src="../images/platos/Platos_Principales/principal2.jpg" alt="pollo">
 					<a href="#">Pollo a la Parrilla</a>
 					<a href="#">$11.25</a>
@@ -149,10 +149,44 @@
                         <p id="modal-descripcion">Descripción / contenido del plato</p>
                         <p id="modal-precio" class="precio">$0.00</p>
 
+                        <!-- Sección de Extras -->
+                        <div class="extras-section">
+                            <h3>Extras disponibles</h3>
+                            <div class="extras-list">
+                                <div class="extra-item">
+                                    <input type="checkbox" id="extra-queso" data-precio="1.50">
+                                    <label for="extra-queso">Queso extra <span class="extra-precio">+$1.50</span></label>
+                                </div>
+                                <div class="extra-item">
+                                    <input type="checkbox" id="extra-tocino" data-precio="2.00">
+                                    <label for="extra-tocino">Tocino <span class="extra-precio">+$2.00</span></label>
+                                </div>
+                                <div class="extra-item">
+                                    <input type="checkbox" id="extra-aguacate" data-precio="1.75">
+                                    <label for="extra-aguacate">Aguacate <span class="extra-precio">+$1.75</span></label>
+                                </div>
+                                <div class="extra-item">
+                                    <input type="checkbox" id="extra-papas" data-precio="2.50">
+                                    <label for="extra-papas">Papas fritas <span class="extra-precio">+$2.50</span></label>
+                                </div>
+                                <div class="extra-item">
+                                    <input type="checkbox" id="extra-bebida" data-precio="2.25">
+                                    <label for="extra-bebida">Bebida refrescante <span class="extra-precio">+$2.25</span></label>
+                                </div>
+                            </div>
+                        </div>
+
                         <label for="modal-comentarios">Comentarios (opcional)</label>
                         <textarea id="modal-comentarios" rows="3" placeholder="P. ej. sin sal, sin cebolla..."></textarea>
                     </div>
                     <div class="modal-footer">
+                        <div class="precio-total-section">
+                            <div class="precio-breakdown">
+                                <span class="precio-base">Precio base: <span id="precio-base-valor">$0.00</span></span>
+                                <span class="precio-extras">Extras: <span id="precio-extras-valor">$0.00</span></span>
+                                <span class="precio-total">Total: <span id="precio-total-valor">$0.00</span></span>
+                            </div>
+                        </div>
                         <div class="cantidad-control">
                             <label for="modal-cantidad">Cantidad</label>
                             <input id="modal-cantidad" type="number" min="1" value="1">
