@@ -59,92 +59,235 @@
 		</div>
 	</div>
 
-    <div class="encabezado">
-        <h1>Reservaciones</h1>
-    </div>
-    <div class="contenedor-reserva">
-        <form id="formReserva" onsubmit="return validarReserva()">
-            <div class="elemento-form">
-                <label>Nombres:</label>
-                <input type="text" name="nombres" id="nombres" class="form-control textbox" />
-            </div>
-            <div class="elemento-form">
-                <label>Apellidos:</label>
-                <input type="text" name="apellidos" id="apellidos" class="form-control textbox" />
-            </div>
-            <div class="elemento-form">
-                <label>Email:</label>
-                <input type="email" name="correo" id="correo" class="form-control textbox" />
-            </div>
-            <div class="elemento-form">
-                <label>Telefono:</label>
-                <input type="text" name="telefono" id="telefono" class="form-control textbox" />
-            </div>
-            <div class="elemento-form">
-                <label>Fecha de reserva:</label>
-                <input type="date" name="fecha" id="fecha" class="formItem textbox" />
-            </div>
-            <div class="elemento-form">
-                <label>Hora:</label>
-                <input type="time" name="hora" id="hora" class="formItem textbox" />
-            </div>
-            <div class="elemento-form">
-                <label>Número de adultos:</label>
-                <select name="adulto" id="adulto" class="formItem comboBox">
-                    <option value="0">Seleccione..</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-            </div>
-            <div class="elemento-form">
-                <label>Número de niños:</label>
-                <select name="ninio" id="ninio" class="formItem comboBox">
-                    <option value="0">Seleccione..</option>
-                    <option value="1">0</option>
-                    <option value="2">1</option>
-                    <option value="3">2</option>
-                    <option value="4">3</option>
-                    <option value="5">4</option>
-                    <option value="6">5</option>
-                    <option value="7">6</option>
-                    <option value="8">7</option>
-                    <option value="9">8</option>
-                    <option value="10">9</option>
-                    <option value="11">10</option>
-                </select>
-            </div>
-            <div class="elemento-form">
-                <label>¿Está celebrando una ocasión especial?</label>
-                <div class="check">
-                    <input type="checkbox" name="ocasion" id="ocasion1" class="formItem oca" value="1"
-                        onclick="seleccionarCheck()" />
-                    <label for="ocasion1"> Si</label>
-                </div>
-                <div class="check">
-                    <input type="checkbox" name="ocasion" id="ocasion2" class="formItem oca" value="2"
-                        onclick="seleccionarCheck()" />
-                    <label for="ocasion2"> No</label>
-                </div>
-            </div>
-            <div class="elemento-form">
-                <label>Pedidos adicionales</label>
-                <label>Por favor, déjenos saber si tiene alguna restricción alimenticia, si requiere de alguna
-                    asistencia,
-                    etc.</label>
-                <textarea id="texto" rows="5" class="texto form-control"></textarea>
-            </div>
-            <input type="submit" class="btn btn-primary" value="Enviar" style="margin-right: 40px">
-            <input type="reset" class="btn btn-primary" value="Cancelar" onclick="limpiarTodo()">
-        </form>
-    </div>
+	<!-- Sección de introducción -->
+	<section class="intro-reservaciones">
+		<div class="intro-content">
+			<h2>Elige tu Ambiente Perfecto</h2>
+			<p>Descubre nuestros espacios únicos y reserva la experiencia ideal para tu ocasión especial</p>
+		</div>
+	</section>
+
+	<!-- Galería de Ambientes -->
+	<section class="ambientes-container">
+		<!-- Ambiente 1: Salón Principal -->
+		<article class="ambiente-card" data-ambiente="salon-principal">
+			<div class="ambiente-image">
+				<img src="../images/home/menu.jpg" alt="Salón Principal">
+				<div class="ambiente-badge">
+					<i class="fa fa-users"></i>
+					<span>2-8 personas</span>
+				</div>
+			</div>
+			<div class="ambiente-info">
+				<h3>Salón Principal</h3>
+				<p class="ambiente-descripcion">Ambiente acogedor y elegante ideal para cenas románticas o reuniones íntimas</p>
+				<div class="ambiente-caracteristicas">
+					<span><i class="fa fa-check-circle"></i> Aire acondicionado</span>
+					<span><i class="fa fa-check-circle"></i> Vista al jardín</span>
+					<span><i class="fa fa-check-circle"></i> Música ambiental</span>
+					<span><i class="fa fa-check-circle"></i> WiFi gratuito</span>
+				</div>
+				<div class="ambiente-rating">
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<span class="rating-text">4.9 (127 reseñas)</span>
+				</div>
+				<button class="btn-reservar" onclick="abrirModalReserva('salon-principal')">
+					<i class="fa fa-calendar"></i> Reservar Ahora
+				</button>
+			</div>
+		</article>
+
+		<!-- Ambiente 2: Terraza VIP -->
+		<article class="ambiente-card" data-ambiente="terraza-vip">
+			<div class="ambiente-image">
+				<img src="../images/home/reservaciones.jpg" alt="Terraza VIP">
+				<div class="ambiente-badge vip">
+					<i class="fa fa-star"></i>
+					<span>4-12 personas</span>
+				</div>
+			</div>
+			<div class="ambiente-info">
+				<h3>Terraza VIP</h3>
+				<p class="ambiente-descripcion">Espacio premium al aire libre con vista panorámica, perfecto para celebraciones especiales</p>
+				<div class="ambiente-caracteristicas">
+					<span><i class="fa fa-check-circle"></i> Vista panorámica</span>
+					<span><i class="fa fa-check-circle"></i> Área privada</span>
+					<span><i class="fa fa-check-circle"></i> Servicio exclusivo</span>
+					<span><i class="fa fa-check-circle"></i> Decoración personalizada</span>
+				</div>
+				<div class="ambiente-rating">
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<span class="rating-text">5.0 (89 reseñas)</span>
+				</div>
+				<button class="btn-reservar" onclick="abrirModalReserva('terraza-vip')">
+					<i class="fa fa-calendar"></i> Reservar Ahora
+				</button>
+			</div>
+		</article>
+
+		<!-- Ambiente 3: Salón Familiar -->
+		<article class="ambiente-card" data-ambiente="salon-familiar">
+			<div class="ambiente-image">
+				<img src="../images/slider/slider2.jpg" alt="Salón Familiar">
+				<div class="ambiente-badge familiar">
+					<i class="fa fa-users"></i>
+					<span>6-15 personas</span>
+				</div>
+			</div>
+			<div class="ambiente-info">
+				<h3>Salón Familiar</h3>
+				<p class="ambiente-descripcion">Espacio amplio y confortable diseñado para grupos grandes y familias</p>
+				<div class="ambiente-caracteristicas">
+					<span><i class="fa fa-check-circle"></i> Espacio amplio</span>
+					<span><i class="fa fa-check-circle"></i> Área de juegos</span>
+					<span><i class="fa fa-check-circle"></i> Menú infantil</span>
+					<span><i class="fa fa-check-circle"></i> Sillas altas disponibles</span>
+				</div>
+				<div class="ambiente-rating">
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star-half-o"></i>
+					<span class="rating-text">4.7 (156 reseñas)</span>
+				</div>
+				<button class="btn-reservar" onclick="abrirModalReserva('salon-familiar')">
+					<i class="fa fa-calendar"></i> Reservar Ahora
+				</button>
+			</div>
+		</article>
+
+		<!-- Ambiente 4: Bar Lounge -->
+		<article class="ambiente-card" data-ambiente="bar-lounge">
+			<div class="ambiente-image">
+				<img src="../images/slider/slider4.jpg" alt="Bar Lounge">
+				<div class="ambiente-badge lounge">
+					<i class="fa fa-glass"></i>
+					<span>2-6 personas</span>
+				</div>
+			</div>
+			<div class="ambiente-info">
+				<h3>Bar Lounge</h3>
+				<p class="ambiente-descripcion">Ambiente relajado con cócteles premium y música en vivo los fines de semana</p>
+				<div class="ambiente-caracteristicas">
+					<span><i class="fa fa-check-circle"></i> Coctelería premium</span>
+					<span><i class="fa fa-check-circle"></i> Música en vivo</span>
+					<span><i class="fa fa-check-circle"></i> Happy hour</span>
+					<span><i class="fa fa-check-circle"></i> Ambiente nocturno</span>
+				</div>
+				<div class="ambiente-rating">
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<i class="fa fa-star"></i>
+					<span class="rating-text">4.8 (203 reseñas)</span>
+				</div>
+				<button class="btn-reservar" onclick="abrirModalReserva('bar-lounge')">
+					<i class="fa fa-calendar"></i> Reservar Ahora
+				</button>
+			</div>
+		</article>
+	</section>
+
+	<!-- Modal de Reserva -->
+	<div id="modalReserva" class="modal-reserva">
+		<div class="modal-reserva-content">
+			<span class="close-reserva" onclick="cerrarModalReserva()">&times;</span>
+			<h2 id="modalAmbienteTitulo">Reservar Mesa</h2>
+			
+			<div class="modal-reserva-body">
+				<div class="reserva-form-section">
+					<form id="formReserva">
+						<div class="form-group">
+							<label><i class="fa fa-calendar"></i> Fecha</label>
+							<input type="date" id="fecha" name="fecha" required>
+						</div>
+
+						<div class="form-row">
+							<div class="form-group">
+								<label><i class="fa fa-clock-o"></i> Hora</label>
+								<select id="hora" name="hora" required>
+									<option value="">Seleccionar hora</option>
+									<option value="12:00">12:00 PM</option>
+									<option value="12:30">12:30 PM</option>
+									<option value="13:00">1:00 PM</option>
+									<option value="13:30">1:30 PM</option>
+									<option value="14:00">2:00 PM</option>
+									<option value="19:00">7:00 PM</option>
+									<option value="19:30">7:30 PM</option>
+									<option value="20:00">8:00 PM</option>
+									<option value="20:30">8:30 PM</option>
+									<option value="21:00">9:00 PM</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label><i class="fa fa-users"></i> Personas</label>
+								<select id="personas" name="personas" required>
+									<option value="">Seleccionar</option>
+									<option value="1">1 persona</option>
+									<option value="2">2 personas</option>
+									<option value="3">3 personas</option>
+									<option value="4">4 personas</option>
+									<option value="5">5 personas</option>
+									<option value="6">6 personas</option>
+									<option value="7">7 personas</option>
+									<option value="8">8 personas</option>
+									<option value="9">9 personas</option>
+									<option value="10">10+ personas</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label><i class="fa fa-star"></i> Ocasión Especial</label>
+							<select id="ocasion" name="ocasion">
+								<option value="">Ninguna</option>
+								<option value="cumpleaños">Cumpleaños</option>
+								<option value="aniversario">Aniversario</option>
+								<option value="cita-romantica">Cita Romántica</option>
+								<option value="negocios">Comida de Negocios</option>
+								<option value="otro">Otro</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label><i class="fa fa-comment"></i> Comentarios Adicionales</label>
+							<textarea id="comentarios" name="comentarios" rows="3" placeholder="Alergias, preferencias de mesa, etc."></textarea>
+						</div>
+
+						<div class="disponibilidad-info">
+							<i class="fa fa-info-circle"></i>
+							<span id="disponibilidadTexto">Selecciona fecha y hora para verificar disponibilidad</span>
+						</div>
+
+						<button type="submit" class="btn-confirmar-reserva">
+							<i class="fa fa-check"></i> Confirmar Reserva
+						</button>
+					</form>
+				</div>
+
+				<div class="comentarios-section">
+					<h3><i class="fa fa-comments"></i> Reseñas de Clientes</h3>
+					<div class="comentarios-lista" id="comentariosLista">
+						<!-- Los comentarios se cargarán dinámicamente -->
+					</div>
+					<button class="btn-comentar" onclick="verificarLogin()">
+						<i class="fa fa-pencil"></i> Dejar una Reseña
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
     <footer>
         <div class="footer-content">
             <h3>Síguenos en nuestras redes sociales</h3>
@@ -159,9 +302,9 @@
             <p>copyright &copy;2021 La Parada. Inc</p>
         </div>
     </footer>
-    <script src="../js/menu.js"></script>
-    <script src="../js/login-modal.js"></script>
-    <script src="../js/validaciones/validacionReserva.js"></script>
+	<script src="../js/menu.js"></script>
+	<script src="../js/login-modal.js"></script>
+	<script src="../js/reservaciones.js"></script>
 </body>
 
 </html>
