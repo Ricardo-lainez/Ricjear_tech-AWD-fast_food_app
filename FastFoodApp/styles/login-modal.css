@@ -26,6 +26,19 @@
 	position: relative;
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 	animation: slideIn 0.3s ease;
+	max-height: 90vh;
+	overflow-y: auto;
+}
+
+.register-modal-content {
+	max-width: 600px;
+}
+
+.modal-subtitle {
+	text-align: center;
+	color: #666;
+	font-size: 14px;
+	margin: -15px 0 25px 0;
 }
 
 @keyframes slideIn {
@@ -62,61 +75,529 @@
 	font-family: 'Satisfy', cursive;
 }
 
-.login-option {
+/* Login Form */
+.login-form {
+	width: 100%;
+}
+
+.form-group-login {
+	margin-bottom: 20px;
+}
+
+.form-group-login label {
+	display: block;
+	margin-bottom: 8px;
+	color: #333;
+	font-weight: 500;
+	font-size: 14px;
+}
+
+.form-group-login label i {
+	margin-right: 8px;
+	color: #EE9B14;
+}
+
+.form-group-login input {
+	width: 100%;
+	padding: 12px 15px;
+	border: 2px solid #ddd;
+	border-radius: 8px;
+	font-size: 15px;
+	transition: all 0.3s;
+	box-sizing: border-box;
+}
+
+.form-group-login input:focus {
+	outline: none;
+	border-color: #EE9B14;
+	box-shadow: 0 0 0 3px rgba(238, 155, 20, 0.1);
+}
+
+.login-options-extra {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 25px;
+	font-size: 14px;
+}
+
+.remember-me {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	color: #666;
+}
+
+.remember-me input[type="checkbox"] {
+	margin-right: 6px;
+	width: auto;
+	cursor: pointer;
+}
+
+.forgot-password {
+	color: #EE9B14;
+	text-decoration: none;
+	font-weight: 500;
+}
+
+.forgot-password:hover {
+	text-decoration: underline;
+}
+
+.login-error {
+	background-color: #fee;
+	color: #c33;
+	padding: 12px;
+	border-radius: 6px;
+	margin-bottom: 15px;
+	font-size: 14px;
+	border-left: 4px solid #c33;
+}
+
+.btn-login {
+	width: 100%;
+	padding: 14px;
+	background: linear-gradient(135deg, #EE9B14 0%, #d88a10 100%);
+	color: white;
+	border: none;
+	border-radius: 8px;
+	font-size: 16px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.3s;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 15px 20px;
-	margin-bottom: 15px;
-	border-radius: 8px;
-	cursor: pointer;
-	transition: all 0.3s ease;
-	font-weight: 500;
-	font-size: 16px;
-	border: 2px solid transparent;
+	gap: 8px;
 }
 
-.login-option:last-child {
+.btn-login:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 5px 15px rgba(238, 155, 20, 0.3);
+}
+
+.btn-login:active {
+	transform: translateY(0);
+}
+
+.login-divider {
+	position: relative;
+	text-align: center;
+	margin: 25px 0;
+}
+
+.login-divider::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	height: 1px;
+	background-color: #ddd;
+}
+
+.login-divider span {
+	position: relative;
+	background-color: white;
+	padding: 0 15px;
+	color: #999;
+	font-size: 14px;
+}
+
+.demo-credentials {
+	background-color: #f8f9fa;
+	padding: 15px;
+	border-radius: 8px;
+	margin-bottom: 20px;
+}
+
+.demo-credentials p {
+	margin: 0 0 10px 0;
+	font-size: 14px;
+	color: #666;
+}
+
+.demo-user {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 8px;
+	font-size: 13px;
+	flex-wrap: wrap;
+}
+
+.demo-user:last-child {
 	margin-bottom: 0;
 }
 
-.login-option i {
-	margin-right: 12px;
-	font-size: 20px;
-}
-
-.google-login {
-	background-color: #ffffff;
+.demo-user span {
+	font-weight: 600;
 	color: #333;
+	min-width: 70px;
+}
+
+.demo-user code {
+	background-color: #fff;
+	padding: 3px 8px;
+	border-radius: 4px;
+	border: 1px solid #ddd;
+	font-family: 'Courier New', monospace;
+	font-size: 12px;
+	color: #EE9B14;
+}
+
+.register-link {
+	text-align: center;
+	margin-top: 15px;
+	font-size: 14px;
+	color: #666;
+}
+
+.register-link a {
+	color: #EE9B14;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.register-link a:hover {
+	text-decoration: underline;
+}
+
+/* ========================================
+   SOCIAL REGISTER OPTIONS
+   ======================================== */
+
+.social-register-options {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin-bottom: 20px;
+}
+
+.social-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	padding: 12px 20px;
 	border: 2px solid #ddd;
+	border-radius: 8px;
+	background-color: white;
+	color: #333;
+	font-size: 15px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.3s;
 }
 
-.google-login:hover {
+.social-btn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.social-btn i {
+	font-size: 18px;
+}
+
+.google-btn {
 	border-color: #4285f4;
-	box-shadow: 0 2px 8px rgba(66, 133, 244, 0.3);
-	transform: translateY(-2px);
 }
 
-.facebook-login {
+.google-btn:hover {
+	background-color: #4285f4;
+	color: white;
+	border-color: #4285f4;
+}
+
+.facebook-btn {
+	border-color: #1877f2;
+}
+
+.facebook-btn:hover {
 	background-color: #1877f2;
-	color: #ffffff;
+	color: white;
+	border-color: #1877f2;
 }
 
-.facebook-login:hover {
-	background-color: #145dbf;
-	box-shadow: 0 2px 8px rgba(24, 119, 242, 0.3);
-	transform: translateY(-2px);
+/* ========================================
+   REGISTER FORM STYLES
+   ======================================== */
+
+.form-row-register {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 15px;
 }
 
-.email-login {
-	background-color: #EE9B14;
-	color: #ffffff;
+.field-hint {
+	display: block;
+	font-size: 12px;
+	color: #999;
+	margin-top: 4px;
 }
 
-.email-login:hover {
-	background-color: #d88a10;
-	box-shadow: 0 2px 8px rgba(238, 155, 20, 0.3);
-	transform: translateY(-2px);
+.password-input-wrapper {
+	position: relative;
+}
+
+.password-input-wrapper input {
+	padding-right: 45px;
+}
+
+.toggle-password {
+	position: absolute;
+	right: 12px;
+	top: 50%;
+	transform: translateY(-50%);
+	background: none;
+	border: none;
+	color: #999;
+	cursor: pointer;
+	padding: 5px;
+	font-size: 16px;
+	transition: color 0.3s;
+}
+
+.toggle-password:hover {
+	color: #EE9B14;
+}
+
+.toggle-password.active {
+	color: #EE9B14;
+}
+
+/* Password Strength Indicator */
+.password-strength {
+	margin-top: 8px;
+	display: none;
+}
+
+.password-strength.show {
+	display: block;
+}
+
+.strength-bar {
+	height: 4px;
+	background-color: #e0e0e0;
+	border-radius: 2px;
+	overflow: hidden;
+	margin-bottom: 5px;
+	position: relative;
+}
+
+.strength-bar::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 0%;
+	transition: all 0.3s;
+	border-radius: 2px;
+}
+
+.password-strength.weak .strength-bar::after {
+	width: 33%;
+	background-color: #dc3545;
+}
+
+.password-strength.medium .strength-bar::after {
+	width: 66%;
+	background-color: #ffc107;
+}
+
+.password-strength.strong .strength-bar::after {
+	width: 100%;
+	background-color: #28a745;
+}
+
+.strength-text {
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.password-strength.weak .strength-text {
+	color: #dc3545;
+}
+
+.password-strength.weak .strength-text::before {
+	content: 'Débil';
+}
+
+.password-strength.medium .strength-text {
+	color: #ffc107;
+}
+
+.password-strength.medium .strength-text::before {
+	content: 'Media';
+}
+
+.password-strength.strong .strength-text {
+	color: #28a745;
+}
+
+.password-strength.strong .strength-text::before {
+	content: 'Fuerte';
+}
+
+/* Checkbox Group */
+.checkbox-group {
+	margin-bottom: 15px;
+}
+
+.checkbox-label {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	cursor: pointer;
+	font-size: 14px;
+	color: #666;
+}
+
+.checkbox-label input[type="checkbox"] {
+	margin-top: 3px;
+	width: auto;
+	cursor: pointer;
+	flex-shrink: 0;
+}
+
+.checkbox-label span {
+	line-height: 1.4;
+}
+
+.link-inline {
+	color: #EE9B14;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.link-inline:hover {
+	text-decoration: underline;
+}
+
+/* Success Message */
+.login-success {
+	background-color: #d4edda;
+	color: #155724;
+	padding: 12px;
+	border-radius: 6px;
+	margin-bottom: 15px;
+	font-size: 14px;
+	border-left: 4px solid #28a745;
+}
+
+.btn-register {
+	background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.btn-register:hover {
+	box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+/* User Menu Dropdown */
+.user-menu-dropdown {
+	position: relative;
+}
+
+.user-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	cursor: pointer;
+	padding: 8px 15px;
+	border-radius: 20px;
+	transition: background-color 0.3s;
+}
+
+.user-info:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-avatar {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	background: linear-gradient(135deg, #EE9B14 0%, #d88a10 100%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.user-name {
+	color: white;
+	font-weight: 500;
+	max-width: 120px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.dropdown-menu {
+	display: none;
+	position: absolute;
+	top: 100%;
+	right: 0;
+	background-color: white;
+	min-width: 200px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	border-radius: 8px;
+	margin-top: 10px;
+	z-index: 1000;
+	overflow: hidden;
+}
+
+.dropdown-menu.show {
+	display: block;
+	animation: fadeInDown 0.3s ease;
+}
+
+@keyframes fadeInDown {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.dropdown-menu a {
+	display: block;
+	padding: 12px 20px;
+	color: #333;
+	text-decoration: none;
+	transition: background-color 0.2s;
+	border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown-menu a:last-child {
+	border-bottom: none;
+}
+
+.dropdown-menu a:hover {
+	background-color: #f8f9fa;
+}
+
+.dropdown-menu a i {
+	margin-right: 10px;
+	width: 16px;
+	color: #EE9B14;
+}
+
+.dropdown-menu .logout-btn {
+	color: #c33;
+}
+
+.dropdown-menu .logout-btn:hover {
+	background-color: #fee;
+}
+
+.dropdown-menu .logout-btn i {
+	color: #c33;
 }
 
 @media (max-width: 768px) {
@@ -125,30 +606,49 @@
 		max-width: 90%;
 	}
 
+	.register-modal-content {
+		max-width: 95%;
+		padding: 25px 18px;
+	}
+
 	.login-modal h2 {
 		font-size: 24px;
 	}
 
-	.login-option {
-		padding: 12px 15px;
+	.form-group-login input {
+		padding: 10px 12px;
 		font-size: 14px;
+	}
+
+	.login-options-extra {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+	}
+
+	.demo-user {
+		font-size: 12px;
+	}
+
+	.user-name {
+		display: none;
+	}
+
+	.form-row-register {
+		grid-template-columns: 1fr;
+	}
+
+	.social-btn {
+		padding: 10px 15px;
+		font-size: 14px;
+	}
+
+	.modal-subtitle {
+		font-size: 13px;
+	}
+
+	.checkbox-label {
+		font-size: 13px;
 	}
 }
 
-
-/* Añade esto a styles/login-modal.css */
-.register-link {
-    text-align: center;
-    margin-top: 15px;
-    font-size: 14px;
-}
-
-.register-link a {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.register-link a:hover {
-    text-decoration: underline;
-}
