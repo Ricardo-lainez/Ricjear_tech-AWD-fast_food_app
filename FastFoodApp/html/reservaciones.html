@@ -230,22 +230,16 @@
 								</select>
 							</div>
 
-							<div class="form-group">
-								<label><i class="fa fa-users"></i> Personas</label>
-								<select id="personas" name="personas" required>
-									<option value="">Seleccionar</option>
-									<option value="1">1 persona</option>
-									<option value="2">2 personas</option>
-									<option value="3">3 personas</option>
-									<option value="4">4 personas</option>
-									<option value="5">5 personas</option>
-									<option value="6">6 personas</option>
-									<option value="7">7 personas</option>
-									<option value="8">8 personas</option>
-									<option value="9">9 personas</option>
-									<option value="10">10+ personas</option>
-								</select>
-							</div>
+						<div class="form-group">
+							<label><i class="fa fa-users"></i> Personas</label>
+							<select id="personas" name="personas" required>
+								<option value="">Seleccionar</option>
+								<!-- Las opciones se generan dinámicamente según el ambiente seleccionado -->
+							</select>
+							<small class="capacity-hint" id="capacityHint" style="display: block; font-size: 12px; color: #999; margin-top: 4px;">
+								Selecciona un ambiente para ver las opciones disponibles
+							</small>
+						</div>
 						</div>
 
 						<div class="form-group">
