@@ -1,4 +1,40 @@
-// Sistema de Reservaciones - La Parada
+// Sistema de Reservaciones - Bocatto Valley
+// ==========================================
+// CONFIGURACIÓN DE AMBIENTES
+// ==========================================
+
+/**
+ * Definición de ambientes con sus capacidades
+ * Basado en el UML: Reservation -> Table
+ * En el futuro, esto vendrá de la base de datos
+ */
+const AMBIENTES_CONFIG = {
+    'salon-principal': {
+        nombre: 'Salón Principal',
+        capacidadMin: 2,
+        capacidadMax: 8,
+        descripcion: 'Ambiente acogedor y elegante ideal para cenas románticas o reuniones íntimas'
+    },
+    'terraza-vip': {
+        nombre: 'Terraza VIP',
+        capacidadMin: 4,
+        capacidadMax: 12,
+        descripcion: 'Espacio premium al aire libre con vista panorámica'
+    },
+    'salon-familiar': {
+        nombre: 'Salón Familiar',
+        capacidadMin: 6,
+        capacidadMax: 15,
+        descripcion: 'Espacio amplio y confortable diseñado para grupos grandes y familias'
+    },
+    'bar-lounge': {
+        nombre: 'Bar Lounge',
+        capacidadMin: 2,
+        capacidadMax: 6,
+        descripcion: 'Ambiente relajado con cócteles premium y música en vivo'
+    }
+};
+
 // Datos de ejemplo de comentarios por ambiente
 const comentariosPorAmbiente = {
     'salon-principal': [
@@ -98,23 +134,40 @@ const reservasExistentes = {
 };
 
 let ambienteSeleccionado = '';
-let usuarioLogueado = false; // Se debe conectar con el sistema de login real
+let capacidadActual = { min: 1, max: 10 }; // Se actualizará según el ambiente
 
-// Función para abrir el modal de reserva
+// ==========================================
+// FUNCIONES PRINCIPALES
+// ==========================================
+
+/**
+ * Abre el modal de reserva y configura el ambiente seleccionado
+ * Basado en UML: Reservation.checkAvailability()
+ * @param {string} ambiente - ID del ambiente
+ */
 function abrirModalReserva(ambiente) {
     ambienteSeleccionado = ambiente;
+    const config = AMBIENTES_CONFIG[ambiente];
+    
+    if (!config) {
+        console.error('Ambiente no encontrado:', ambiente);
+        return;
+    }
+    
     const modal = document.getElementById('modalReserva');
     const titulo = document.getElementById('modalAmbienteTitulo');
     
-    // Actualizar título según el ambiente
-    const titulos = {
-        'salon-principal': 'Reservar Mesa - Salón Principal',
-        'terraza-vip': 'Reservar Mesa - Terraza VIP',
-        'salon-familiar': 'Reservar Mesa - Salón Familiar',
-        'bar-lounge': 'Reservar Mesa - Bar Lounge'
+    // Actualizar título
+    titulo.textContent = `Reservar Mesa - ${config.nombre}`;
+    
+    // Actualizar capacidad actual
+    capacidadActual = {
+        min: config.capacidadMin,
+        max: config.capacidadMax
     };
     
-    titulo.textContent = titulos[ambiente] || 'Reservar Mesa';
+    // Actualizar selector de personas según capacidad del ambiente
+    actualizarSelectorPersonas(config.capacidadMin, config.capacidadMax);
     
     // Cargar comentarios del ambiente
     cargarComentarios(ambiente);
@@ -127,13 +180,58 @@ function abrirModalReserva(ambiente) {
     modal.style.display = 'block';
 }
 
-// Función para cerrar el modal de reserva
+/**
+ * Actualiza dinámicamente el selector de personas según la capacidad del ambiente
+ * @param {number} min - Capacidad mínima
+ * @param {number} max - Capacidad máxima
+ */
+function actualizarSelectorPersonas(min, max) {
+    const personasSelect = document.getElementById('personas');
+    const capacityHint = document.getElementById('capacityHint');
+    
+    if (!personasSelect) return;
+    
+    // Limpiar opciones existentes
+    personasSelect.innerHTML = '<option value="">Seleccionar</option>';
+    
+    // Generar opciones según capacidad
+    for (let i = min; i <= max; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = `${i} ${i === 1 ? 'persona' : 'personas'}`;
+        personasSelect.appendChild(option);
+    }
+    
+    // Actualizar hint de capacidad
+    if (capacityHint) {
+        capacityHint.textContent = `Este ambiente permite entre ${min} y ${max} personas`;
+        capacityHint.style.color = '#28a745';
+    }
+    
+    // Agregar opción informativa si alguien necesita más espacio
+    if (max < 15) {
+        const optionInfo = document.createElement('option');
+        optionInfo.value = '';
+        optionInfo.textContent = `¿Más de ${max} personas? Contáctanos`;
+        optionInfo.disabled = true;
+        optionInfo.style.fontStyle = 'italic';
+        personasSelect.appendChild(optionInfo);
+    }
+}
+
+/**
+ * Cierra el modal de reserva y resetea el formulario
+ */
 function cerrarModalReserva() {
     const modal = document.getElementById('modalReserva');
     modal.style.display = 'none';
     document.getElementById('formReserva').reset();
     document.getElementById('disponibilidadTexto').textContent = 'Selecciona fecha y hora para verificar disponibilidad';
     document.getElementById('disponibilidadTexto').parentElement.className = 'disponibilidad-info';
+    
+    // Resetear variables
+    ambienteSeleccionado = '';
+    capacidadActual = { min: 1, max: 10 };
 }
 
 // Cerrar modal al hacer clic fuera
@@ -175,7 +273,11 @@ function cargarComentarios(ambiente) {
     comentariosLista.innerHTML = html;
 }
 
-// Función para verificar disponibilidad
+/**
+ * Verifica la disponibilidad del ambiente en la fecha y hora seleccionadas
+ * Basado en UML: Reservation.checkAvailability()
+ * En producción, consultará la base de datos
+ */
 function verificarDisponibilidad() {
     const fecha = document.getElementById('fecha').value;
     const hora = document.getElementById('hora').value;
@@ -190,7 +292,7 @@ function verificarDisponibilidad() {
         return;
     }
     
-    // Verificar si existe reserva
+    // Verificar si existe reserva (simulado - en producción será consulta a BD)
     const reservado = reservasExistentes[fecha]?.[hora]?.includes(ambienteSeleccionado);
     
     if (reservado) {
@@ -227,7 +329,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Función para confirmar reserva
+/**
+ * Confirma y guarda la reserva
+ * Basado en UML: Reservation.confirmReservation() y Reservation.sendConfirmation()
+ * En producción, guardará en base de datos y enviará confirmación por email
+ */
 function confirmarReserva() {
     const fecha = document.getElementById('fecha').value;
     const hora = document.getElementById('hora').value;
@@ -235,38 +341,67 @@ function confirmarReserva() {
     const ocasion = document.getElementById('ocasion').value;
     const comentarios = document.getElementById('comentarios').value;
     
-    // Validar que todos los campos requeridos estén completos
+    // Validar campos requeridos
     if (!fecha || !hora || !personas) {
         alert('Por favor completa todos los campos requeridos');
         return;
     }
     
-    // Aquí se conectaría con el backend para guardar la reserva
-    // Por ahora, solo mostramos un mensaje de confirmación
+    // Validar que el número de personas esté dentro del rango
+    const numPersonas = parseInt(personas);
+    if (numPersonas < capacidadActual.min || numPersonas > capacidadActual.max) {
+        alert(`Este ambiente solo permite entre ${capacidadActual.min} y ${capacidadActual.max} personas.\nPor favor, selecciona un número válido.`);
+        return;
+    }
     
-    const ambientes = {
-        'salon-principal': 'Salón Principal',
-        'terraza-vip': 'Terraza VIP',
-        'salon-familiar': 'Salón Familiar',
-        'bar-lounge': 'Bar Lounge'
+    // TODO: Cuando se implemente BD, aquí se hará:
+    // 1. POST /api/reservations
+    // 2. Reservation.blockTimeSlot()
+    // 3. Reservation.sendConfirmation()
+    // 4. Payment.processPayment() si requiere pago adelantado
+    
+    const config = AMBIENTES_CONFIG[ambienteSeleccionado];
+    
+    // Crear objeto de reserva según estructura del UML
+    const reservaData = {
+        // id: generado por BD
+        // reservationNumber: generado por BD
+        clienteID: null, // Obtener del usuario logueado
+        ambiente: config.nombre,
+        ambienteID: ambienteSeleccionado,
+        reservationDate: new Date(fecha + 'T' + hora),
+        startTime: hora,
+        endTime: calcularHoraFin(hora), // Agregar 2 horas por defecto
+        numberOfPeople: numPersonas,
+        status: 'confirmed', // pending, confirmed, cancelled
+        specialNotes: comentarios || '',
+        ocasion: ocasion || '',
+        isPaid: false,
+        createdAt: new Date()
     };
     
+    // Mensaje de confirmación
     const mensaje = `
-        ¡Reserva Confirmada! 
+        ✅ ¡Reserva Confirmada! 
         
-        Ambiente: ${ambientes[ambienteSeleccionado]}
-        Fecha: ${new Date(fecha + 'T00:00:00').toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-        Hora: ${hora}
-        Personas: ${personas}
-        ${ocasion ? `Ocasión: ${ocasion}` : ''}
-        ${comentarios ? `Comentarios: ${comentarios}` : ''}
+        📍 Ambiente: ${config.nombre}
+        📅 Fecha: ${new Date(fecha + 'T00:00:00').toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+        ⏰ Hora: ${hora}
+        👥 Personas: ${numPersonas}
+        ${ocasion ? `🎉 Ocasión: ${ocasion}` : ''}
+        ${comentarios ? `📝 Notas: ${comentarios}` : ''}
         
-        Te esperamos en La Parada!
+        ¡Te esperamos en Bocatto Valley!
+        
+        Recibirás un correo de confirmación con los detalles de tu reserva.
     `;
     
     alert(mensaje);
     
-    // Simular que la reserva fue guardada
+    // Simular guardado en BD (localStorage temporal)
+    guardarReservaLocal(reservaData);
+    
+    // Actualizar reservas existentes para simular ocupación
     if (!reservasExistentes[fecha]) {
         reservasExistentes[fecha] = {};
     }
@@ -278,25 +413,75 @@ function confirmarReserva() {
     cerrarModalReserva();
 }
 
-// Función para verificar si el usuario está logueado antes de comentar
+/**
+ * Calcula la hora de fin de la reserva (2 horas después por defecto)
+ * @param {string} horaInicio - Hora en formato HH:MM
+ * @returns {string} Hora de fin en formato HH:MM
+ */
+function calcularHoraFin(horaInicio) {
+    const [horas, minutos] = horaInicio.split(':').map(Number);
+    const horaFin = new Date();
+    horaFin.setHours(horas + 2, minutos, 0);
+    return horaFin.toTimeString().slice(0, 5);
+}
+
+/**
+ * Guarda la reserva en localStorage (temporal hasta tener BD)
+ * @param {Object} reservaData 
+ */
+function guardarReservaLocal(reservaData) {
+    try {
+        let reservas = localStorage.getItem('bocatto_reservations');
+        reservas = reservas ? JSON.parse(reservas) : [];
+        
+        // Agregar ID temporal
+        reservaData.id = Date.now();
+        reservaData.reservationNumber = `RES-${Date.now().toString().slice(-6)}`;
+        
+        reservas.push(reservaData);
+        localStorage.setItem('bocatto_reservations', JSON.stringify(reservas));
+        
+        console.log('✅ Reserva guardada localmente:', reservaData);
+    } catch (error) {
+        console.error('Error al guardar reserva:', error);
+    }
+}
+
+/**
+ * Verifica si el usuario está logueado antes de permitir acciones
+ * Integración con sistema de autenticación
+ */
 function verificarLogin() {
-    // Verificar si el usuario está logueado
-    // Por ahora simulamos que no está logueado y abrimos el modal de login
-    if (!usuarioLogueado) {
-        // Abrir el modal de login existente
+    // Verificar si existe el servicio de autenticación
+    if (window.authService && window.authService.isAuthenticated()) {
+        // Usuario logueado, permitir acción
+        abrirFormularioComentario();
+    } else {
+        // No logueado, abrir modal de login
         const loginModal = document.getElementById('loginModal');
         if (loginModal) {
             loginModal.style.display = 'flex';
         }
         alert('Debes iniciar sesión para dejar una reseña');
-    } else {
-        // Si está logueado, abrir formulario para comentar
-        abrirFormularioComentario();
     }
 }
 
-// Función para abrir formulario de comentario (cuando el usuario esté logueado)
+/**
+ * Abre formulario para comentar (requiere autenticación)
+ * Basado en UML: Comment y Rating
+ */
 function abrirFormularioComentario() {
-    // Esta función se implementará cuando se tenga el sistema de autenticación
-    alert('Formulario de reseña (funcionalidad disponible próximamente con autenticación)');
+    // TODO: Implementar formulario de comentarios
+    // Estructura según UML:
+    // - Comment: clientId, productId/reservationId, text, commentDate, isApproved, commentType
+    // - Rating: clientId, productId, stars, rateDate
+    alert('Formulario de reseña (funcionalidad disponible próximamente con autenticación completa)');
 }
+
+// ==========================================
+// LOG DE INICIALIZACIÓN
+// ==========================================
+
+console.log('📅 Sistema de Reservaciones cargado');
+console.log('🏠 Ambientes disponibles:', Object.keys(AMBIENTES_CONFIG).length);
+console.log('📋 Preparado para integración con BD');
