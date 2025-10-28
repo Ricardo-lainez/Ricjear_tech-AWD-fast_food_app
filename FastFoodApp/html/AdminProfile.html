@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Bocatto Valley</title>
+    <link rel="stylesheet" type="text/css" href="../styles/AdminProfile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header del Panel de Admin -->
+    <header class="admin-header">
+        <div class="header-left">
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <span>Bocatto Valley</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="admin-user-info" id="adminUserInfo">
+                <!-- Se carga dinámicamente con JavaScript -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenedor Principal -->
+    <div class="admin-container">
+        <!-- Sidebar de Navegación -->
+        <aside class="admin-sidebar">
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Reportes</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-utensils"></i>
+                    <span>Productos</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Reservaciones</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Pedidos</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Clientes</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Empleados</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Configuración</span>
+                </a>
+                <a href="../index.html" class="nav-item nav-item-bottom">
+                    <i class="fas fa-globe"></i>
+                    <span>Ver Sitio Web</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main class="admin-main">
+            <div class="welcome-section">
+                <div class="welcome-card">
+                    <div class="welcome-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="welcome-content">
+                        <h1 class="welcome-title">¡Bienvenido, <span id="adminName">Raul</span>!</h1>
+                        <p class="welcome-subtitle">Panel de Administración de Bocatto Valley</p>
+                        <p class="welcome-description">
+                            Desde aquí podrás gestionar todos los aspectos del restaurante: 
+                            productos, pedidos, reservaciones, reportes y mucho más.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Información del Sistema -->
+                <div class="system-info">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="info-content">
+                            <p class="info-label">Fecha de Acceso</p>
+                            <p class="info-value" id="currentDate"></p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="info-content">
+                            <p class="info-label">Hora Actual</p>
+                            <p class="info-value" id="currentTime"></p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <p class="info-label">Nivel de Acceso</p>
+                            <p class="info-value">Administrador</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mensaje de Estado -->
+                <div class="status-message">
+                    <div class="status-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="status-content">
+                        <h3>Panel en Desarrollo</h3>
+                        <p>Las funcionalidades del panel de administración se están desarrollando actualmente. 
+                           Pronto podrás acceder a todas las herramientas de gestión del restaurante.</p>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h2 class="section-title">Accesos Rápidos</h2>
+                    <div class="actions-grid">
+                        <div class="action-card">
+                            <i class="fas fa-file-alt"></i>
+                            <h3>Generar Reporte</h3>
+                            <p>Próximamente</p>
+                        </div>
+                        <div class="action-card">
+                            <i class="fas fa-plus-circle"></i>
+                            <h3>Nuevo Producto</h3>
+                            <p>Próximamente</p>
+                        </div>
+                        <div class="action-card">
+                            <i class="fas fa-clipboard-list"></i>
+                            <h3>Ver Pedidos</h3>
+                            <p>Próximamente</p>
+                        </div>
+                        <div class="action-card">
+                            <i class="fas fa-calendar-check"></i>
+                            <h3>Reservaciones</h3>
+                            <p>Próximamente</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/auth.js"></script>
+    <script src="../js/AdminProfile.js"></script>
+</body>
+</html>

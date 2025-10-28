@@ -23,10 +23,10 @@
 const SIMULATED_USERS = [
     {
         id: 1,
-        firstName: 'Carlos',
+        firstName: 'Raul',
         lastName: 'Administrador',
-        email: 'admin@bocatto.com',
-        password: 'admin123', // En producción estará hasheada
+        email: 'admin@adminbocatto.com',
+        password: 'adminPass123', // En producción estará hasheada
         phone: '0999999999',
         address: 'Quito, Ecuador',
         registrationDate: new Date('2024-01-01'),
@@ -94,9 +94,36 @@ class AuthService {
      */
     initializeUsersStorage() {
         const existingUsers = localStorage.getItem(this.usersKey);
+        
         if (!existingUsers) {
             // Guardar usuarios simulados iniciales
             localStorage.setItem(this.usersKey, JSON.stringify(SIMULATED_USERS));
+        } else {
+            // ACTUALIZAR credenciales del administrador si existe versión antigua
+            try {
+                const users = JSON.parse(existingUsers);
+                let updated = false;
+                
+                // Buscar y actualizar admin con credenciales antiguas
+                const adminIndex = users.findIndex(u => 
+                    u.email === 'admin@bocatto.com' || u.role === 'administrator'
+                );
+                
+                if (adminIndex !== -1) {
+                    // Actualizar con las nuevas credenciales
+                    users[adminIndex] = SIMULATED_USERS[0]; // Raul con nuevas credenciales
+                    updated = true;
+                }
+                
+                if (updated) {
+                    localStorage.setItem(this.usersKey, JSON.stringify(users));
+                    console.log('✅ Credenciales de administrador actualizadas');
+                }
+            } catch (error) {
+                console.error('Error al actualizar usuarios:', error);
+                // En caso de error, resetear con usuarios simulados
+                localStorage.setItem(this.usersKey, JSON.stringify(SIMULATED_USERS));
+            }
         }
     }
 
@@ -369,7 +396,7 @@ class AuthService {
     getRedirectUrl(role) {
         switch (role) {
             case 'administrator':
-                return './html/admin-dashboard.html';
+                return './html/AdminProfile.html';
             case 'client':
                 return './index.html'; // Por ahora redirige al home
             default:
@@ -507,9 +534,7 @@ function updateAuthUI() {
                     <i class="fa fa-chevron-down" style="font-size: 12px; color: white;"></i>
                 </div>
                 <div class="dropdown-menu" id="dropdownMenu">
-                    ${user.role === 'administrator' ? 
-                        '<a href="./html/admin-dashboard.html"><i class="fa fa-tachometer"></i> Panel Admin</a>' : 
-                        '<a href="#"><i class="fa fa-user"></i> Mi Perfil</a>'}
+                    <a href="#"><i class="fa fa-user"></i> Mi Perfil</a>
                     <a href="#"><i class="fa fa-heart"></i> Favoritos</a>
                     <a href="#"><i class="fa fa-shopping-bag"></i> Mis Pedidos</a>
                     <a href="#"><i class="fa fa-calendar"></i> Mis Reservas</a>
