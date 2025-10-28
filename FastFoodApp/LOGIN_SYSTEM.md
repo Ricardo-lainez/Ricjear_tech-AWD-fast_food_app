@@ -22,13 +22,14 @@ Sistema de autenticación simulado que diferencia entre **Clientes** y **Adminis
 
 3. **Roles de Usuario**
    - **Cliente**: Acceso al sitio web normal
-   - **Administrador**: Acceso al panel de administración
+   - **Administrador**: Acceso al Panel de Administración (AdminProfile)
 
-4. **Dashboard de Administrador**
-   - Panel estadístico con métricas
-   - Sidebar con navegación
-   - Secciones placeholder para futuras funcionalidades
-   - Diseño responsive
+4. **Panel de Administración**
+   - Diseño profesional con sidebar y header
+   - Mensaje de bienvenida personalizado
+   - Información de fecha y hora en tiempo real
+   - Protección de acceso (solo administradores)
+   - Accesos rápidos a funcionalidades futuras
 
 5. **Menú de Usuario**
    - Dropdown con opciones personalizadas
@@ -40,8 +41,8 @@ Sistema de autenticación simulado que diferencia entre **Clientes** y **Adminis
 
 ### Administrador
 ```
-Email: admin@bocatto.com
-Contraseña: admin123
+Email: admin@adminbocatto.com
+Contraseña: adminPass123
 ```
 
 ### Cliente
@@ -62,14 +63,14 @@ Contraseña: 123456
 FastFoodApp/
 ├── index.html                          # Página principal (actualizada con login)
 ├── html/
-│   └── admin-dashboard.html           # Dashboard del administrador
+│   └── AdminProfile.html              # Panel de Administración
 ├── js/
 │   ├── auth.js                        # 🆕 Sistema de autenticación
 │   ├── login-modal.js                 # 🔄 Gestión del modal de login
-│   └── admin-dashboard.js             # 🆕 Funcionalidad del dashboard admin
+│   └── AdminProfile.js                # 🆕 Funcionalidad del panel admin
 └── styles/
     ├── login-modal.css                # 🔄 Estilos del modal y menú usuario
-    └── admin-dashboard.css            # 🆕 Estilos del dashboard admin
+    └── AdminProfile.css               # 🆕 Estilos del panel admin
 ```
 
 ## 🔧 Implementación Basada en UML
@@ -147,7 +148,7 @@ Guardar sesión                  Mostrar error
     ↓
 ¿Es administrador?
     ↓ SÍ                          ↓ NO (Cliente)
-Redirigir a admin-dashboard    Recargar página
+Redirigir a AdminProfile      Recargar página (index.html)
 ```
 
 ### 2. Verificación de Sesión
@@ -167,7 +168,7 @@ Actualizar UI
 
 ### 3. Protección de Páginas
 ```
-admin-dashboard.html
+AdminProfile.html
     ↓
 protectPage('administrator')
     ↓
@@ -194,17 +195,17 @@ Permitir acceso
 - Avatar con inicial del nombre
 - Nombre del usuario
 - Dropdown con opciones:
-  - Cliente: Mi Perfil, Favoritos, Mis Pedidos, Mis Reservas, Configuración
-  - Admin: Panel Admin, Favoritos, etc.
+  - Mi Perfil, Favoritos, Mis Pedidos, Mis Reservas, Configuración
   - Cerrar Sesión
 
-### Dashboard Admin
+### Panel de Administración (AdminProfile.html)
 - Header con logo y menú de usuario
-- Sidebar con navegación
-- Tarjetas de estadísticas
-- Actividad reciente
-- Productos populares
-- Secciones placeholder para futuras funcionalidades
+- Sidebar con navegación a diferentes secciones
+- Mensaje de bienvenida personalizado con el nombre del administrador (Raul)
+- Información en tiempo real: fecha, hora y nivel de acceso
+- Accesos rápidos a funcionalidades (en desarrollo)
+- Diseño responsive y profesional
+- Protección de acceso (solo administradores autenticados)
 
 ## 🔮 Preparación para Backend
 
@@ -287,9 +288,11 @@ Permitir acceso
 1. Abrir `index.html` en el navegador
 2. Click en "Ingresar" en el menú
 3. Usar credenciales de prueba:
-   - Admin: `admin@bocatto.com` / `admin123`
+   - Admin: `admin@adminbocatto.com` / `adminPass123`
    - Cliente: `cliente@bocatto.com` / `cliente123`
-4. Verificar redirección según el rol
+4. Verificar redirección:
+   - Administrador → AdminProfile.html con mensaje "¡Bienvenido, Raul!"
+   - Cliente → index.html
 5. Probar el menú de usuario
 6. Cerrar sesión
 
@@ -297,9 +300,9 @@ Permitir acceso
 
 ### 🆕 Nuevos
 - `js/auth.js`
-- `js/admin-dashboard.js`
-- `html/admin-dashboard.html`
-- `styles/admin-dashboard.css`
+- `js/AdminProfile.js`
+- `html/AdminProfile.html`
+- `styles/AdminProfile.css`
 - `LOGIN_SYSTEM.md` (este archivo)
 
 ### 🔄 Modificados
