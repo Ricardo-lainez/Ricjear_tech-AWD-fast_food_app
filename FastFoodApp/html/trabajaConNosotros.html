@@ -29,7 +29,9 @@
                 <li class="list_item"><a href="quienesSomos.html" class="link">Quiénes Somos</a></li>
                 <li class="list_item"><a href="contactenos.html" class="link">Contáctenos</a></li>
                 <li class="list_item"><a href="trabajaConNosotros.html" class="link">Trabaja con Nosotros</a></li>
-                <li class="list_item"><a href="#" class="login-btn" id="loginBtn">Ingresar</a></li>
+                <li class="list_item" id="userMenuItem">
+                    <a href="#" class="login-btn" id="loginBtn">Ingresar</a>
+                </li>
             </ul>
         </nav>
 
@@ -44,18 +46,171 @@
 		<div class="login-modal-content">
 			<span class="close-modal" id="closeModal">&times;</span>
 			<h2>Iniciar Sesión</h2>
-			<div class="login-option google-login">
-				<i class="fa fa-google"></i>
-				<span>Continuar con Google</span>
+			
+			<form id="loginForm" class="login-form">
+				<div class="form-group-login">
+					<label for="loginEmail">
+						<i class="fa fa-envelope"></i> Correo Electrónico
+					</label>
+					<input type="email" id="loginEmail" name="email" placeholder="correo@ejemplo.com" required>
+				</div>
+
+				<div class="form-group-login">
+					<label for="loginPassword">
+						<i class="fa fa-lock"></i> Contraseña
+					</label>
+					<input type="password" id="loginPassword" name="password" placeholder="••••••••" required>
+				</div>
+
+				<div class="login-options-extra">
+					<label class="remember-me">
+						<input type="checkbox" id="rememberMe">
+						<span>Recordarme</span>
+					</label>
+					<a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+				</div>
+
+				<div id="loginError" class="login-error" style="display: none;"></div>
+
+				<button type="submit" class="btn-login">
+					<i class="fa fa-sign-in"></i> Iniciar Sesión
+				</button>
+			</form>
+
+			<div class="login-divider">
+				<span>o</span>
 			</div>
-			<div class="login-option facebook-login">
-				<i class="fa fa-facebook"></i>
-				<span>Continuar con Facebook</span>
+
+			<div class="demo-credentials">
+				<p><strong>Credenciales de prueba:</strong></p>
+				<div class="demo-user">
+					<span><i class="fa fa-user"></i> Cliente:</span> 
+					<code>cliente@bocatto.com</code> / <code>cliente123</code>
+				</div>
+				<div class="demo-user">
+					<span><i class="fa fa-shield"></i> Admin:</span> 
+					<code>admin@adminbocatto.com</code> / <code>adminPass123</code>
+				</div>
 			</div>
-			<div class="login-option email-login">
-				<i class="fa fa-envelope"></i>
-				<span>Continuar con Correo Electrónico</span>
+			<p class="register-link">¿No tienes una cuenta? <a href="#" id="openRegisterModal">Regístrate aquí</a></p>
+		</div>
+	</div>
+
+	<!-- Register Modal -->
+	<div id="registerModal" class="login-modal">
+		<div class="login-modal-content register-modal-content">
+			<span class="close-modal" id="closeRegisterModal">&times;</span>
+			<h2>Crear Cuenta</h2>
+			<p class="modal-subtitle">Únete a Bocatto Valley y disfruta de beneficios exclusivos</p>
+
+			<!-- Opciones de registro rápido -->
+			<div class="social-register-options">
+				<button class="social-btn google-btn" id="googleRegisterBtn">
+					<i class="fa fa-google"></i>
+					<span>Continuar con Google</span>
+				</button>
+				<button class="social-btn facebook-btn" id="facebookRegisterBtn">
+					<i class="fa fa-facebook"></i>
+					<span>Continuar con Facebook</span>
+				</button>
 			</div>
+
+			<div class="login-divider">
+				<span>o regístrate con email</span>
+			</div>
+
+			<!-- Formulario de registro -->
+			<form id="registerForm" class="login-form">
+				<div class="form-row-register">
+					<div class="form-group-login">
+						<label for="registerFirstName">
+							<i class="fa fa-user"></i> Nombres *
+						</label>
+						<input type="text" id="registerFirstName" name="firstName" placeholder="Juan" required>
+					</div>
+
+					<div class="form-group-login">
+						<label for="registerLastName">
+							<i class="fa fa-user"></i> Apellidos *
+						</label>
+						<input type="text" id="registerLastName" name="lastName" placeholder="Pérez" required>
+					</div>
+				</div>
+
+				<div class="form-group-login">
+					<label for="registerEmail">
+						<i class="fa fa-envelope"></i> Correo Electrónico *
+					</label>
+					<input type="email" id="registerEmail" name="email" placeholder="correo@ejemplo.com" required>
+					<small class="field-hint">Usarás este email para iniciar sesión</small>
+				</div>
+
+				<div class="form-group-login">
+					<label for="registerPassword">
+						<i class="fa fa-lock"></i> Contraseña *
+					</label>
+					<div class="password-input-wrapper">
+						<input type="password" id="registerPassword" name="password" placeholder="Mínimo 6 caracteres" required>
+						<button type="button" class="toggle-password" id="toggleRegisterPassword">
+							<i class="fa fa-eye"></i>
+						</button>
+					</div>
+					<div class="password-strength" id="passwordStrength">
+						<div class="strength-bar"></div>
+						<span class="strength-text"></span>
+					</div>
+				</div>
+
+				<div class="form-group-login">
+					<label for="registerConfirmPassword">
+						<i class="fa fa-lock"></i> Confirmar Contraseña *
+					</label>
+					<div class="password-input-wrapper">
+						<input type="password" id="registerConfirmPassword" name="confirmPassword" placeholder="Repite tu contraseña" required>
+						<button type="button" class="toggle-password" id="toggleConfirmPassword">
+							<i class="fa fa-eye"></i>
+						</button>
+					</div>
+				</div>
+
+				<div class="form-group-login">
+					<label for="registerPhone">
+						<i class="fa fa-phone"></i> Teléfono
+					</label>
+					<input type="tel" id="registerPhone" name="phone" placeholder="0987654321" pattern="[0-9]{10}">
+					<small class="field-hint">10 dígitos (opcional)</small>
+				</div>
+
+				<div class="form-group-login">
+					<label for="registerAddress">
+						<i class="fa fa-map-marker"></i> Dirección
+					</label>
+					<input type="text" id="registerAddress" name="address" placeholder="Ciudad, Sector, Calle">
+				</div>
+
+				<div class="form-group-login checkbox-group">
+					<label class="checkbox-label">
+						<input type="checkbox" id="termsAccept" required>
+						<span>Acepto los <a href="#" class="link-inline">Términos y Condiciones</a> y la <a href="#" class="link-inline">Política de Privacidad</a></span>
+					</label>
+				</div>
+
+				<div class="form-group-login checkbox-group">
+					<label class="checkbox-label">
+						<input type="checkbox" id="newsletterAccept">
+						<span>Quiero recibir ofertas y novedades por email</span>
+					</label>
+				</div>
+
+				<div id="registerError" class="login-error" style="display: none;"></div>
+				<div id="registerSuccess" class="login-success" style="display: none;"></div>
+
+				<button type="submit" class="btn-login btn-register">
+					<i class="fa fa-user-plus"></i> Crear Cuenta
+				</button>
+			</form>
+
+			<p class="register-link">¿Ya tienes una cuenta? <a href="#" id="backToLogin">Inicia sesión aquí</a></p>
 		</div>
 	</div>
 
@@ -125,8 +280,10 @@
             <p>copyright &copy;2025 Bocatto Valley. Inc</p>
         </div>
     </footer>
+    <script src="../js/auth.js"></script>
     <script src="../js/menu.js"></script>
     <script src="../js/login-modal.js"></script>
+    <script src="../js/register-modal.js"></script>
     <script src="../js/validaciones/validacionessolicitudtrabajo.js"></script>
 </body>
 

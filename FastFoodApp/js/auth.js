@@ -526,6 +526,46 @@ function updateAuthUI() {
         const firstName = user.firstName || 'Usuario';
         const initial = firstName.charAt(0).toUpperCase();
 
+        // Determinar si estamos en el panel de admin o en el sitio público
+        const isInAdminPanel = window.location.pathname.includes('AdminProfile.html');
+        const isInHtmlFolder = window.location.pathname.includes('/html/');
+        
+        // Construir el menú según el rol del usuario
+        let menuOptions = '';
+        
+        if (user.role === 'administrator') {
+            // Menú para administradores
+            if (isInAdminPanel) {
+                // Si está en el panel admin, mostrar opción para ver sitio web
+                menuOptions = `
+                    <a href="#"><i class="fa fa-user"></i> Mi Perfil</a>
+                    <a href="#"><i class="fa fa-cog"></i> Configuración</a>
+                    <a href="../index.html"><i class="fa fa-globe"></i> Ver Sitio Web</a>
+                    <a href="#" class="logout-btn" id="logoutBtn"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
+                `;
+            } else {
+                // Si está en el sitio web, mostrar opción para ir al panel
+                // Ajustar la ruta según la ubicación
+                const adminPanelPath = isInHtmlFolder ? './AdminProfile.html' : './html/AdminProfile.html';
+                menuOptions = `
+                    <a href="${adminPanelPath}"><i class="fa fa-tachometer"></i> Panel Admin</a>
+                    <a href="#"><i class="fa fa-user"></i> Mi Perfil</a>
+                    <a href="#"><i class="fa fa-cog"></i> Configuración</a>
+                    <a href="#" class="logout-btn" id="logoutBtn"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
+                `;
+            }
+        } else {
+            // Menú para clientes regulares
+            menuOptions = `
+                <a href="#"><i class="fa fa-user"></i> Mi Perfil</a>
+                <a href="#"><i class="fa fa-heart"></i> Favoritos</a>
+                <a href="#"><i class="fa fa-shopping-bag"></i> Mis Pedidos</a>
+                <a href="#"><i class="fa fa-calendar"></i> Mis Reservas</a>
+                <a href="#"><i class="fa fa-cog"></i> Configuración</a>
+                <a href="#" class="logout-btn" id="logoutBtn"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
+            `;
+        }
+
         userMenuItem.innerHTML = `
             <div class="user-menu-dropdown">
                 <div class="user-info" id="userInfo">
@@ -534,12 +574,7 @@ function updateAuthUI() {
                     <i class="fa fa-chevron-down" style="font-size: 12px; color: white;"></i>
                 </div>
                 <div class="dropdown-menu" id="dropdownMenu">
-                    <a href="#"><i class="fa fa-user"></i> Mi Perfil</a>
-                    <a href="#"><i class="fa fa-heart"></i> Favoritos</a>
-                    <a href="#"><i class="fa fa-shopping-bag"></i> Mis Pedidos</a>
-                    <a href="#"><i class="fa fa-calendar"></i> Mis Reservas</a>
-                    <a href="#"><i class="fa fa-cog"></i> Configuración</a>
-                    <a href="#" class="logout-btn" id="logoutBtn"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
+                    ${menuOptions}
                 </div>
             </div>
         `;
