@@ -94,11 +94,11 @@ function setupUserMenu() {
         // Logout
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
-            logoutBtn.addEventListener('click', function(e) {
+            logoutBtn.addEventListener('click', async function(e) {
                 e.preventDefault();
                 
                 if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
-                    authService.logout();
+                    await authService.logout();
                     window.location.href = '../index.html';
                 }
             });

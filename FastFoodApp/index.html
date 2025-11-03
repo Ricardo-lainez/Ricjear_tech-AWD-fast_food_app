@@ -77,21 +77,7 @@
 				</button>
 			</form>
 
-			<div class="login-divider">
-				<span>o</span>
-			</div>
-
-			<div class="demo-credentials">
-			<p><strong>Credenciales de prueba:</strong></p>
-			<div class="demo-user">
-				<span><i class="fa fa-user"></i> Cliente:</span> 
-				<code>cliente@bocatto.com</code> / <code>cliente123</code>
-			</div>
-			<div class="demo-user">
-				<span><i class="fa fa-shield"></i> Admin:</span> 
-				<code>admin@adminbocatto.com</code> / <code>adminPass123</code>
-			</div>
-		</div>			<p class="register-link">¿No tienes una cuenta? <a href="#" id="openRegisterModal">Regístrate aquí</a></p>
+			<p class="register-link">¿No tienes una cuenta? <a href="#" id="openRegisterModal">Regístrate aquí</a></p>
 		</div>
 	</div>
 
@@ -262,7 +248,18 @@
 			<p>copyright &copy;2025 Bocatto Valley. Inc</p>
 		</div>
 	</footer>
-	<script src="js/auth.js"></script>
+	<!-- Limpieza de datos viejos (PRIMERO) -->
+	<script src="js/cleanup.js"></script>
+	
+	<!-- API Client para comunicación con backend -->
+	<script src="js/api-client.js"></script>
+	
+	<!-- Sistema de autenticación con API (MongoDB Atlas) -->
+	<!-- Nota: Comentar auth.js para usar la versión con base de datos -->
+	<!-- <script src="js/auth.js"></script> -->
+	<script src="js/auth-api.js"></script>
+	
+	<!-- Otros scripts -->
 	<script src="js/menu.js"></script>
 	<script src="js/login-modal.js"></script>
 	<script src="js/register-modal.js"></script>

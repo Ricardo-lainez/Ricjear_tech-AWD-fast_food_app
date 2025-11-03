@@ -1,0 +1,125 @@
+# ==========================================
+# GITIGNORE PARA PROYECTO COMPLETO
+# ==========================================
+
+# ==========================================
+# ARCHIVOS SENSIBLES (¡NUNCA SUBIR!)
+# ==========================================
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Credenciales adicionales
+credentials.json
+secrets.json
+config.local.js
+
+# ==========================================
+# NODE MODULES
+# ==========================================
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ==========================================
+# LOGS
+# ==========================================
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# ==========================================
+# SISTEMA OPERATIVO
+# ==========================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ==========================================
+# IDEs y EDITORES
+# ==========================================
+# Visual Studio Code
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.code-workspace
+
+# JetBrains (IntelliJ, WebStorm, etc.)
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.netrwhist
+
+# ==========================================
+# BUILD y DIST
+# ==========================================
+dist/
+build/
+*.tsbuildinfo
+
+# ==========================================
+# TEMPORALES
+# ==========================================
+tmp/
+temp/
+*.tmp
+*.bak
+*.cache
+
+# ==========================================
+# TESTING
+# ==========================================
+coverage/
+.nyc_output/
+*.lcov
+
+# ==========================================
+# DEPENDENCIAS OPCIONALES
+# ==========================================
+.pnp
+.pnp.js
+
+# ==========================================
+# ARCHIVOS ESPECÍFICOS DEL PROYECTO
+# ==========================================
+# Si tienes archivos de backup o documentos privados
+NOTAS_PRIVADAS.md
+TODO_PERSONAL.md
