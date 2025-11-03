@@ -39,7 +39,7 @@ const AMBIENTES_CONFIG = {
 const comentariosPorAmbiente = {
     'salon-principal': [
         {
-            usuario: 'María González',
+            usuario: 'Andrea López',
             fecha: '15 Oct 2025',
             rating: 5,
             texto: 'Excelente ambiente para una cena romántica. La atención fue impecable y la comida deliciosa. Totalmente recomendado.'
