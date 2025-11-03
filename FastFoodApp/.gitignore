@@ -123,3 +123,6 @@ coverage/
 # Si tienes archivos de backup o documentos privados
 NOTAS_PRIVADAS.md
 TODO_PERSONAL.md
+
+# Credenciales del equipo (NO subir)
+CREDENCIALES_EQUIPO.md
