@@ -1,0 +1,40 @@
+# ==========================================
+# GITIGNORE PARA BACKEND
+# ==========================================
+
+# Variables de entorno (¡IMPORTANTE!)
+.env
+.env.local
+.env.production
+
+# Dependencias
+node_modules/
+package-lock.json
+yarn.lock
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Archivos temporales
+temp/
+tmp/
+*.tmp
+
+# Build
+dist/
+build/
