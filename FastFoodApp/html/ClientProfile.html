@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Panel - Bocatto Valley</title>
+    <title>Client Profile - Bocatto Valley</title>
     <link rel="stylesheet" type="text/css" href="../styles/ClientProfile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&family=Satisfy&display=swap" rel="stylesheet">
@@ -38,6 +38,10 @@
                         <a href="#" class="dropdown-item" onclick="switchSection('profile')">
                             <i class="fas fa-user-edit"></i>
                             <span>Editar Perfil</span>
+                        </a>
+                        <a href="#" class="dropdown-item" onclick="returnToSite()">
+                            <i class="fas fa-home"></i>
+                            <span>Volver al Sitio</span>
                         </a>
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item logout-item" id="logoutBtn">
@@ -141,7 +145,7 @@
                                     <span class="action-subtitle">Actualiza tu información</span>
                                 </div>
                             </button>
-                            <a href="../menu.html" class="quick-action-card">
+                            <a href="./menu.html" class="quick-action-card" data-action="view-menu">
                                 <div class="action-icon">
                                     <i class="fas fa-utensils"></i>
                                 </div>
@@ -150,7 +154,7 @@
                                     <span class="action-subtitle">Explora nuestros platos</span>
                                 </div>
                             </a>
-                            <a href="../ubicaciones.html" class="quick-action-card">
+                            <a href="./ubicaciones.html" class="quick-action-card" data-action="contact">
                                 <div class="action-icon">
                                     <i class="fas fa-map-marker-alt"></i>
                                 </div>
@@ -159,7 +163,7 @@
                                     <span class="action-subtitle">Encuentra nuestros locales</span>
                                 </div>
                             </a>
-                            <a href="../reservaciones.html" class="quick-action-card">
+                            <a href="./reservaciones.html" class="quick-action-card" data-action="new-reservation">
                                 <div class="action-icon">
                                     <i class="fas fa-calendar-plus"></i>
                                 </div>
@@ -181,7 +185,7 @@
                         <div class="card-content">
                             <h3>Puntos de Lealtad</h3>
                             <div class="points-display">
-                                <span class="points-number" id="dashboardPoints">0</span>
+                                <span class="points-number" id="dashboardPoints" data-stat="total-points">0</span>
                                 <span class="points-label">puntos</span>
                             </div>
                             <p class="card-subtitle">¡Sigue acumulando para obtener recompensas!</p>
@@ -330,19 +334,237 @@
                 </div>
             </section>
 
-            <!-- Secciones para futuras implementaciones -->
+            <!-- Modal de Cambio de Contraseña -->
+            <div id="changePasswordModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>
+                            <i class="fas fa-key"></i>
+                            Cambiar Contraseña
+                        </h2>
+                        <button type="button" class="modal-close" onclick="closePasswordModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <form id="change-password-form" class="modal-form">
+                        <div class="form-group">
+                            <label for="currentPassword">
+                                <i class="fas fa-lock"></i>
+                                Contraseña Actual
+                            </label>
+                            <input type="password" id="currentPassword" name="currentPassword" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="newPassword">
+                                <i class="fas fa-key"></i>
+                                Nueva Contraseña
+                            </label>
+                            <input type="password" id="newPassword" name="newPassword" required minlength="6">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword">
+                                <i class="fas fa-check"></i>
+                                Confirmar Nueva Contraseña
+                            </label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6">
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-save"></i>
+                                Cambiar Contraseña
+                            </button>
+                            <button type="button" class="btn-secondary" onclick="closePasswordModal()">
+                                <i class="fas fa-times"></i>
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Sección Mis Pedidos -->
             <section id="orders-section" class="content-section">
                 <div class="content-header">
                     <h1>
                         <i class="fas fa-shopping-bag"></i>
                         Mis Pedidos
                     </h1>
-                    <p class="content-subtitle">Próximamente podrás ver y gestionar todos tus pedidos</p>
+                    <p class="content-subtitle">Aquí encontrarás el historial completo de todos tus pedidos</p>
                 </div>
-                <div class="coming-soon-content">
-                    <i class="fas fa-tools"></i>
-                    <h3>Funcionalidad en Desarrollo</h3>
-                    <p>Estamos trabajando en esta sección para brindarte la mejor experiencia.</p>
+
+                <div class="section-content">
+                    <!-- Vista previa de pedidos -->
+                    <div class="orders-preview">
+                        <div class="orders-grid">
+                            <!-- Pedido 1 -->
+                            <div class="order-card demo-card">
+                                <div class="order-header">
+                                    <div class="order-info">
+                                        <span class="order-number">#ORD-001</span>
+                                        <span class="order-date">
+                                            <i class="fas fa-calendar"></i>
+                                            02 Nov 2024
+                                        </span>
+                                    </div>
+                                    <span class="order-status delivered">
+                                        <i class="fas fa-check-circle"></i>
+                                        Entregado
+                                    </span>
+                                </div>
+                                <div class="order-items">
+                                    <div class="order-item">
+                                        <img src="../images/platos/pizza-margherita.jpg" alt="Pizza" class="item-image" onerror="this.style.display='none'">
+                                        <div class="item-details">
+                                            <span class="item-name">Pizza Margherita</span>
+                                            <span class="item-quantity">x2</span>
+                                        </div>
+                                        <span class="item-price">$18.00</span>
+                                    </div>
+                                    <div class="order-item">
+                                        <img src="../images/platos/coca-cola.jpg" alt="Bebida" class="item-image" onerror="this.style.display='none'">
+                                        <div class="item-details">
+                                            <span class="item-name">Coca Cola</span>
+                                            <span class="item-quantity">x2</span>
+                                        </div>
+                                        <span class="item-price">$4.00</span>
+                                    </div>
+                                </div>
+                                <div class="order-footer">
+                                    <div class="order-total">
+                                        <strong>Total: $22.00</strong>
+                                    </div>
+                                    <div class="order-actions">
+                                        <button class="btn-secondary btn-sm" disabled>
+                                            <i class="fas fa-redo"></i>
+                                            Repetir Pedido
+                                        </button>
+                                        <button class="btn-primary btn-sm" disabled>
+                                            <i class="fas fa-star"></i>
+                                            Calificar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedido 2 -->
+                            <div class="order-card demo-card">
+                                <div class="order-header">
+                                    <div class="order-info">
+                                        <span class="order-number">#ORD-002</span>
+                                        <span class="order-date">
+                                            <i class="fas fa-calendar"></i>
+                                            28 Oct 2024
+                                        </span>
+                                    </div>
+                                    <span class="order-status delivered">
+                                        <i class="fas fa-check-circle"></i>
+                                        Entregado
+                                    </span>
+                                </div>
+                                <div class="order-items">
+                                    <div class="order-item">
+                                        <img src="../images/platos/hamburguesa-clasica.jpg" alt="Hamburguesa" class="item-image" onerror="this.style.display='none'">
+                                        <div class="item-details">
+                                            <span class="item-name">Hamburguesa Clásica</span>
+                                            <span class="item-quantity">x1</span>
+                                        </div>
+                                        <span class="item-price">$12.50</span>
+                                    </div>
+                                    <div class="order-item">
+                                        <img src="../images/platos/papas-fritas.jpg" alt="Papas" class="item-image" onerror="this.style.display='none'">
+                                        <div class="item-details">
+                                            <span class="item-name">Papas Fritas</span>
+                                            <span class="item-quantity">x1</span>
+                                        </div>
+                                        <span class="item-price">$4.50</span>
+                                    </div>
+                                </div>
+                                <div class="order-footer">
+                                    <div class="order-total">
+                                        <strong>Total: $17.00</strong>
+                                    </div>
+                                    <div class="order-actions">
+                                        <button class="btn-secondary btn-sm" disabled>
+                                            <i class="fas fa-redo"></i>
+                                            Repetir Pedido
+                                        </button>
+                                        <button class="btn-primary btn-sm" disabled>
+                                            <i class="fas fa-star"></i>
+                                            Calificar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pedido 3 -->
+                            <div class="order-card demo-card">
+                                <div class="order-header">
+                                    <div class="order-info">
+                                        <span class="order-number">#ORD-003</span>
+                                        <span class="order-date">
+                                            <i class="fas fa-calendar"></i>
+                                            25 Oct 2024
+                                        </span>
+                                    </div>
+                                    <span class="order-status in-progress">
+                                        <i class="fas fa-clock"></i>
+                                        En Preparación
+                                    </span>
+                                </div>
+                                <div class="order-items">
+                                    <div class="order-item">
+                                        <img src="../images/platos/ensalada-cesar.jpg" alt="Ensalada" class="item-image" onerror="this.style.display='none'">
+                                        <div class="item-details">
+                                            <span class="item-name">Ensalada César</span>
+                                            <span class="item-quantity">x1</span>
+                                        </div>
+                                        <span class="item-price">$8.50</span>
+                                    </div>
+                                    <div class="order-item">
+                                        <img src="../images/platos/agua.jpg" alt="Agua" class="item-image" onerror="this.style.display='none'">
+                                        <div class="item-details">
+                                            <span class="item-name">Agua Natural</span>
+                                            <span class="item-quantity">x1</span>
+                                        </div>
+                                        <span class="item-price">$1.50</span>
+                                    </div>
+                                </div>
+                                <div class="order-footer">
+                                    <div class="order-total">
+                                        <strong>Total: $10.00</strong>
+                                    </div>
+                                    <div class="order-actions">
+                                        <button class="btn-warning btn-sm" disabled>
+                                            <i class="fas fa-times"></i>
+                                            Cancelar
+                                        </button>
+                                        <button class="btn-info btn-sm" disabled>
+                                            <i class="fas fa-eye"></i>
+                                            Seguir Pedido
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mensaje de desarrollo -->
+                    <div class="development-notice">
+                        <div class="notice-content">
+                            <i class="fas fa-tools"></i>
+                            <h3>Funcionalidad en Desarrollo</h3>
+                            <p>La gestión completa de pedidos estará disponible próximamente. Los ejemplos mostrados son una vista previa del diseño final.</p>
+                            <div class="notice-actions">
+                                <a href="./menu.html" class="btn-primary">
+                                    <i class="fas fa-utensils"></i>
+                                    Ver Menú Actual
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -352,12 +574,204 @@
                         <i class="fas fa-calendar-check"></i>
                         Mis Reservas
                     </h1>
-                    <p class="content-subtitle">Próximamente podrás gestionar todas tus reservaciones</p>
+                    <p class="content-subtitle">Gestiona todas tus reservaciones de mesa en nuestros restaurantes</p>
                 </div>
-                <div class="coming-soon-content">
-                    <i class="fas fa-tools"></i>
-                    <h3>Funcionalidad en Desarrollo</h3>
-                    <p>Estamos trabajando en esta sección para brindarte la mejor experiencia.</p>
+
+                <div class="section-content">
+                    <!-- Vista previa de reservas -->
+                    <div class="reservations-preview">
+                        <div class="reservations-grid">
+                            <!-- Reserva Próxima -->
+                            <div class="reservation-card demo-card upcoming">
+                                <div class="reservation-header">
+                                    <div class="reservation-info">
+                                        <span class="reservation-number">#RES-001</span>
+                                        <span class="reservation-restaurant">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            Bocatto Valley - Centro
+                                        </span>
+                                    </div>
+                                    <span class="reservation-status confirmed">
+                                        <i class="fas fa-check-circle"></i>
+                                        Confirmada
+                                    </span>
+                                </div>
+                                <div class="reservation-details">
+                                    <div class="reservation-datetime">
+                                        <div class="datetime-item">
+                                            <i class="fas fa-calendar"></i>
+                                            <span class="date">Viernes, 08 Nov 2024</span>
+                                        </div>
+                                        <div class="datetime-item">
+                                            <i class="fas fa-clock"></i>
+                                            <span class="time">19:30 - 21:30</span>
+                                        </div>
+                                    </div>
+                                    <div class="reservation-party">
+                                        <div class="party-item">
+                                            <i class="fas fa-users"></i>
+                                            <span>4 personas</span>
+                                        </div>
+                                        <div class="party-item">
+                                            <i class="fas fa-chair"></i>
+                                            <span>Mesa #5 - Terraza</span>
+                                        </div>
+                                    </div>
+                                    <div class="reservation-notes">
+                                        <i class="fas fa-sticky-note"></i>
+                                        <span>Cumpleaños - Mesa junto a la ventana</span>
+                                    </div>
+                                </div>
+                                <div class="reservation-footer">
+                                    <div class="reservation-actions">
+                                        <button class="btn-secondary btn-sm" disabled>
+                                            <i class="fas fa-edit"></i>
+                                            Modificar
+                                        </button>
+                                        <button class="btn-warning btn-sm" disabled>
+                                            <i class="fas fa-times"></i>
+                                            Cancelar
+                                        </button>
+                                        <button class="btn-info btn-sm" disabled>
+                                            <i class="fas fa-directions"></i>
+                                            Cómo Llegar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reserva Pasada -->
+                            <div class="reservation-card demo-card completed">
+                                <div class="reservation-header">
+                                    <div class="reservation-info">
+                                        <span class="reservation-number">#RES-002</span>
+                                        <span class="reservation-restaurant">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            Bocatto Valley - Norte
+                                        </span>
+                                    </div>
+                                    <span class="reservation-status completed">
+                                        <i class="fas fa-check-double"></i>
+                                        Completada
+                                    </span>
+                                </div>
+                                <div class="reservation-details">
+                                    <div class="reservation-datetime">
+                                        <div class="datetime-item">
+                                            <i class="fas fa-calendar"></i>
+                                            <span class="date">Sábado, 02 Nov 2024</span>
+                                        </div>
+                                        <div class="datetime-item">
+                                            <i class="fas fa-clock"></i>
+                                            <span class="time">20:00 - 22:00</span>
+                                        </div>
+                                    </div>
+                                    <div class="reservation-party">
+                                        <div class="party-item">
+                                            <i class="fas fa-users"></i>
+                                            <span>2 personas</span>
+                                        </div>
+                                        <div class="party-item">
+                                            <i class="fas fa-chair"></i>
+                                            <span>Mesa #12 - Interior</span>
+                                        </div>
+                                    </div>
+                                    <div class="reservation-rating">
+                                        <span>Tu experiencia:</span>
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="reservation-footer">
+                                    <div class="reservation-actions">
+                                        <button class="btn-primary btn-sm" disabled>
+                                            <i class="fas fa-redo"></i>
+                                            Reservar de Nuevo
+                                        </button>
+                                        <button class="btn-secondary btn-sm" disabled>
+                                            <i class="fas fa-receipt"></i>
+                                            Ver Factura
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reserva Pendiente -->
+                            <div class="reservation-card demo-card pending">
+                                <div class="reservation-header">
+                                    <div class="reservation-info">
+                                        <span class="reservation-number">#RES-003</span>
+                                        <span class="reservation-restaurant">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            Bocatto Valley - Sur
+                                        </span>
+                                    </div>
+                                    <span class="reservation-status pending">
+                                        <i class="fas fa-hourglass-half"></i>
+                                        Pendiente
+                                    </span>
+                                </div>
+                                <div class="reservation-details">
+                                    <div class="reservation-datetime">
+                                        <div class="datetime-item">
+                                            <i class="fas fa-calendar"></i>
+                                            <span class="date">Domingo, 10 Nov 2024</span>
+                                        </div>
+                                        <div class="datetime-item">
+                                            <i class="fas fa-clock"></i>
+                                            <span class="time">13:00 - 15:00</span>
+                                        </div>
+                                    </div>
+                                    <div class="reservation-party">
+                                        <div class="party-item">
+                                            <i class="fas fa-users"></i>
+                                            <span>6 personas</span>
+                                        </div>
+                                        <div class="party-item">
+                                            <i class="fas fa-chair"></i>
+                                            <span>Mesa grande solicitada</span>
+                                        </div>
+                                    </div>
+                                    <div class="reservation-notes">
+                                        <i class="fas fa-info-circle"></i>
+                                        <span>Esperando confirmación de disponibilidad</span>
+                                    </div>
+                                </div>
+                                <div class="reservation-footer">
+                                    <div class="reservation-actions">
+                                        <button class="btn-info btn-sm" disabled>
+                                            <i class="fas fa-phone"></i>
+                                            Llamar Restaurant
+                                        </button>
+                                        <button class="btn-warning btn-sm" disabled>
+                                            <i class="fas fa-times"></i>
+                                            Cancelar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mensaje de desarrollo -->
+                    <div class="development-notice">
+                        <div class="notice-content">
+                            <i class="fas fa-tools"></i>
+                            <h3>Funcionalidad en Desarrollo</h3>
+                            <p>El sistema completo de reservaciones estará disponible próximamente. Los ejemplos mostrados son una vista previa del diseño final.</p>
+                            <div class="notice-actions">
+                                <a href="./reservaciones.html" class="btn-primary">
+                                    <i class="fas fa-calendar-plus"></i>
+                                    Hacer Reserva Actual
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -367,12 +781,209 @@
                         <i class="fas fa-star"></i>
                         Mis Reseñas
                     </h1>
-                    <p class="content-subtitle">Próximamente podrás escribir y gestionar tus reseñas</p>
+                    <p class="content-subtitle">Comparte tu experiencia y ayuda a otros clientes a elegir mejor</p>
                 </div>
-                <div class="coming-soon-content">
-                    <i class="fas fa-tools"></i>
-                    <h3>Funcionalidad en Desarrollo</h3>
-                    <p>Estamos trabajando en esta sección para brindarte la mejor experiencia.</p>
+
+                <div class="section-content">
+                    <!-- Estadísticas de reseñas -->
+                    <div class="reviews-stats">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat-number">4.8</span>
+                                    <span class="stat-label">Promedio</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-comment"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat-number">12</span>
+                                    <span class="stat-label">Reseñas</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-thumbs-up"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat-number">95%</span>
+                                    <span class="stat-label">Positivas</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vista previa de reseñas -->
+                    <div class="reviews-preview">
+                        <div class="reviews-grid">
+                            <!-- Reseña 1 -->
+                            <div class="review-card demo-card">
+                                <div class="review-header">
+                                    <div class="review-product">
+                                        <img src="../images/platos/pizza-margherita.jpg" alt="Pizza" class="product-image" onerror="this.style.display='none'">
+                                        <div class="product-info">
+                                            <span class="product-name">Pizza Margherita</span>
+                                            <span class="review-date">02 Nov 2024</span>
+                                        </div>
+                                    </div>
+                                    <div class="review-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span class="rating-text">5/5</span>
+                                    </div>
+                                </div>
+                                <div class="review-content">
+                                    <p class="review-text">"¡Absolutamente deliciosa! La masa estaba perfecta, crujiente por fuera y suave por dentro. Los ingredientes frescos se notaban en cada bocado. Definitivamente mi pizza favorita del menú."</p>
+                                    <div class="review-tags">
+                                        <span class="tag">Deliciosa</span>
+                                        <span class="tag">Masa perfecta</span>
+                                        <span class="tag">Ingredientes frescos</span>
+                                    </div>
+                                </div>
+                                <div class="review-footer">
+                                    <div class="review-stats">
+                                        <span class="helpful">
+                                            <i class="fas fa-thumbs-up"></i>
+                                            8 personas encontraron esto útil
+                                        </span>
+                                    </div>
+                                    <div class="review-actions">
+                                        <button class="btn-secondary btn-sm" disabled>
+                                            <i class="fas fa-edit"></i>
+                                            Editar
+                                        </button>
+                                        <button class="btn-primary btn-sm" disabled>
+                                            <i class="fas fa-redo"></i>
+                                            Pedir de Nuevo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reseña 2 -->
+                            <div class="review-card demo-card">
+                                <div class="review-header">
+                                    <div class="review-product">
+                                        <img src="../images/platos/hamburguesa-clasica.jpg" alt="Hamburguesa" class="product-image" onerror="this.style.display='none'">
+                                        <div class="product-info">
+                                            <span class="product-name">Hamburguesa Clásica</span>
+                                            <span class="review-date">28 Oct 2024</span>
+                                        </div>
+                                    </div>
+                                    <div class="review-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                        <span class="rating-text">4/5</span>
+                                    </div>
+                                </div>
+                                <div class="review-content">
+                                    <p class="review-text">"Muy buena hamburguesa, la carne estaba jugosa y bien sazonada. Las papas fritas acompañaron perfecto. El único detalle es que llegó un poco fría, pero el sabor compensó todo."</p>
+                                    <div class="review-tags">
+                                        <span class="tag">Carne jugosa</span>
+                                        <span class="tag">Bien sazonada</span>
+                                        <span class="tag">Papas perfectas</span>
+                                    </div>
+                                </div>
+                                <div class="review-footer">
+                                    <div class="review-stats">
+                                        <span class="helpful">
+                                            <i class="fas fa-thumbs-up"></i>
+                                            5 personas encontraron esto útil
+                                        </span>
+                                    </div>
+                                    <div class="review-actions">
+                                        <button class="btn-secondary btn-sm" disabled>
+                                            <i class="fas fa-edit"></i>
+                                            Editar
+                                        </button>
+                                        <button class="btn-primary btn-sm" disabled>
+                                            <i class="fas fa-redo"></i>
+                                            Pedir de Nuevo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reseña 3 -->
+                            <div class="review-card demo-card">
+                                <div class="review-header">
+                                    <div class="review-product">
+                                        <img src="../images/platos/ensalada-cesar.jpg" alt="Ensalada" class="product-image" onerror="this.style.display='none'">
+                                        <div class="product-info">
+                                            <span class="product-name">Ensalada César</span>
+                                            <span class="review-date">25 Oct 2024</span>
+                                        </div>
+                                    </div>
+                                    <div class="review-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span class="rating-text">5/5</span>
+                                    </div>
+                                </div>
+                                <div class="review-content">
+                                    <p class="review-text">"¡La mejor ensalada César que he probado! Lechuga fresca, aderezo casero delicioso y la cantidad perfecta de queso parmesano. Ideal para una comida ligera pero satisfactoria."</p>
+                                    <div class="review-tags">
+                                        <span class="tag">Lechuga fresca</span>
+                                        <span class="tag">Aderezo casero</span>
+                                        <span class="tag">Perfecta cantidad</span>
+                                    </div>
+                                </div>
+                                <div class="review-footer">
+                                    <div class="review-stats">
+                                        <span class="helpful">
+                                            <i class="fas fa-thumbs-up"></i>
+                                            12 personas encontraron esto útil
+                                        </span>
+                                    </div>
+                                    <div class="review-actions">
+                                        <button class="btn-secondary btn-sm" disabled>
+                                            <i class="fas fa-edit"></i>
+                                            Editar
+                                        </button>
+                                        <button class="btn-primary btn-sm" disabled>
+                                            <i class="fas fa-redo"></i>
+                                            Pedir de Nuevo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mensaje de desarrollo -->
+                    <div class="development-notice">
+                        <div class="notice-content">
+                            <i class="fas fa-tools"></i>
+                            <h3>Funcionalidad en Desarrollo</h3>
+                            <p>El sistema completo de reseñas estará disponible próximamente. Los ejemplos mostrados son una vista previa del diseño final.</p>
+                            <div class="notice-actions">
+                                <a href="./menu.html" class="btn-primary">
+                                    <i class="fas fa-star"></i>
+                                    Ver Productos para Reseñar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
@@ -462,9 +1073,40 @@
         
         // Función global para cambiar secciones (se usará en ClientProfile.js)
         function switchSection(sectionName) {
-            // Esta función será implementada en ClientProfile.js
-            console.log('Switching to section:', sectionName);
+            if (window.clientProfile) {
+                window.clientProfile.showSection(sectionName);
+            } else {
+                console.log('Switching to section:', sectionName);
+            }
         }
+        
+        // Funciones para modal de contraseña
+        function openPasswordModal() {
+            document.getElementById('changePasswordModal').style.display = 'flex';
+        }
+        
+        function closePasswordModal() {
+            document.getElementById('changePasswordModal').style.display = 'none';
+            document.getElementById('change-password-form').reset();
+        }
+        
+        // Event listener para el botón de cambiar contraseña
+        document.addEventListener('DOMContentLoaded', function() {
+            const changePasswordBtn = document.getElementById('changePasswordBtn');
+            if (changePasswordBtn) {
+                changePasswordBtn.addEventListener('click', openPasswordModal);
+            }
+            
+            // Cerrar modal al hacer click fuera
+            const modal = document.getElementById('changePasswordModal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        closePasswordModal();
+                    }
+                });
+            }
+        });
     </script>
     <script src="../js/api-client.js"></script>
     <script src="../js/auth-api.js"></script>

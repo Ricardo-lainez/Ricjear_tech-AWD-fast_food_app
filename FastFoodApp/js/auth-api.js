@@ -334,13 +334,15 @@ class AuthService {
      * @returns {string}
      */
     getRedirectUrl(role) {
+        const isInHtmlFolder = window.location.pathname.includes('/html/');
+        
         switch (role) {
             case 'administrator':
-                return './html/AdminProfile.html';
+                return isInHtmlFolder ? './AdminProfile.html' : './html/AdminProfile.html';
             case 'client':
-                return './index.html';
+                return isInHtmlFolder ? './ClientProfile.html' : './html/ClientProfile.html';
             default:
-                return './index.html';
+                return isInHtmlFolder ? '../index.html' : './index.html';
         }
     }
 
@@ -427,14 +429,29 @@ function updateAuthUI() {
                 `;
             }
         } else {
-            menuOptions = `
-                <a href="#"><i class="fa fa-user"></i> Mi Perfil</a>
-                <a href="#"><i class="fa fa-heart"></i> Favoritos</a>
-                <a href="#"><i class="fa fa-shopping-bag"></i> Mis Pedidos</a>
-                <a href="#"><i class="fa fa-calendar"></i> Mis Reservas</a>
-                <a href="#"><i class="fa fa-cog"></i> Configuración</a>
-                <a href="#" class="logout-btn" id="logoutBtn"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
-            `;
+            // Para clientes
+            const isInHtmlFolder = window.location.pathname.includes('/html/');
+            const isInClientPanel = window.location.pathname.includes('ClientProfile.html');
+            
+            if (isInClientPanel) {
+                menuOptions = `
+                    <a href="#"><i class="fa fa-user"></i> Mi Perfil</a>
+                    <a href="#"><i class="fa fa-cog"></i> Configuración</a>
+                    <a href="../index.html"><i class="fa fa-globe"></i> Ver Sitio Web</a>
+                    <a href="#" class="logout-btn" id="logoutBtn"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
+                `;
+            } else {
+                const clientPanelPath = isInHtmlFolder ? './ClientProfile.html' : './html/ClientProfile.html';
+                menuOptions = `
+                    <a href="${clientPanelPath}"><i class="fa fa-tachometer"></i> Panel Cliente</a>
+                    <a href="#"><i class="fa fa-user"></i> Mi Perfil</a>
+                    <a href="#"><i class="fa fa-heart"></i> Favoritos</a>
+                    <a href="#"><i class="fa fa-shopping-bag"></i> Mis Pedidos</a>
+                    <a href="#"><i class="fa fa-calendar"></i> Mis Reservas</a>
+                    <a href="#"><i class="fa fa-cog"></i> Configuración</a>
+                    <a href="#" class="logout-btn" id="logoutBtn"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
+                `;
+            }
         }
 
         userMenuItem.innerHTML = `
