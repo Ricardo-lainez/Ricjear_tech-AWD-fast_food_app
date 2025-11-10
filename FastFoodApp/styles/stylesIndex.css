@@ -13,7 +13,10 @@ body{
 
 /* Index specific styles */
 header {
-	background-image: url('../images/slider/slider1.jpg');
+	background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../images/slider/slider1.jpg');
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
 }
 
 /* Section Styles */

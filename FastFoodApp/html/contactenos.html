@@ -214,52 +214,216 @@
 		</div>
 	</div>
 
-	<div class="titulo">
-		<h1>Contáctenos</h1>
-	</div>
-	<div id="contenedorPrincipal">
-		<div class="contenedor-formularios">
-			<form id="formContactenos" onsubmit="return validar()">
-				<div class="elemento-form">
-					<label>Nombres:</label>
-					<input type="text" name="nombres" id="nombres" class="texto textbox" placeholder="Ingrese su nombre"/>
+	<!-- Sección de Contacto -->
+	<section class="contact-section">
+		<div class="section-container">
+			<div class="section-header">
+				<h1 class="section-title">
+					<i class="fa fa-envelope"></i>
+					Nos encantaría saber de ti
+				</h1>
+				<p class="section-subtitle">
+					¿Tienes alguna pregunta, sugerencia o comentario? Completa el formulario y te responderemos pronto.
+				</p>
+			</div>
+
+			<div class="form-container">
+				<div class="contact-form">
+					<form id="formContactenos" onsubmit="return validar()">
+						<!-- Información Personal -->
+						<div class="form-row">
+							<div class="form-group">
+								<label for="nombres">
+									<i class="fa fa-user"></i>
+									Nombres *
+								</label>
+								<input 
+									type="text" 
+									name="nombres" 
+									id="nombres" 
+									class="form-input" 
+									placeholder="Tu nombre completo" 
+									required 
+								/>
+							</div>
+							
+							<div class="form-group">
+								<label for="apellidos">
+									<i class="fa fa-user"></i>
+									Apellidos *
+								</label>
+								<input 
+									type="text" 
+									name="apellidos" 
+									id="apellidos" 
+									class="form-input" 
+									placeholder="Tus apellidos" 
+									required 
+								/>
+							</div>
+						</div>
+
+						<!-- Información de Contacto -->
+						<div class="form-row">
+							<div class="form-group">
+								<label for="correo">
+									<i class="fa fa-envelope"></i>
+									Correo Electrónico *
+								</label>
+								<input 
+									type="email" 
+									name="correo" 
+									id="correo" 
+									class="form-input" 
+									placeholder="ejemplo@correo.com" 
+									required 
+								/>
+							</div>
+							
+							<div class="form-group">
+								<label for="telefono">
+									<i class="fa fa-phone"></i>
+									Teléfono
+								</label>
+								<input 
+									type="tel" 
+									name="telefono" 
+									id="telefono" 
+									class="form-input" 
+									placeholder="0991234567" 
+									maxlength="10"
+									pattern="[0-9]{10}"
+									title="Ingrese exactamente 10 dígitos"
+									oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)"
+								/>
+								<small class="field-hint">10 dígitos únicamente (opcional)</small>
+							</div>
+						</div>
+
+						<!-- Asunto -->
+						<div class="form-row">
+							<div class="form-group full-width">
+								<label for="asunto">
+									<i class="fa fa-tag"></i>
+									Asunto *
+								</label>
+								<div class="custom-select-wrapper">
+									<select name="asunto" id="asunto" class="form-select custom-select" required>
+										<option value="">Selecciona un asunto...</option>
+										<option value="1">Reclamo</option>
+										<option value="2">Solicitud de información</option>
+										<option value="3">Sugerencia</option>
+										<option value="4">Felicitación</option>
+										<option value="5">Consulta sobre menú</option>
+										<option value="6">Reservación especial</option>
+									</select>
+									<div class="select-arrow">
+										<i class="fa fa-chevron-down"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Pregunta sobre instalaciones -->
+						<div class="form-row">
+							<div class="form-group full-width">
+								<label>
+									<i class="fa fa-building"></i>
+									¿Te gustaría conocer nuestras instalaciones?
+								</label>
+								<div class="radio-options">
+									<div class="radio-card">
+										<input type="radio" name="pregunta" value="Si" id="visit-yes" />
+										<label for="visit-yes" class="radio-label">
+											<div class="radio-icon">
+												<i class="fa fa-check-circle"></i>
+											</div>
+											<span>Sí, me interesa</span>
+										</label>
+									</div>
+									<div class="radio-card">
+										<input type="radio" name="pregunta" value="No" id="visit-no" />
+										<label for="visit-no" class="radio-label">
+											<div class="radio-icon">
+												<i class="fa fa-times-circle"></i>
+											</div>
+											<span>No, gracias</span>
+										</label>
+									</div>
+									<div class="radio-card">
+										<input type="radio" name="pregunta" value="Mas tarde" id="visit-later" />
+										<label for="visit-later" class="radio-label">
+											<div class="radio-icon">
+												<i class="fa fa-clock-o"></i>
+											</div>
+											<span>En otro momento</span>
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Mensaje -->
+						<div class="form-row">
+							<div class="form-group full-width">
+								<label for="texto">
+									<i class="fa fa-comment"></i>
+									Mensaje *
+								</label>
+								<textarea 
+									id="texto" 
+									name="mensaje"
+									class="form-textarea" 
+									rows="4" 
+									placeholder="Escribe tu mensaje aquí... Cuéntanos qué tienes en mente."
+									required></textarea>
+							</div>
+						</div>
+
+						<!-- Botones -->
+						<div class="form-actions">
+							<button type="submit" class="btn btn-primary">
+								<i class="fa fa-paper-plane"></i>
+								Enviar Mensaje
+							</button>
+							<button type="reset" class="btn btn-secondary">
+								<i class="fa fa-refresh"></i>
+								Limpiar Formulario
+							</button>
+						</div>
+					</form>
 				</div>
-				<div class="elemento-form">
-					<label>Apellidos:</label>
-					<input type="text" name="apellidos" id="apellidos" class="texto textbox" placeholder="Ingrese su apellido"/>
-				</div>
-				<div class="elemento-form">
-					<label>Email:</label>
-					<input type="email" name="correo" id="correo" class="texto textbox" placeholder="Ingrese su correo"/>
-				</div>
-				<div class="elemento-form">
-					<label>Asunto</label>
-					<select name="asunto" id="asunto" class="texto comboBox">
-						<option value="0">Seleccione..</option>
-						<option value="1">Reclamo</option>
-						<option value="2">Solicitud</option>
-					</select>
-				</div>
-				<div class="elemento-form">
-					<label>Telefono:</label>
-					<input type="text" name="telefono" id="telefono" class="texto textbox textbox" placeholder="Ingrese su teléfono"/>
-				</div>
-				<div class="elemento-form">
-					<label>Quiere conocer nuestras instalaciones?</label>
-					<div class="radioButton"><input class="preg" id="Si" type="radio" name="pregunta" value="Si" />Si
+
+				<!-- Información de Contacto -->
+				<div class="contact-info">
+					<div class="info-card">
+						<h4><i class="fa fa-map-marker"></i> Encuéntranos</h4>
+						<p>Av. Principal 123<br>
+						Centro de la Ciudad<br>
+						Ecuador</p>
 					</div>
-					<div class="radioButton"><input class="preg" id="No" type="radio" name="pregunta" value="No" />No
+					
+					<div class="info-card">
+						<h4><i class="fa fa-phone"></i> Llámanos</h4>
+						<p><strong>(02) 234-5678</strong><br>
+						<small>Lunes a Domingo<br>8:00 AM - 10:00 PM</small></p>
+					</div>
+					
+					<div class="info-card">
+						<h4><i class="fa fa-clock-o"></i> Horarios</h4>
+						<p><strong>Lun - Dom:</strong> 8:00 AM - 10:00 PM<br>
+						<small>Desayuno, Almuerzo y Cena</small></p>
+					</div>
+
+					<div class="info-card">
+						<h4><i class="fa fa-envelope"></i> Email</h4>
+						<p><strong>info@bocattovalley.com</strong><br>
+						<small>Respuesta en 24 horas</small></p>
 					</div>
 				</div>
-				<div class="elemento-form">
-					<label>Mensaje</label> <br>
-					<textarea id="texto" rows="3" class="texto form-control"></textarea>
-				</div>
-				<input type="submit" class="btn btn-warning" value="Enviar">
-				<input type="reset" class="btn btn-primary" value="Cancelar">
-			</form>
+			</div>
 		</div>
-	</div>
+	</section>
 	<footer>
 		<div class="footer-content">
 			<h3>Síguenos en nuestras redes sociales</h3>

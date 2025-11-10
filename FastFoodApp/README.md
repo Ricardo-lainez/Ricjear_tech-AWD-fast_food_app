@@ -135,7 +135,7 @@ npm start
 
 - **Ricardo** - [GitHub](https://github.com/Ricardo-lainez)
 - **Jeancarlo** - Backend Lead
-- **Otros miembros** - (Agregar aquí)
+- **Ariel** - Frontend
 
 ---
 

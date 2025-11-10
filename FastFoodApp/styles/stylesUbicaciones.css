@@ -14,7 +14,10 @@ body{
 
 /* Ubicaciones specific styles */
 header {
-	background-image: url('../images/slider/slider2.jpg');
+	background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../images/slider/slider2.jpg');
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
 }
 
 h1 {

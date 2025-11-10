@@ -55,7 +55,7 @@ class ClientProfile {
         this.reservationsContainer = document.querySelector('.reservations-grid');
         this.reviewsContainer = document.querySelector('.reviews-grid');
 
-        console.log('📋 Elementos DOM inicializados:', {
+        console.log('Elementos DOM inicializados:', {
             navItems: this.navItems.length,
             userDropdown: !!this.userDropdown,
             profileForm: !!this.profileForm
@@ -122,7 +122,7 @@ class ClientProfile {
                         e.preventDefault();
                         this.showSection('profile');
                         this.closeUserDropdown();
-                        console.log('📝 Navegando a sección de perfil');
+                        console.log(' Navegando a sección de perfil');
                     });
                 }
             });
@@ -147,7 +147,7 @@ class ClientProfile {
                 });
             });
 
-            console.log('✅ Botones del header inicializados');
+            console.log('Botones del header inicializados');
         }, 100);
     }
 
@@ -161,7 +161,7 @@ class ClientProfile {
             editProfileBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.showSection('profile');
-                console.log('📝 Navegando a perfil desde acción rápida');
+                console.log('Navegando a perfil desde acción rápida');
             });
         }
 
@@ -195,26 +195,26 @@ class ClientProfile {
      */
     async init() {
         try {
-            console.log('🔍 Iniciando ClientProfile...');
+            console.log(' Iniciando ClientProfile...');
             
             // Verificar autenticación
-            console.log('📡 Obteniendo usuario actual...');
+            console.log(' Obteniendo usuario actual...');
             await this.getCurrentUser();
-            console.log('✅ Usuario obtenido:', this.currentUser);
+            console.log(' Usuario obtenido:', this.currentUser);
             
             // Cargar datos del dashboard
-            console.log('📊 Cargando datos del dashboard...');
+            console.log(' Cargando datos del dashboard...');
             await this.loadDashboardData();
             
             // Mostrar sección por defecto
-            console.log('🎯 Mostrando sección dashboard...');
+            console.log(' Mostrando sección dashboard...');
             this.showSection('dashboard');
-            
-            console.log('🎉 ClientProfile inicializado correctamente');
-            
+
+            console.log(' ClientProfile inicializado correctamente');
+
         } catch (error) {
-            console.error('❌ Error al inicializar el panel:', error);
-            console.log('🔄 Redirigiendo al login...');
+            console.error('Error al inicializar el panel:', error);
+            console.log('Redirigiendo al login...');
             this.redirectToLogin();
         }
     }
@@ -660,10 +660,10 @@ class ClientProfile {
      */
     async loadProfileData() {
         try {
-            console.log('🔄 Cargando datos del perfil...');
+            console.log(' Cargando datos del perfil...');
             
             if (!this.currentUser) {
-                console.log('📡 Usuario no disponible, obteniendo datos...');
+                console.log(' Usuario no disponible, obteniendo datos...');
                 await this.getCurrentUser();
             }
 
@@ -672,7 +672,7 @@ class ClientProfile {
                 const profileForm = document.getElementById('profileForm') || document.querySelector('#profile-form, .profile-form');
                 
                 if (profileForm) {
-                    console.log('📝 Actualizando formulario de perfil...');
+                    console.log(' Actualizando formulario de perfil...');
                     
                     // Mapeo de campos del backend con el frontend
                     const fieldMapping = {
@@ -689,24 +689,24 @@ class ClientProfile {
                         const input = profileForm.querySelector(`input[name="${fieldName}"], textarea[name="${fieldName}"], input[id="${fieldName}"], textarea[id="${fieldName}"]`);
                         if (input) {
                             input.value = value;
-                            console.log(`✅ Campo ${fieldName}: ${value}`);
+                            console.log(` Campo ${fieldName}: ${value}`);
                         } else {
-                            console.log(`⚠️ Campo ${fieldName} no encontrado en el formulario`);
+                            console.log(` Campo ${fieldName} no encontrado en el formulario`);
                         }
                     });
 
                     // Actualizar información adicional en la sidebar
                     this.updateProfileSidebar();
                     
-                    console.log('✅ Datos del perfil cargados correctamente');
+                    console.log(' Datos del perfil cargados correctamente');
                 } else {
-                    console.warn('⚠️ Formulario de perfil no encontrado');
+                    console.warn(' Formulario de perfil no encontrado');
                 }
             } else {
-                console.error('❌ No hay usuario actual disponible');
+                console.error(' No hay usuario actual disponible');
             }
         } catch (error) {
-            console.error('❌ Error al cargar datos del perfil:', error);
+            console.error(' Error al cargar datos del perfil:', error);
         }
     }
 
@@ -748,7 +748,7 @@ class ClientProfile {
             userStatsElements.favoriteCategory.textContent = 'Por definir'; // Se calculará con pedidos reales
         }
 
-        console.log('✅ Sidebar del perfil actualizada');
+        console.log(' Sidebar del perfil actualizada');
     }
 
     /**
@@ -855,11 +855,17 @@ class ClientProfile {
      */
     updateUserDisplay() {
         if (this.currentUser) {
-            // Actualizar nombre en header
-            const userNameElements = document.querySelectorAll('.user-name, #userName, #sidebarUserName');
+            // Actualizar nombre en header y mensaje de bienvenida
+            const userNameElements = document.querySelectorAll('.user-name, #userName, #sidebarUserName, #welcomeUserName');
             userNameElements.forEach(element => {
                 if (element) {
-                    element.textContent = `${this.currentUser.firstName} ${this.currentUser.lastName}` || 'Usuario';
+                    // Para el mensaje de bienvenida, usar solo el primer nombre
+                    if (element.id === 'welcomeUserName') {
+                        element.textContent = this.currentUser.firstName || 'Cliente';
+                    } else {
+                        // Para otros elementos, usar nombre completo
+                        element.textContent = `${this.currentUser.firstName} ${this.currentUser.lastName}` || 'Usuario';
+                    }
                 }
             });
 
@@ -1215,10 +1221,10 @@ let clientProfile;
 function initializeClientProfile() {
     // Verificar que authService esté disponible
     if (window.authService) {
-        console.log('✅ AuthService encontrado, inicializando ClientProfile...');
+        console.log(' AuthService encontrado, inicializando ClientProfile...');
         clientProfile = new ClientProfile();
     } else {
-        console.log('⏳ Esperando authService...');
+        console.log(' Esperando authService...');
         // Reintentar después de un breve delay
         setTimeout(initializeClientProfile, 100);
     }
@@ -1226,7 +1232,7 @@ function initializeClientProfile() {
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 DOM listo, iniciando ClientProfile...');
+    console.log(' DOM listo, iniciando ClientProfile...');
     initializeClientProfile();
 });
 
@@ -1239,16 +1245,16 @@ window.switchSection = function(sectionName) {
         window.clientProfile.showSection(sectionName);
         // Cerrar dropdown si está abierto
         window.clientProfile.closeUserDropdown();
-        console.log('🔄 Cambiando a sección:', sectionName);
+        console.log(' Cambiando a sección:', sectionName);
     } else {
-        console.log('⏳ ClientProfile no inicializado aún, esperando...');
+        console.log(' ClientProfile no inicializado aún, esperando...');
         setTimeout(() => window.switchSection(sectionName), 100);
     }
 };
 
 // Función global para volver al sitio principal
 window.returnToSite = function() {
-    console.log('🏠 Volviendo al sitio principal...');
+    console.log(' Volviendo al sitio principal...');
     // Redirigir al index.html (página principal del sitio)
     window.location.href = '../index.html';
 };
