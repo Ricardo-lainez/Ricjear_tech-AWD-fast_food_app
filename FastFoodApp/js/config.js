@@ -3,6 +3,7 @@
  * CONFIGURACIÓN DE URLs - BOCATTO VALLEY
  * ========================================
  * Este archivo maneja las URLs del API según el entorno
+ * Última actualización: 2025-11-11
  */
 
 const CONFIG = {
