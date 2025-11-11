@@ -3,16 +3,13 @@
  * CONFIGURACIÓN DE LA API
  * ========================================
  * Centraliza la configuración de conexión con el backend
+ * NOTA: Este archivo usa la configuración de js/config.js
  */
 
-// URL base de la API
-// En desarrollo: http://localhost:3000
-// En producción: https://tu-api.render.com o tu dominio
+// Usar configuración centralizada
 const API_CONFIG = {
-    // Detectar automáticamente el entorno
-    baseURL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-        ? 'http://localhost:3000/api'
-        : 'https://tu-api-en-produccion.com/api', // ⚠️ CAMBIAR CUANDO DESPLIEGUES
+    // Usar la URL del archivo config.js
+    baseURL: window.APP_CONFIG ? window.APP_CONFIG.API.BASE_URL : 'http://localhost:3000/api',
     
     // Timeout para peticiones
     timeout: 10000, // 10 segundos
