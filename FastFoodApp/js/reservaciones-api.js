@@ -2,7 +2,7 @@
 // ================================================
 
 // Configuración de la API
-const API_CONFIG = {
+const RESERVACIONES_API_CONFIG = {
     // Usar API local en desarrollo, producción en deploy
     baseURL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
         ? 'http://localhost:3000/api'
@@ -18,7 +18,7 @@ const API_CONFIG = {
 // Clase para manejar las peticiones a la API
 class ReservacionesAPI {
     constructor() {
-        this.baseURL = API_CONFIG.baseURL;
+        this.baseURL = RESERVACIONES_API_CONFIG.baseURL;
         this.token = localStorage.getItem('token');
     }
 
@@ -61,7 +61,7 @@ class ReservacionesAPI {
      */
     async obtenerAmbientes() {
         try {
-            const response = await this.request(API_CONFIG.endpoints.ambientes);
+            const response = await this.request(RESERVACIONES_API_CONFIG.endpoints.ambientes);
             return response.data || [];
         } catch (error) {
             console.error('Error al obtener ambientes:', error);
@@ -74,7 +74,7 @@ class ReservacionesAPI {
      */
     async obtenerAmbiente(id) {
         try {
-            const response = await this.request(`${API_CONFIG.endpoints.ambientes}/${id}`);
+            const response = await this.request(`${RESERVACIONES_API_CONFIG.endpoints.ambientes}/${id}`);
             return response.data;
         } catch (error) {
             console.error('Error al obtener ambiente:', error);
@@ -87,7 +87,7 @@ class ReservacionesAPI {
      */
     async verificarDisponibilidad(ambienteId, fechaReservacion, horaInicio, horaFin) {
         try {
-            const response = await this.request(API_CONFIG.endpoints.verificarDisponibilidad, {
+            const response = await this.request(RESERVACIONES_API_CONFIG.endpoints.verificarDisponibilidad, {
                 method: 'POST',
                 body: JSON.stringify({
                     ambienteId,
@@ -108,7 +108,7 @@ class ReservacionesAPI {
      */
     async crearReservacion(datosReservacion) {
         try {
-            const response = await this.request(API_CONFIG.endpoints.reservaciones, {
+            const response = await this.request(RESERVACIONES_API_CONFIG.endpoints.reservaciones, {
                 method: 'POST',
                 body: JSON.stringify(datosReservacion)
             });
@@ -124,7 +124,7 @@ class ReservacionesAPI {
      */
     async obtenerMisReservaciones() {
         try {
-            const response = await this.request(`${API_CONFIG.endpoints.reservaciones}/mis-reservaciones`);
+            const response = await this.request(`${RESERVACIONES_API_CONFIG.endpoints.reservaciones}/mis-reservaciones`);
             return response.data || [];
         } catch (error) {
             console.error('Error al obtener reservaciones:', error);
@@ -137,7 +137,7 @@ class ReservacionesAPI {
      */
     async cancelarReservacion(id) {
         try {
-            const response = await this.request(`${API_CONFIG.endpoints.reservaciones}/${id}/cancelar`, {
+            const response = await this.request(`${RESERVACIONES_API_CONFIG.endpoints.reservaciones}/${id}/cancelar`, {
                 method: 'PATCH'
             });
             return response.data;
