@@ -21,6 +21,12 @@ async function cargarAmbientes() {
             container.innerHTML = '<div class="loading">Cargando ambientes...</div>';
         }
 
+        // Verificar que la API esté disponible
+        if (!window.reservacionesAPI) {
+            console.error('❌ reservacionesAPI no está disponible');
+            throw new Error('API no inicializada');
+        }
+
         // Obtener ambientes desde la API
         ambientesData = await window.reservacionesAPI.obtenerAmbientes();
         
