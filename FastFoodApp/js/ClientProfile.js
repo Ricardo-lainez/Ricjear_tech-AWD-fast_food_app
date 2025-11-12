@@ -1254,8 +1254,8 @@ window.switchSection = function(sectionName) {
 
 // Función global para volver al sitio principal
 window.returnToSite = function() {
-    console.log(' Volviendo al sitio principal...');
-    // Redirigir al index.html (página principal del sitio)
+    console.log('✅ Volviendo al sitio principal (manteniendo sesión)...');
+    // Simplemente redirigir - la sesión ya está guardada en localStorage/sessionStorage
     window.location.href = '../index.html';
 };
 
