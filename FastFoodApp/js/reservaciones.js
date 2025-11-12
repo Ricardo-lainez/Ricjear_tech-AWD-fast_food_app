@@ -103,7 +103,7 @@ function renderizarAmbientes() {
         card.innerHTML = `
             ${badgeHTML}
             <div class="ambiente-imagen">
-                <img src="../${ambiente.imagenUrl}" alt="${ambiente.nombre}">
+                <img src="../${ambiente.imagenUrl}" alt="${ambiente.nombre}" onerror="this.src='../images/home/plato-destac.jpg'">
             </div>
             <div class="ambiente-info">
                 <h3>${ambiente.nombre}</h3>
@@ -221,8 +221,8 @@ const comentariosPorAmbiente = {
 };
 
 // Variables globales
-let ambienteSeleccionado = '';
-let capacidadActual = { min: 1, max: 10 }; // Se actualizará según el ambiente
+let ambienteSeleccionado = null; // Objeto completo del ambiente seleccionado
+let horariosOcupados = []; // Array de horarios ya reservados
 
 // ==========================================
 // FUNCIONES PRINCIPALES
@@ -230,24 +230,39 @@ let capacidadActual = { min: 1, max: 10 }; // Se actualizará según el ambiente
 
 /**
  * Abre el modal de reserva y configura el ambiente seleccionado
- * Basado en UML: Reservation.checkAvailability()
- * @param {string} ambiente - ID del ambiente
+ * @param {string} ambienteSlug - slug del ambiente
  */
-function abrirModalReserva(ambiente) {
-    ambienteSeleccionado = ambiente;
-    const config = AMBIENTES_CONFIG[ambiente];
-    
-    if (!config) {
-        console.error('Ambiente no encontrado:', ambiente);
-        return;
-    }
-    
-    const modal = document.getElementById('modalReserva');
-    const titulo = document.getElementById('modalAmbienteTitulo');
-    
-    // Actualizar título
-    titulo.textContent = `Reservar Mesa - ${config.nombre}`;
-    
+async function abrirModalReserva(ambienteSlug) {
+    try {
+        // Verificar si el usuario está autenticado
+        const usuario = window.authAPI ? window.authAPI.getCurrentUser() : null;
+        if (!usuario) {
+            alert('Debes iniciar sesión para hacer una reservación');
+            // Abrir modal de login si existe
+            const loginModal = document.getElementById('loginModal');
+            if (loginModal) {
+                loginModal.style.display = 'flex';
+            }
+            return;
+        }
+
+        // Buscar el ambiente en los datos cargados
+        ambienteSeleccionado = ambientesData.find(a => 
+            a.nombre.toLowerCase().replace(/\s+/g, '-') === ambienteSlug
+        );
+
+        if (!ambienteSeleccionado) {
+            console.error('Ambiente no encontrado:', ambienteSlug);
+            alert('Error: Ambiente no disponible');
+            return;
+        }
+
+        const modal = document.getElementById('modalReserva');
+        const titulo = document.getElementById('modalAmbienteTitulo');
+        
+        // Actualizar título
+        titulo.textContent = `Reservar - ${ambienteSeleccionado.nombre}`;
+        
     // Actualizar capacidad actual
     capacidadActual = {
         min: config.capacidadMin,
@@ -262,10 +277,30 @@ function abrirModalReserva(ambiente) {
     
     // Configurar fecha mínima (hoy)
     const fechaInput = document.getElementById('fecha');
-    const hoy = new Date().toISOString().split('T')[0];
-    fechaInput.setAttribute('min', hoy);
-    
-    modal.style.display = 'block';
+        // Actualizar selector de personas según capacidad del ambiente
+        actualizarSelectorPersonas(ambienteSeleccionado.capacidadMin, ambienteSeleccionado.capacidadMax);
+        
+        // Establecer fecha mínima (hoy)
+        const fechaInput = document.getElementById('fecha');
+        const hoy = new Date().toISOString().split('T')[0];
+        fechaInput.setAttribute('min', hoy);
+        
+        // Limpiar formulario
+        document.getElementById('formReserva').reset();
+        fechaInput.value = '';
+        
+        // Resetear texto de disponibilidad
+        const disponibilidadTexto = document.getElementById('disponibilidadTexto');
+        if (disponibilidadTexto) {
+            disponibilidadTexto.textContent = 'Selecciona fecha y hora para verificar disponibilidad';
+            disponibilidadTexto.parentElement.className = 'disponibilidad-info';
+        }
+        
+        modal.style.display = 'block';
+    } catch (error) {
+        console.error('Error al abrir modal de reserva:', error);
+        alert('Error al abrir el formulario de reservación');
+    }
 }
 
 /**
@@ -295,16 +330,6 @@ function actualizarSelectorPersonas(min, max) {
         capacityHint.textContent = `Este ambiente permite entre ${min} y ${max} personas`;
         capacityHint.style.color = '#28a745';
     }
-    
-    // Agregar opción informativa si alguien necesita más espacio
-    if (max < 15) {
-        const optionInfo = document.createElement('option');
-        optionInfo.value = '';
-        optionInfo.textContent = `¿Más de ${max} personas? Contáctanos`;
-        optionInfo.disabled = true;
-        optionInfo.style.fontStyle = 'italic';
-        personasSelect.appendChild(optionInfo);
-    }
 }
 
 /**
@@ -314,12 +339,10 @@ function cerrarModalReserva() {
     const modal = document.getElementById('modalReserva');
     modal.style.display = 'none';
     document.getElementById('formReserva').reset();
-    document.getElementById('disponibilidadTexto').textContent = 'Selecciona fecha y hora para verificar disponibilidad';
-    document.getElementById('disponibilidadTexto').parentElement.className = 'disponibilidad-info';
     
     // Resetear variables
-    ambienteSeleccionado = '';
-    capacidadActual = { min: 1, max: 10 };
+    ambienteSeleccionado = null;
+    horariosOcupados = [];
 }
 
 // Cerrar modal al hacer clic fuera
@@ -363,8 +386,7 @@ function cargarComentarios(ambiente) {
 
 /**
  * Verifica la disponibilidad del ambiente en la fecha y hora seleccionadas
- * Basado en UML: Reservation.checkAvailability()
- * Ahora conectado con la API real
+ * Conectado con la API real - verifica margen de 2 horas
  */
 async function verificarDisponibilidad() {
     const fecha = document.getElementById('fecha').value;
@@ -379,24 +401,34 @@ async function verificarDisponibilidad() {
         btnConfirmar.disabled = false;
         return;
     }
+
+    if (!ambienteSeleccionado) {
+        disponibilidadTexto.textContent = 'Error: Ambiente no seleccionado';
+        disponibilidadDiv.className = 'disponibilidad-info no-disponible';
+        btnConfirmar.disabled = true;
+        return;
+    }
     
-    // Verificar disponibilidad con la API
+    // Mostrar loading
+    disponibilidadTexto.textContent = 'Verificando disponibilidad...';
+    disponibilidadDiv.className = 'disponibilidad-info';
+    btnConfirmar.disabled = true;
+    
     try {
-        const config = AMBIENTES_CONFIG[ambienteSeleccionado];
-        const disponible = await window.reservacionesAPI.verificarDisponibilidad({
-            ambienteId: config.id,
+        const resultado = await window.reservacionesAPI.verificarDisponibilidad({
+            ambienteId: ambienteSeleccionado._id,
             fechaReservacion: fecha,
             horaInicio: hora
         });
         
-        if (!disponible.disponible) {
-            disponibilidadTexto.textContent = '⚠️ No disponible - ' + (disponible.mensaje || 'Esta mesa ya está reservada para la fecha y hora seleccionadas');
-            disponibilidadDiv.className = 'disponibilidad-info no-disponible';
-            btnConfirmar.disabled = true;
-        } else {
+        if (resultado.disponible) {
             disponibilidadTexto.textContent = '✓ ¡Disponible! Puedes proceder con tu reserva';
             disponibilidadDiv.className = 'disponibilidad-info disponible';
             btnConfirmar.disabled = false;
+        } else {
+            disponibilidadTexto.textContent = '⚠️ No disponible - ' + (resultado.mensaje || 'Este horario ya está reservado (margen de 2 horas)');
+            disponibilidadDiv.className = 'disponibilidad-info no-disponible';
+            btnConfirmar.disabled = true;
         }
     } catch (error) {
         console.error('Error al verificar disponibilidad:', error);
@@ -431,7 +463,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /**
  * Confirma y guarda la reserva en la base de datos
- * Ahora conectado con la API real
+ * Conectado con la API real
  */
 async function confirmarReserva() {
     const fecha = document.getElementById('fecha').value;
@@ -445,20 +477,26 @@ async function confirmarReserva() {
         alert('Por favor completa todos los campos requeridos');
         return;
     }
+
+    if (!ambienteSeleccionado) {
+        alert('Error: No se ha seleccionado un ambiente');
+        return;
+    }
     
     // Validar que el número de personas esté dentro del rango
     const numPersonas = parseInt(personas);
-    if (numPersonas < capacidadActual.min || numPersonas > capacidadActual.max) {
-        alert(`Este ambiente solo permite entre ${capacidadActual.min} y ${capacidadActual.max} personas.\nPor favor, selecciona un número válido.`);
+    if (numPersonas < ambienteSeleccionado.capacidadMin || numPersonas > ambienteSeleccionado.capacidadMax) {
+        alert(`Este ambiente solo permite entre ${ambienteSeleccionado.capacidadMin} y ${ambienteSeleccionado.capacidadMax} personas.\nPor favor, selecciona un número válido.`);
         return;
     }
     
     // Verificar que el usuario esté autenticado
-    const token = localStorage.getItem('token');
-    if (!token) {
+    const usuario = window.authAPI ? window.authAPI.getCurrentUser() : null;
+    if (!usuario) {
         alert('⚠️ Debes iniciar sesión para hacer una reservación');
         cerrarModalReserva();
-        document.getElementById('loginModal').style.display = 'flex';
+        const loginModal = document.getElementById('loginModal');
+        if (loginModal) loginModal.style.display = 'flex';
         return;
     }
     
@@ -468,47 +506,47 @@ async function confirmarReserva() {
         const textoOriginal = btnConfirmar.innerHTML;
         btnConfirmar.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Procesando...';
         btnConfirmar.disabled = true;
-
-        const config = AMBIENTES_CONFIG[ambienteSeleccionado];
         
         // Calcular hora de fin (2 horas después)
         const [horas, minutos] = hora.split(':');
-        const horaFin = `${String(parseInt(horas) + 2).padStart(2, '0')}:${minutos}`;
+        const horaFin = `${String((parseInt(horas) + 2) % 24).padStart(2, '0')}:${minutos}`;
         
         // Crear objeto de reserva para la API
         const reservaData = {
-            ambienteId: config.id,
+            ambienteId: ambienteSeleccionado._id,
             fechaReservacion: fecha,
             horaInicio: hora,
             horaFin: horaFin,
             numeroPersonas: numPersonas,
-            ocasionEspecial: ocasion || '',
-            comentarios: comentarios || ''
+            ocasionEspecial: ocasion || undefined,
+            comentarios: comentarios || undefined
         };
         
         // Enviar a la API
         const reservaCreada = await window.reservacionesAPI.crearReservacion(reservaData);
         
+        // Formatear fecha para mostrar
+        const fechaObj = new Date(fecha + 'T00:00:00');
+        const fechaFormateada = fechaObj.toLocaleDateString('es-ES', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+        
         // Mensaje de confirmación
-        const mensaje = `
-        ✅ ¡Reserva Confirmada! 
-        
-        📋 Número de Reservación: ${reservaCreada.numeroReservacion}
-        📍 Ambiente: ${config.nombre}
-        📅 Fecha: ${new Date(fecha + 'T00:00:00').toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-        ⏰ Hora: ${hora} - ${horaFin}
-        👥 Personas: ${numPersonas}
-        ${ocasion ? `🎉 Ocasión: ${ocasion}` : ''}
-        ${comentarios ? `📝 Notas: ${comentarios}` : ''}
-        
-        ¡Te esperamos en Bocatto Valley!
-        
-        Recibirás un correo de confirmación con los detalles de tu reserva.
-    `;
+        let mensaje = `✅ ¡Reserva Confirmada!\n\n`;
+        mensaje += `📋 Número: ${reservaCreada.numeroReservacion || 'N/A'}\n`;
+        mensaje += `📍 Ambiente: ${ambienteSeleccionado.nombre}\n`;
+        mensaje += `📅 Fecha: ${fechaFormateada}\n`;
+        mensaje += `⏰ Hora: ${hora} - ${horaFin}\n`;
+        mensaje += `👥 Personas: ${numPersonas}\n`;
+        if (ocasion) mensaje += `🎉 Ocasión: ${ocasion}\n`;
+        if (comentarios) mensaje += `📝 Notas: ${comentarios}\n`;
+        mensaje += `\n¡Te esperamos en Bocatto Valley!`;
         
         alert(mensaje);
         cerrarModalReserva();
-        document.getElementById('formReserva').reset();
         
         // Restaurar botón
         btnConfirmar.innerHTML = textoOriginal;

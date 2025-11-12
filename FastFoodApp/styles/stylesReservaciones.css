@@ -47,108 +47,229 @@ header {
     max-width: 1400px;
     margin: 60px auto;
     padding: 0 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
 }
 
-/* Tarjeta de ambiente */
+.ambientes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 40px;
+    margin-top: 30px;
+}
+
+/* Tarjeta de ambiente mejorada */
 .ambiente-card {
-    background: #1a1a1a;
-    border-radius: 15px;
+    background: linear-gradient(145deg, #1f1f1f 0%, #151515 100%);
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
+    position: relative;
+    border: 2px solid transparent;
 }
 
 .ambiente-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(238, 155, 20, 0.3);
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 25px 60px rgba(238, 155, 20, 0.4);
+    border-color: rgba(238, 155, 20, 0.5);
 }
 
-.ambiente-image {
-    position: relative;
-    width: 100%;
-    height: 280px;
-    overflow: hidden;
-}
-
-.ambiente-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.ambiente-card:hover .ambiente-image img {
-    transform: scale(1.1);
-}
-
-.ambiente-badge {
+/* Badge mejorado */
+.ambiente-card .badge {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(238, 155, 20, 0.95);
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #EE9B14 0%, #d88610 100%);
     color: white;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: 700;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
+    z-index: 10;
+    box-shadow: 0 4px 15px rgba(238, 155, 20, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.ambiente-badge.vip {
-    background: rgba(255, 215, 0, 0.95);
+.badge-premium {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
     color: #14213D;
 }
 
-.ambiente-badge.familiar {
-    background: rgba(46, 196, 182, 0.95);
+.badge-family {
+    background: linear-gradient(135deg, #2EC4B6 0%, #1a8f85 100%);
 }
 
-.ambiente-badge.lounge {
-    background: rgba(156, 39, 176, 0.95);
+.badge-new {
+    background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%);
 }
 
+/* Imagen del ambiente */
+.ambiente-imagen {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    background: #0a0a0a;
+}
+
+.ambiente-imagen::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+    z-index: 5;
+}
+
+.ambiente-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ambiente-card:hover .ambiente-imagen img {
+    transform: scale(1.15) rotate(2deg);
+}
+
+/* Información del ambiente */
 .ambiente-info {
-    padding: 25px;
+    padding: 30px;
     color: white;
 }
 
 .ambiente-info h3 {
     font-family: 'Satisfy', cursive;
-    font-size: 28px;
+    font-size: 32px;
     color: #EE9B14;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.ambiente-descripcion {
-    color: #b8b8b8;
+.ambiente-info .descripcion {
+    color: #c5c5c5;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    min-height: 60px;
+}
+
+/* Capacidad */
+.capacidad-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(238, 155, 20, 0.1);
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border-left: 4px solid #EE9B14;
+}
+
+.capacidad-info i {
+    color: #EE9B14;
+    font-size: 20px;
+}
+
+.capacidad-info span {
+    color: #ffffff;
+    font-weight: 600;
     font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    min-height: 50px;
 }
 
-.ambiente-caracteristicas {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+/* Características */
+.caracteristicas {
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
-.ambiente-caracteristicas span {
+.caracteristica {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 13px;
     color: #e5e5e5;
+    border: 1px solid rgba(238, 155, 20, 0.2);
+    transition: all 0.3s ease;
 }
 
-.ambiente-caracteristicas i {
+.caracteristica:hover {
+    background: rgba(238, 155, 20, 0.15);
+    border-color: rgba(238, 155, 20, 0.5);
+}
+
+.caracteristica i {
+    color: #EE9B14;
+    font-size: 12px;
+}
+
+/* Rating */
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+}
+
+.rating .stars {
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+
+.rating .rating-text {
+    color: #b8b8b8;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Botón de reservar mejorado */
+.btn-reservar {
+    width: 100%;
+    background: linear-gradient(135deg, #EE9B14 0%, #d88610 100%);
+    color: white;
+    border: none;
+    padding: 18px 30px;
+    font-size: 17px;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: 0 8px 20px rgba(238, 155, 20, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-reservar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(238, 155, 20, 0.5);
+    background: linear-gradient(135deg, #d88610 0%, #EE9B14 100%);
+}
+
+.btn-reservar:active {
+    transform: translateY(-1px);
+}
+
+.btn-reservar i {
+    font-size: 18px;
+}
     color: #2EC4B6;
     font-size: 16px;
 }
