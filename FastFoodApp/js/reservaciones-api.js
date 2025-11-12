@@ -85,18 +85,13 @@ class ReservacionesAPI {
     /**
      * Verificar disponibilidad de un ambiente
      */
-    async verificarDisponibilidad(ambienteId, fechaReservacion, horaInicio, horaFin) {
+    async verificarDisponibilidad(datos) {
         try {
             const response = await this.request(RESERVACIONES_API_CONFIG.endpoints.verificarDisponibilidad, {
                 method: 'POST',
-                body: JSON.stringify({
-                    ambienteId,
-                    fechaReservacion,
-                    horaInicio,
-                    horaFin
-                })
+                body: JSON.stringify(datos)
             });
-            return response.disponible;
+            return response;
         } catch (error) {
             console.error('Error al verificar disponibilidad:', error);
             throw error;
