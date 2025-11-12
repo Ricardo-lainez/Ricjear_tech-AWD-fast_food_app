@@ -146,6 +146,19 @@ class ReservacionesAPI {
             throw error;
         }
     }
+
+    /**
+     * Obtener todas las reservaciones (solo para admin)
+     */
+    async obtenerTodasReservaciones() {
+        try {
+            const response = await this.request(RESERVACIONES_API_CONFIG.endpoints.reservaciones);
+            return response.data || [];
+        } catch (error) {
+            console.error('Error al obtener todas las reservaciones:', error);
+            throw error;
+        }
+    }
 }
 
 // Crear instancia global de la API

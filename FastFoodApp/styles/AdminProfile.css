@@ -482,3 +482,52 @@ body {
 .admin-sidebar::-webkit-scrollbar-thumb:hover {
     background: var(--primary-dark);
 }
+
+
+/* GESTIÓN DE RESERVACIONES */
+.reservations-management { margin: 30px 0; background: white; border-radius: 15px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+.section-title { font-size: 24px; color: #2C3E50; display: flex; align-items: center; gap: 10px; }
+.btn-refresh { background: #3498DB; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; transition: all 0.3s; }
+.btn-refresh:hover { background: #2980B9; transform: translateY(-2px); }
+.filters-container { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+.filter-group { display: flex; flex-direction: column; gap: 5px; }
+.filter-group label { font-size: 12px; color: #7F8C8D; font-weight: 600; }
+.filter-group input, .filter-group select { padding: 8px 12px; border: 1px solid #E0E0E0; border-radius: 6px; font-size: 14px; }
+.btn-clear-filters { background: #95A5A6; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; margin-left: auto; }
+.stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+.stat-card { background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); border-radius: 12px; padding: 20px; display: flex; gap: 15px; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.stat-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; }
+.stat-icon.pending { background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%); }
+.stat-icon.confirmed { background: linear-gradient(135deg, #27AE60 0%, #229954 100%); }
+.stat-icon.cancelled { background: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%); }
+.stat-icon.total { background: linear-gradient(135deg, #3498DB 0%, #2980B9 100%); }
+.stat-label { font-size: 12px; color: #7F8C8D; margin-bottom: 5px; }
+.stat-value { font-size: 28px; font-weight: 700; color: #2C3E50; }
+.table-container { min-height: 300px; position: relative; }
+.loading-state, .error-state, .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; color: #7F8C8D; }
+.loading-state i { font-size: 48px; margin-bottom: 15px; color: #3498DB; }
+.error-state i { font-size: 48px; margin-bottom: 15px; color: #E74C3C; }
+.empty-state i { font-size: 48px; margin-bottom: 15px; color: #95A5A6; }
+.reservations-table { width: 100%; border-collapse: collapse; background: white; }
+.reservations-table thead { background: #F8F9FA; }
+.reservations-table th { padding: 15px; text-align: left; font-size: 13px; font-weight: 600; color: #2C3E50; border-bottom: 2px solid #E0E0E0; }
+.reservations-table td { padding: 15px; border-bottom: 1px solid #F0F0F0; font-size: 14px; }
+.reservations-table tbody tr:hover { background: #F8F9FA; }
+.reservation-id { background: #3498DB; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+.client-info { display: flex; flex-direction: column; gap: 3px; }
+.client-info strong { color: #2C3E50; }
+.client-info small { color: #7F8C8D; font-size: 12px; }
+.badge-persons { background: #E8F4F8; color: #3498DB; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.status-badge { padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+.status-pending { background: #FEF5E7; color: #F39C12; }
+.status-confirmed { background: #E8F8F5; color: #27AE60; }
+.status-cancelled { background: #FADBD8; color: #E74C3C; }
+.action-buttons { display: flex; gap: 8px; }
+.btn-action { width: 32px; height: 32px; border: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+.btn-confirm { background: #E8F8F5; color: #27AE60; }
+.btn-confirm:hover { background: #27AE60; color: white; }
+.btn-cancel { background: #FADBD8; color: #E74C3C; }
+.btn-cancel:hover { background: #E74C3C; color: white; }
+.btn-info { background: #E8F4F8; color: #3498DB; }
+.btn-info:hover { background: #3498DB; color: white; }
