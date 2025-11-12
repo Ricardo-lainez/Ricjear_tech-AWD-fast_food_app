@@ -223,134 +223,8 @@
 	</section>
 
 	<!-- Galería de Ambientes -->
-	<section class="ambientes-container">
-		<!-- Ambiente 1: Salón Principal -->
-		<article class="ambiente-card" data-ambiente="salon-principal">
-			<div class="ambiente-image">
-				<img src="../images/home/menu.jpg" alt="Salón Principal">
-				<div class="ambiente-badge">
-					<i class="fa fa-users"></i>
-					<span>2-8 personas</span>
-				</div>
-			</div>
-			<div class="ambiente-info">
-				<h3>Salón Principal</h3>
-				<p class="ambiente-descripcion">Ambiente acogedor y elegante ideal para cenas románticas o reuniones íntimas</p>
-				<div class="ambiente-caracteristicas">
-					<span><i class="fa fa-check-circle"></i> Aire acondicionado</span>
-					<span><i class="fa fa-check-circle"></i> Vista al jardín</span>
-					<span><i class="fa fa-check-circle"></i> Música ambiental</span>
-					<span><i class="fa fa-check-circle"></i> WiFi gratuito</span>
-				</div>
-				<div class="ambiente-rating">
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<span class="rating-text">4.9 (127 reseñas)</span>
-				</div>
-				<button class="btn-reservar" onclick="abrirModalReserva('salon-principal')">
-					<i class="fa fa-calendar"></i> Reservar Ahora
-				</button>
-			</div>
-		</article>
-
-		<!-- Ambiente 2: Terraza VIP -->
-		<article class="ambiente-card" data-ambiente="terraza-vip">
-			<div class="ambiente-image">
-				<img src="../images/home/reservaciones.jpg" alt="Terraza VIP">
-				<div class="ambiente-badge vip">
-					<i class="fa fa-star"></i>
-					<span>4-12 personas</span>
-				</div>
-			</div>
-			<div class="ambiente-info">
-				<h3>Terraza VIP</h3>
-				<p class="ambiente-descripcion">Espacio premium al aire libre con vista panorámica, perfecto para celebraciones especiales</p>
-				<div class="ambiente-caracteristicas">
-					<span><i class="fa fa-check-circle"></i> Vista panorámica</span>
-					<span><i class="fa fa-check-circle"></i> Área privada</span>
-					<span><i class="fa fa-check-circle"></i> Servicio exclusivo</span>
-					<span><i class="fa fa-check-circle"></i> Decoración personalizada</span>
-				</div>
-				<div class="ambiente-rating">
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<span class="rating-text">5.0 (89 reseñas)</span>
-				</div>
-				<button class="btn-reservar" onclick="abrirModalReserva('terraza-vip')">
-					<i class="fa fa-calendar"></i> Reservar Ahora
-				</button>
-			</div>
-		</article>
-
-		<!-- Ambiente 3: Salón Familiar -->
-		<article class="ambiente-card" data-ambiente="salon-familiar">
-			<div class="ambiente-image">
-				<img src="../images/slider/slider2.jpg" alt="Salón Familiar">
-				<div class="ambiente-badge familiar">
-					<i class="fa fa-users"></i>
-					<span>6-15 personas</span>
-				</div>
-			</div>
-			<div class="ambiente-info">
-				<h3>Salón Familiar</h3>
-				<p class="ambiente-descripcion">Espacio amplio y confortable diseñado para grupos grandes y familias</p>
-				<div class="ambiente-caracteristicas">
-					<span><i class="fa fa-check-circle"></i> Espacio amplio</span>
-					<span><i class="fa fa-check-circle"></i> Área de juegos</span>
-					<span><i class="fa fa-check-circle"></i> Menú infantil</span>
-					<span><i class="fa fa-check-circle"></i> Sillas altas disponibles</span>
-				</div>
-				<div class="ambiente-rating">
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star-half-o"></i>
-					<span class="rating-text">4.7 (156 reseñas)</span>
-				</div>
-				<button class="btn-reservar" onclick="abrirModalReserva('salon-familiar')">
-					<i class="fa fa-calendar"></i> Reservar Ahora
-				</button>
-			</div>
-		</article>
-
-		<!-- Ambiente 4: Bar Lounge -->
-		<article class="ambiente-card" data-ambiente="bar-lounge">
-			<div class="ambiente-image">
-				<img src="../images/slider/slider4.jpg" alt="Bar Lounge">
-				<div class="ambiente-badge lounge">
-					<i class="fa fa-glass"></i>
-					<span>2-6 personas</span>
-				</div>
-			</div>
-			<div class="ambiente-info">
-				<h3>Bar Lounge</h3>
-				<p class="ambiente-descripcion">Ambiente relajado con cócteles premium y música en vivo los fines de semana</p>
-				<div class="ambiente-caracteristicas">
-					<span><i class="fa fa-check-circle"></i> Coctelería premium</span>
-					<span><i class="fa fa-check-circle"></i> Música en vivo</span>
-					<span><i class="fa fa-check-circle"></i> Happy hour</span>
-					<span><i class="fa fa-check-circle"></i> Ambiente nocturno</span>
-				</div>
-				<div class="ambiente-rating">
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<span class="rating-text">4.8 (203 reseñas)</span>
-				</div>
-				<button class="btn-reservar" onclick="abrirModalReserva('bar-lounge')">
-					<i class="fa fa-calendar"></i> Reservar Ahora
-				</button>
-			</div>
-		</article>
+	<section class="ambientes-container ambientes-grid">
+		<!-- Los ambientes se cargarán dinámicamente desde la base de datos -->
 	</section>
 
 	<!-- Modal de Reserva -->
@@ -456,6 +330,7 @@
 	<script src="../js/menu.js"></script>
 	<script src="../js/login-modal.js"></script>
 	<script src="../js/register-modal.js"></script>
+	<script src="../js/reservaciones-api.js"></script>
 	<script src="../js/reservaciones.js"></script>
 </body>
 

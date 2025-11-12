@@ -17,7 +17,7 @@ const CONFIG = {
         // En producción: backend desplegado en Render
         BASE_URL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
             ? 'http://localhost:3000/api'
-            : 'https://bocatto-valley-api.onrender.com/api', // URL del backend en Render
+            : 'https://bocatto-valley-api.onrender.com/api', // ✅ URL del backend en Render (actualizado 2025-11-11)
 
         // Endpoints
         AUTH: {
