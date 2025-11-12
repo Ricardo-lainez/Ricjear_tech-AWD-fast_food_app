@@ -388,6 +388,7 @@ const authService = new AuthService();
 
 // Hacer disponible globalmente para otros scripts
 window.authService = authService;
+window.authAPI = authService; // Alias para compatibilidad
 
 // ==========================================
 // FUNCIONES DE UI (mantienen compatibilidad con código existente)

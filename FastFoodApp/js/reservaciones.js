@@ -47,7 +47,7 @@ function renderizarAmbientes() {
 
 async function abrirModalReserva(ambienteId) {
     try {
-        const usuario = window.authAPI?.getCurrentUser();
+        const usuario = window.authService?.getCurrentUser();
         if (!usuario) {
             alert('Debes iniciar sesión para hacer una reservación');
             const loginModal = document.getElementById('loginModal');
@@ -168,9 +168,9 @@ async function confirmarReserva() {
         alert(`Este ambiente solo permite entre ${ambienteSeleccionado.capacidadMin} y ${ambienteSeleccionado.capacidadMax} personas.`);
         return;
     }
-    const usuario = window.authAPI?.getCurrentUser();
+    const usuario = window.authService?.getCurrentUser();
     if (!usuario) {
-        alert('Debes iniciar sesión para hacer una reservación');
+        alert('⚠️ Debes iniciar sesión para hacer una reservación');
         cerrarModalReserva();
         const loginModal = document.getElementById('loginModal');
         if (loginModal) loginModal.style.display = 'flex';
