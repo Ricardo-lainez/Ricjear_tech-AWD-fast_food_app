@@ -1,39 +1,134 @@
 // Sistema de Reservaciones - Bocatto Valley
 // ==========================================
-// CONFIGURACIÓN DE AMBIENTES
+// CONFIGURACIÓN DINÁMICA DESDE LA BASE DE DATOS
 // ==========================================
 
 /**
- * Definición de ambientes con sus capacidades
- * Basado en el UML: Reservation -> Table
- * En el futuro, esto vendrá de la base de datos
+ * Los ambientes ahora se cargan desde la API
+ * Ya no se usan datos simulados
  */
-const AMBIENTES_CONFIG = {
-    'salon-principal': {
-        nombre: 'Salón Principal',
-        capacidadMin: 2,
-        capacidadMax: 8,
-        descripcion: 'Ambiente acogedor y elegante ideal para cenas románticas o reuniones íntimas'
-    },
-    'terraza-vip': {
-        nombre: 'Terraza VIP',
-        capacidadMin: 4,
-        capacidadMax: 12,
-        descripcion: 'Espacio premium al aire libre con vista panorámica'
-    },
-    'salon-familiar': {
-        nombre: 'Salón Familiar',
-        capacidadMin: 6,
-        capacidadMax: 15,
-        descripcion: 'Espacio amplio y confortable diseñado para grupos grandes y familias'
-    },
-    'bar-lounge': {
-        nombre: 'Bar Lounge',
-        capacidadMin: 2,
-        capacidadMax: 6,
-        descripcion: 'Ambiente relajado con cócteles premium y música en vivo'
+let AMBIENTES_CONFIG = {};
+let ambientesData = [];
+
+/**
+ * Cargar ambientes desde la API al iniciar la página
+ */
+async function cargarAmbientes() {
+    try {
+        // Mostrar loader
+        const container = document.querySelector('.ambientes-grid');
+        if (container) {
+            container.innerHTML = '<div class="loading">Cargando ambientes...</div>';
+        }
+
+        // Obtener ambientes desde la API
+        ambientesData = await window.reservacionesAPI.obtenerAmbientes();
+        
+        // Convertir a formato compatible con el código existente
+        AMBIENTES_CONFIG = {};
+        ambientesData.forEach(ambiente => {
+            const slug = ambiente.nombre.toLowerCase()
+                .replace(/\s+/g, '-')
+                .replace(/[áàä]/g, 'a')
+                .replace(/[éèë]/g, 'e')
+                .replace(/[íìï]/g, 'i')
+                .replace(/[óòö]/g, 'o')
+                .replace(/[úùü]/g, 'u');
+            
+            AMBIENTES_CONFIG[slug] = {
+                id: ambiente._id,
+                nombre: ambiente.nombre,
+                capacidadMin: ambiente.capacidadMin,
+                capacidadMax: ambiente.capacidadMax,
+                descripcion: ambiente.descripcion,
+                caracteristicas: ambiente.caracteristicas || [],
+                imagenUrl: ambiente.imagenUrl,
+                badge: ambiente.badge || {},
+                rating: ambiente.rating || { promedio: 0, totalResenas: 0 }
+            };
+        });
+
+        // Renderizar ambientes en el DOM
+        renderizarAmbientes();
+        
+        console.log('✅ Ambientes cargados desde la base de datos:', ambientesData.length);
+    } catch (error) {
+        console.error('❌ Error al cargar ambientes:', error);
+        
+        // Mostrar mensaje de error
+        const container = document.querySelector('.ambientes-grid');
+        if (container) {
+            container.innerHTML = `
+                <div class="error-message">
+                    <p>⚠️ Error al cargar los ambientes. Por favor, intenta más tarde.</p>
+                    <button onclick="cargarAmbientes()" class="btn-retry">Reintentar</button>
+                </div>
+            `;
+        }
     }
-};
+}
+
+/**
+ * Renderizar ambientes en el DOM
+ */
+function renderizarAmbientes() {
+    const container = document.querySelector('.ambientes-grid');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    Object.entries(AMBIENTES_CONFIG).forEach(([slug, ambiente]) => {
+        const card = document.createElement('div');
+        card.className = 'ambiente-card';
+        card.setAttribute('data-ambiente', slug);
+        
+        // Badge
+        let badgeHTML = '';
+        if (ambiente.badge && ambiente.badge.texto) {
+            badgeHTML = `<span class="badge ${ambiente.badge.clase}">
+                <i class="fa ${ambiente.badge.icono}"></i> ${ambiente.badge.texto}
+            </span>`;
+        }
+
+        // Rating
+        const stars = Math.round(ambiente.rating.promedio);
+        const starsHTML = '⭐'.repeat(stars);
+
+        card.innerHTML = `
+            ${badgeHTML}
+            <div class="ambiente-imagen">
+                <img src="../${ambiente.imagenUrl}" alt="${ambiente.nombre}">
+            </div>
+            <div class="ambiente-info">
+                <h3>${ambiente.nombre}</h3>
+                <p class="descripcion">${ambiente.descripcion}</p>
+                <div class="capacidad-info">
+                    <i class="fa fa-users"></i>
+                    <span>Capacidad: ${ambiente.capacidadMin}-${ambiente.capacidadMax} personas</span>
+                </div>
+                ${ambiente.caracteristicas && ambiente.caracteristicas.length > 0 ? `
+                    <div class="caracteristicas">
+                        ${ambiente.caracteristicas.slice(0, 3).map(c => 
+                            `<span class="caracteristica"><i class="fa fa-check"></i> ${c}</span>`
+                        ).join('')}
+                    </div>
+                ` : ''}
+                <div class="rating">
+                    <span class="stars">${starsHTML}</span>
+                    <span class="rating-text">${ambiente.rating.promedio} (${ambiente.rating.totalResenas} reseñas)</span>
+                </div>
+                <button class="btn-reservar" onclick="abrirModalReserva('${slug}')">
+                    <i class="fa fa-calendar"></i> Reservar Ahora
+                </button>
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+// Inicializar cuando se carga la página
+document.addEventListener('DOMContentLoaded', cargarAmbientes);
 
 // Datos de ejemplo de comentarios por ambiente
 const comentariosPorAmbiente = {
@@ -119,20 +214,7 @@ const comentariosPorAmbiente = {
     ]
 };
 
-// Datos de mesas reservadas (simulación para frontend)
-const reservasExistentes = {
-    '2025-10-20': {
-        '19:00': ['salon-principal', 'terraza-vip'],
-        '20:00': ['bar-lounge'],
-        '21:00': ['salon-familiar']
-    },
-    '2025-10-21': {
-        '13:00': ['salon-principal'],
-        '19:00': ['terraza-vip', 'salon-familiar'],
-        '20:30': ['bar-lounge']
-    }
-};
-
+// Variables globales
 let ambienteSeleccionado = '';
 let capacidadActual = { min: 1, max: 10 }; // Se actualizará según el ambiente
 
@@ -276,9 +358,9 @@ function cargarComentarios(ambiente) {
 /**
  * Verifica la disponibilidad del ambiente en la fecha y hora seleccionadas
  * Basado en UML: Reservation.checkAvailability()
- * En producción, consultará la base de datos
+ * Ahora conectado con la API real
  */
-function verificarDisponibilidad() {
+async function verificarDisponibilidad() {
     const fecha = document.getElementById('fecha').value;
     const hora = document.getElementById('hora').value;
     const disponibilidadDiv = document.querySelector('.disponibilidad-info');
@@ -292,17 +374,29 @@ function verificarDisponibilidad() {
         return;
     }
     
-    // Verificar si existe reserva (simulado - en producción será consulta a BD)
-    const reservado = reservasExistentes[fecha]?.[hora]?.includes(ambienteSeleccionado);
-    
-    if (reservado) {
-        disponibilidadTexto.textContent = '⚠️ No disponible - Esta mesa ya está reservada para la fecha y hora seleccionadas';
+    // Verificar disponibilidad con la API
+    try {
+        const config = AMBIENTES_CONFIG[ambienteSeleccionado];
+        const disponible = await window.reservacionesAPI.verificarDisponibilidad({
+            ambienteId: config.id,
+            fechaReservacion: fecha,
+            horaInicio: hora
+        });
+        
+        if (!disponible.disponible) {
+            disponibilidadTexto.textContent = '⚠️ No disponible - ' + (disponible.mensaje || 'Esta mesa ya está reservada para la fecha y hora seleccionadas');
+            disponibilidadDiv.className = 'disponibilidad-info no-disponible';
+            btnConfirmar.disabled = true;
+        } else {
+            disponibilidadTexto.textContent = '✓ ¡Disponible! Puedes proceder con tu reserva';
+            disponibilidadDiv.className = 'disponibilidad-info disponible';
+            btnConfirmar.disabled = false;
+        }
+    } catch (error) {
+        console.error('Error al verificar disponibilidad:', error);
+        disponibilidadTexto.textContent = '⚠️ No se pudo verificar la disponibilidad. Por favor, intenta de nuevo.';
         disponibilidadDiv.className = 'disponibilidad-info no-disponible';
         btnConfirmar.disabled = true;
-    } else {
-        disponibilidadTexto.textContent = '✓ ¡Disponible! Puedes proceder con tu reserva';
-        disponibilidadDiv.className = 'disponibilidad-info disponible';
-        btnConfirmar.disabled = false;
     }
 }
 
@@ -330,11 +424,10 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /**
- * Confirma y guarda la reserva
- * Basado en UML: Reservation.confirmReservation() y Reservation.sendConfirmation()
- * En producción, guardará en base de datos y enviará confirmación por email
+ * Confirma y guarda la reserva en la base de datos
+ * Ahora conectado con la API real
  */
-function confirmarReserva() {
+async function confirmarReserva() {
     const fecha = document.getElementById('fecha').value;
     const hora = document.getElementById('hora').value;
     const personas = document.getElementById('personas').value;
@@ -354,39 +447,50 @@ function confirmarReserva() {
         return;
     }
     
-    // TODO: Cuando se implemente BD, aquí se hará:
-    // 1. POST /api/reservations
-    // 2. Reservation.blockTimeSlot()
-    // 3. Reservation.sendConfirmation()
-    // 4. Payment.processPayment() si requiere pago adelantado
+    // Verificar que el usuario esté autenticado
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('⚠️ Debes iniciar sesión para hacer una reservación');
+        cerrarModalReserva();
+        document.getElementById('loginModal').style.display = 'flex';
+        return;
+    }
     
-    const config = AMBIENTES_CONFIG[ambienteSeleccionado];
-    
-    // Crear objeto de reserva según estructura del UML
-    const reservaData = {
-        // id: generado por BD
-        // reservationNumber: generado por BD
-        clienteID: null, // Obtener del usuario logueado
-        ambiente: config.nombre,
-        ambienteID: ambienteSeleccionado,
-        reservationDate: new Date(fecha + 'T' + hora),
-        startTime: hora,
-        endTime: calcularHoraFin(hora), // Agregar 2 horas por defecto
-        numberOfPeople: numPersonas,
-        status: 'confirmed', // pending, confirmed, cancelled
-        specialNotes: comentarios || '',
-        ocasion: ocasion || '',
-        isPaid: false,
-        createdAt: new Date()
-    };
-    
-    // Mensaje de confirmación
-    const mensaje = `
+    try {
+        // Mostrar loading
+        const btnConfirmar = document.querySelector('.btn-confirmar-reserva');
+        const textoOriginal = btnConfirmar.innerHTML;
+        btnConfirmar.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Procesando...';
+        btnConfirmar.disabled = true;
+
+        const config = AMBIENTES_CONFIG[ambienteSeleccionado];
+        
+        // Calcular hora de fin (2 horas después)
+        const [horas, minutos] = hora.split(':');
+        const horaFin = `${String(parseInt(horas) + 2).padStart(2, '0')}:${minutos}`;
+        
+        // Crear objeto de reserva para la API
+        const reservaData = {
+            ambienteId: config.id,
+            fechaReservacion: fecha,
+            horaInicio: hora,
+            horaFin: horaFin,
+            numeroPersonas: numPersonas,
+            ocasionEspecial: ocasion || '',
+            comentarios: comentarios || ''
+        };
+        
+        // Enviar a la API
+        const reservaCreada = await window.reservacionesAPI.crearReservacion(reservaData);
+        
+        // Mensaje de confirmación
+        const mensaje = `
         ✅ ¡Reserva Confirmada! 
         
+        📋 Número de Reservación: ${reservaCreada.numeroReservacion}
         📍 Ambiente: ${config.nombre}
         📅 Fecha: ${new Date(fecha + 'T00:00:00').toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-        ⏰ Hora: ${hora}
+        ⏰ Hora: ${hora} - ${horaFin}
         👥 Personas: ${numPersonas}
         ${ocasion ? `🎉 Ocasión: ${ocasion}` : ''}
         ${comentarios ? `📝 Notas: ${comentarios}` : ''}
@@ -395,22 +499,24 @@ function confirmarReserva() {
         
         Recibirás un correo de confirmación con los detalles de tu reserva.
     `;
-    
-    alert(mensaje);
-    
-    // Simular guardado en BD (localStorage temporal)
-    guardarReservaLocal(reservaData);
-    
-    // Actualizar reservas existentes para simular ocupación
-    if (!reservasExistentes[fecha]) {
-        reservasExistentes[fecha] = {};
+        
+        alert(mensaje);
+        cerrarModalReserva();
+        document.getElementById('formReserva').reset();
+        
+        // Restaurar botón
+        btnConfirmar.innerHTML = textoOriginal;
+        btnConfirmar.disabled = false;
+        
+    } catch (error) {
+        console.error('Error al crear reservación:', error);
+        alert('❌ Error al procesar la reservación: ' + (error.message || 'Por favor, intenta de nuevo'));
+        
+        // Restaurar botón
+        const btnConfirmar = document.querySelector('.btn-confirmar-reserva');
+        btnConfirmar.innerHTML = '<i class="fa fa-check"></i> Confirmar Reserva';
+        btnConfirmar.disabled = false;
     }
-    if (!reservasExistentes[fecha][hora]) {
-        reservasExistentes[fecha][hora] = [];
-    }
-    reservasExistentes[fecha][hora].push(ambienteSeleccionado);
-    
-    cerrarModalReserva();
 }
 
 /**
@@ -418,34 +524,9 @@ function confirmarReserva() {
  * @param {string} horaInicio - Hora en formato HH:MM
  * @returns {string} Hora de fin en formato HH:MM
  */
-function calcularHoraFin(horaInicio) {
-    const [horas, minutos] = horaInicio.split(':').map(Number);
-    const horaFin = new Date();
-    horaFin.setHours(horas + 2, minutos, 0);
-    return horaFin.toTimeString().slice(0, 5);
-}
-
-/**
- * Guarda la reserva en localStorage (temporal hasta tener BD)
- * @param {Object} reservaData 
- */
-function guardarReservaLocal(reservaData) {
-    try {
-        let reservas = localStorage.getItem('bocatto_reservations');
-        reservas = reservas ? JSON.parse(reservas) : [];
-        
-        // Agregar ID temporal
-        reservaData.id = Date.now();
-        reservaData.reservationNumber = `RES-${Date.now().toString().slice(-6)}`;
-        
-        reservas.push(reservaData);
-        localStorage.setItem('bocatto_reservations', JSON.stringify(reservas));
-        
-        console.log('✅ Reserva guardada localmente:', reservaData);
-    } catch (error) {
-        console.error('Error al guardar reserva:', error);
-    }
-}
+// Funciones auxiliares eliminadas: 
+// - calcularHoraFin() y guardarReservaLocal() ya no son necesarias
+// - La API ahora maneja toda la lógica de reservaciones
 
 /**
  * Verifica si el usuario está logueado antes de permitir acciones

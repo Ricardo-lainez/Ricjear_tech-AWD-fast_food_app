@@ -12,6 +12,8 @@ import connectDB from './config/database.js';
 
 // Importar rutas
 import authRoutes from './routes/authRoutes.js';
+import ambienteRoutes from './routes/ambienteRoutes.js';
+import reservacionRoutes from './routes/reservacionRoutes.js';
 
 // Cargar variables de entorno
 dotenv.config();
@@ -74,13 +76,20 @@ app.get('/', (req, res) => {
         version: '1.0.0',
         endpoints: {
             auth: '/api/auth',
-            // Agregar más endpoints aquí en el futuro
+            ambientes: '/api/ambientes',
+            reservaciones: '/api/reservaciones'
         }
     });
 });
 
 // Rutas de autenticación
 app.use('/api/auth', authRoutes);
+
+// Rutas de ambientes
+app.use('/api/ambientes', ambienteRoutes);
+
+// Rutas de reservaciones
+app.use('/api/reservaciones', reservacionRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
