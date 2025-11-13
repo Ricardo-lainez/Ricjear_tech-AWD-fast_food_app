@@ -436,7 +436,7 @@ function updateAuthUI() {
             
             if (isInClientPanel) {
                 menuOptions = `
-                    <a href="#"><i class="fa fa-user"></i> Mi Perfil</a>
+                    <a href="#" data-section="profile"><i class="fa fa-user"></i> Mi Perfil</a>
                     <a href="#"><i class="fa fa-cog"></i> Configuración</a>
                     <a href="../index.html"><i class="fa fa-globe"></i> Ver Sitio Web</a>
                     <a href="#" class="logout-btn" id="logoutBtn"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
@@ -445,7 +445,7 @@ function updateAuthUI() {
                 const clientPanelPath = isInHtmlFolder ? './ClientProfile.html' : './html/ClientProfile.html';
                 menuOptions = `
                     <a href="${clientPanelPath}"><i class="fa fa-tachometer"></i> Panel Cliente</a>
-                    <a href="#"><i class="fa fa-user"></i> Mi Perfil</a>
+                    <a href="${clientPanelPath}"><i class="fa fa-user"></i> Mi Perfil</a>
                     <a href="#"><i class="fa fa-heart"></i> Favoritos</a>
                     <a href="#"><i class="fa fa-shopping-bag"></i> Mis Pedidos</a>
                     <a href="#"><i class="fa fa-calendar"></i> Mis Reservas</a>
