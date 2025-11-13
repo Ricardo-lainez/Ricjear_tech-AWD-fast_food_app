@@ -57,6 +57,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// Servir archivos estáticos (imágenes)
+app.use('/images', express.static('../images'));
+
 // Logging en desarrollo
 if (process.env.NODE_ENV === 'development') {
     app.use((req, res, next) => {
