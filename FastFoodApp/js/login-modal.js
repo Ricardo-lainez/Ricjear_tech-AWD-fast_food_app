@@ -97,12 +97,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     closeLoginModal();
                     if (window.updateAuthUI) window.updateAuthUI();
 
-                    // Redirigir según el rol
-                    if (result.user.role === 'administrator' || result.user.role === 'client') {
-                        window.location.href = result.redirectTo;
-                    } else {
-                        location.reload();
-                    }
+                    // NO redirigir automáticamente, solo recargar la página actual
+                    // para actualizar el menú de usuario
+                    location.reload();
                 }, 800);
             } else {
                 showError(result.message);

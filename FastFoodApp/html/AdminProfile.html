@@ -121,9 +121,128 @@
                         <i class="fas fa-info-circle"></i>
                     </div>
                     <div class="status-content">
-                        <h3>Panel en Desarrollo</h3>
-                        <p>Las funcionalidades del panel de administración se están desarrollando actualmente. 
-                           Pronto podrás acceder a todas las herramientas de gestión del restaurante.</p>
+                        <h3>Panel de Administración</h3>
+                        <p>Gestiona las reservaciones del restaurante desde este panel. 
+                           Puedes ver, filtrar y actualizar el estado de cada reservación.</p>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN DE GESTIÓN DE RESERVACIONES -->
+                <div class="reservations-management">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-calendar-alt"></i>
+                            Gestión de Reservaciones
+                        </h2>
+                        <div class="section-actions">
+                            <button class="btn-refresh" onclick="cargarReservaciones()">
+                                <i class="fas fa-sync-alt"></i> Actualizar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filtros -->
+                    <div class="filters-container">
+                        <div class="filter-group">
+                            <label><i class="fas fa-calendar"></i> Fecha:</label>
+                            <input type="date" id="filterFecha" onchange="aplicarFiltros()">
+                        </div>
+                        <div class="filter-group">
+                            <label><i class="fas fa-door-open"></i> Ambiente:</label>
+                            <select id="filterAmbiente" onchange="aplicarFiltros()">
+                                <option value="">Todos</option>
+                                <option value="Salón Principal">Salón Principal</option>
+                                <option value="Terraza VIP">Terraza VIP</option>
+                                <option value="Salón Familiar">Salón Familiar</option>
+                                <option value="Bar Lounge">Bar Lounge</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label><i class="fas fa-tasks"></i> Estado:</label>
+                            <select id="filterEstado" onchange="aplicarFiltros()">
+                                <option value="">Todos</option>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="confirmada">Confirmada</option>
+                                <option value="cancelada">Cancelada</option>
+                            </select>
+                        </div>
+                        <button class="btn-clear-filters" onclick="limpiarFiltros()">
+                            <i class="fas fa-times"></i> Limpiar
+                        </button>
+                    </div>
+
+                    <!-- Estadísticas Rápidas -->
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <div class="stat-icon pending">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <p class="stat-label">Pendientes</p>
+                                <p class="stat-value" id="statPendientes">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon confirmed">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <p class="stat-label">Confirmadas</p>
+                                <p class="stat-value" id="statConfirmadas">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon cancelled">
+                                <i class="fas fa-times-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <p class="stat-label">Canceladas</p>
+                                <p class="stat-value" id="statCanceladas">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon total">
+                                <i class="fas fa-list"></i>
+                            </div>
+                            <div class="stat-content">
+                                <p class="stat-label">Total</p>
+                                <p class="stat-value" id="statTotal">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de Reservaciones -->
+                    <div class="table-container">
+                        <div id="reservationsLoading" class="loading-state" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Cargando reservaciones...</p>
+                        </div>
+                        <div id="reservationsError" class="error-state" style="display: none;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Error al cargar las reservaciones</p>
+                            <button onclick="cargarReservaciones()">Reintentar</button>
+                        </div>
+                        <div id="reservationsEmpty" class="empty-state" style="display: none;">
+                            <i class="fas fa-inbox"></i>
+                            <p>No hay reservaciones para mostrar</p>
+                        </div>
+                        <table class="reservations-table" id="reservationsTable" style="display: none;">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Cliente</th>
+                                    <th>Ambiente</th>
+                                    <th>Personas</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reservationsTableBody">
+                                <!-- Las filas se cargan dinámicamente -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -147,8 +266,8 @@
                             <p>Próximamente</p>
                         </div>
                         <div class="action-card">
-                            <i class="fas fa-calendar-check"></i>
-                            <h3>Reservaciones</h3>
+                            <i class="fas fa-chart-pie"></i>
+                            <h3>Análisis</h3>
                             <p>Próximamente</p>
                         </div>
                     </div>
@@ -158,6 +277,7 @@
     </div>
 
     <!-- Scripts -->
+    <script src="../js/reservaciones-api.js"></script>
     <script src="../js/api-client.js"></script>
     <script src="../js/auth-api.js"></script>
     <script src="../js/AdminProfile.js"></script>

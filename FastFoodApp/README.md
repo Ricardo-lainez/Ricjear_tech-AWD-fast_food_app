@@ -135,7 +135,7 @@ npm start
 
 - **Ricardo** - [GitHub](https://github.com/Ricardo-lainez)
 - **Jeancarlo** - Backend Lead
-- **Otros miembros** - (Agregar aquí)
+- **Ariel** - Frontend
 
 ---
 
@@ -372,4 +372,5 @@ Ingeniería en Software
 
 ---
 
-**¿Nuevo en el equipo? 👉 Empieza por [GUIA_INSTALACION_EQUIPO.md](./GUIA_INSTALACION_EQUIPO.md)**
+**¿Nuevo en el equipo? 👉 Empieza por [GUIA_INSTALACION_EQUIPO.md](./GUIA_INSTALACION_EQUIPO.md)**#   D e p l o y   t r i g g e r  
+ 

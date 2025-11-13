@@ -77,21 +77,6 @@
 				</button>
 			</form>
 
-			<div class="login-divider">
-				<span>o</span>
-			</div>
-
-			<div class="demo-credentials">
-				<p><strong>Credenciales de prueba:</strong></p>
-				<div class="demo-user">
-					<span><i class="fa fa-user"></i> Cliente:</span> 
-					<code>cliente@bocatto.com</code> / <code>cliente123</code>
-				</div>
-				<div class="demo-user">
-					<span><i class="fa fa-shield"></i> Admin:</span> 
-					<code>admin@adminbocatto.com</code> / <code>adminPass123</code>
-				</div>
-			</div>
 			<p class="register-link">¿No tienes una cuenta? <a href="#" id="openRegisterModal">Regístrate aquí</a></p>
 		</div>
 	</div>
@@ -214,58 +199,206 @@
 		</div>
 	</div>
 
-    <div class="titulo">
-        <h1>Forma parte de nuestro equipo</h1>
-    </div>
-    <div class="contenedor-formularios">
-        <!-- onsubmit=return validar() PERMITE LLAMAR A LA FUNCION DE JAVASCRIPT QUE VALIDA EL FORMULARIO-->
-        <form id="formContacto" onsubmit="return validar()">
-            <div class="elemento-form">
-                <label>Cedula:</label>
-                <input type="text" name="cedula" id="cedula" class="formItem textbox" />
+    <!-- Sección de Únete al Equipo -->
+    <section class="join-team-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h1 class="section-title">
+                    <i class="fa fa-users"></i>
+                    Forma parte de nuestro equipo
+                </h1>
+                <p class="section-subtitle">
+                    ¡Únete a la familia Bocatto Valley! Envíanos tu información y te contactaremos pronto.
+                </p>
             </div>
-            <div class="elemento-form">
-                <label>Nombres:</label>
-                <input type="text" name="nombres" id="nombres" class="formItem textbox" />
-            </div>
-            <div class="elemento-form">
-                <label>Apellidos:</label>
-                <input type="text" name="apellidos" id="apellidos" class="formItem textbox" />
-            </div>
-            <div class="elemento-form">
-                <label>Email:</label>
-                <input type="email" name="correo" id="correo" class="formItem textbox" />
-            </div>
-            <div class="elemento-form">
-                <label>Telefono:</label>
-                <input type="text" name="telefono" id="telefono" class="formItem textbox" />
-            </div>
-            <div class="elemento-form">
-                <label>Genero:</label>
-                <div class="radioButton"><input class="gen" id="fem" type="radio" name="genero" value="F" />Femenino
+
+            <div class="form-container">
+                <!-- Formulario Simplificado -->
+                <div class="job-application-form">
+                    <form id="formContacto" onsubmit="return validar()">
+                        <!-- Información Personal -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nombres">
+                                    <i class="fa fa-user"></i>
+                                    Nombres *
+                                </label>
+                                <input type="text" name="nombres" id="nombres" class="form-input" placeholder="Tu nombre completo" required />
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="apellidos">
+                                    <i class="fa fa-user"></i>
+                                    Apellidos *
+                                </label>
+                                <input type="text" name="apellidos" id="apellidos" class="form-input" placeholder="Tus apellidos" required />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cedula">
+                                    <i class="fa fa-id-card"></i>
+                                    Cédula *
+                                </label>
+                                <input 
+                                    type="text" 
+                                    name="cedula" 
+                                    id="cedula" 
+                                    class="form-input" 
+                                    placeholder="1234567890" 
+                                    maxlength="10"
+                                    pattern="[0-9]{10}"
+                                    title="Ingrese exactamente 10 dígitos"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)"
+                                    required 
+                                />
+                                <small class="field-hint">10 dígitos únicamente</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="telefono">
+                                    <i class="fa fa-phone"></i>
+                                    Teléfono *
+                                </label>
+                                <input 
+                                    type="tel" 
+                                    name="telefono" 
+                                    id="telefono" 
+                                    class="form-input" 
+                                    placeholder="0991234567" 
+                                    maxlength="10"
+                                    pattern="[0-9]{10}"
+                                    title="Ingrese exactamente 10 dígitos"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)"
+                                    required 
+                                />
+                                <small class="field-hint">10 dígitos únicamente</small>
+                            </div>
+                        </div>
+
+                        <!-- Información de Contacto -->
+                        <div class="form-row">
+                            <div class="form-group full-width">
+                                <label for="correo">
+                                    <i class="fa fa-envelope"></i>
+                                    Correo Electrónico *
+                                </label>
+                                <input type="email" name="correo" id="correo" class="form-input" placeholder="ejemplo@correo.com" required />
+                            </div>
+                        </div>
+
+                        <!-- Información Laboral -->
+                        <div class="form-row">
+                            <div class="form-group full-width">
+                                <label for="areatrabajo">
+                                    <i class="fa fa-briefcase"></i>
+                                    Área de Interés *
+                                </label>
+                                <div class="custom-select-wrapper">
+                                    <select name="areatrabajo" id="areatrabajo" class="form-select custom-select" required>
+                                        <option value="">Selecciona un área...</option>
+                                        <option value="1" data-icon="👨‍🍳">Cocina</option>
+                                        <option value="2" data-icon="💬">Atención al Cliente</option>
+                                        <option value="3" data-icon="🍽️">Servicio de Mesas</option>
+                                        <option value="4" data-icon="🔧">Mantenimiento</option>
+                                        <option value="5" data-icon="📊">Administración</option>
+                                        <option value="6" data-icon="🚚">Delivery</option>
+                                    </select>
+                                    <div class="select-arrow">
+                                        <i class="fa fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>
+                                    <i class="fa fa-venus-mars"></i>
+                                    Género *
+                                </label>
+                                <div class="gender-options">
+                                    <div class="gender-card">
+                                        <input type="radio" name="genero" value="F" id="fem" required />
+                                        <label for="fem" class="gender-label">
+                                            <div class="gender-icon">
+                                                <i class="fa fa-female"></i>
+                                            </div>
+                                            <span>Femenino</span>
+                                        </label>
+                                    </div>
+                                    <div class="gender-card">
+                                        <input type="radio" name="genero" value="M" id="mas" required />
+                                        <label for="mas" class="gender-label">
+                                            <div class="gender-icon">
+                                                <i class="fa fa-male"></i>
+                                            </div>
+                                            <span>Masculino</span>
+                                        </label>
+                                    </div>
+                                    <div class="gender-card">
+                                        <input type="radio" name="genero" value="O" id="otro" required />
+                                        <label for="otro" class="gender-label">
+                                            <div class="gender-icon">
+                                                <i class="fa fa-genderless"></i>
+                                            </div>
+                                            <span>Otro</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Experiencia -->
+                        <div class="form-row">
+                            <div class="form-group full-width">
+                                <label for="texto">
+                                    <i class="fa fa-history"></i>
+                                    Experiencia Previa (Opcional)
+                                </label>
+                                <textarea 
+                                    name="experiencia" 
+                                    id="texto" 
+                                    class="form-textarea" 
+                                    rows="3" 
+                                    placeholder="Cuéntanos brevemente sobre tu experiencia laboral..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-paper-plane"></i>
+                                Enviar Solicitud
+                            </button>
+                            <button type="reset" class="btn btn-secondary">
+                                <i class="fa fa-refresh"></i>
+                                Limpiar
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div class="radioButton"><input class="gen" id="mas" type="radio" name="genero" value="M" />Masculino
+
+                <!-- Información Adicional Compacta -->
+                <div class="info-sidebar">
+                    <div class="info-card">
+                        <h4><i class="fa fa-heart"></i> ¿Por qué Bocatto Valley?</h4>
+                        <ul>
+                            <li><i class="fa fa-check"></i> Ambiente familiar y profesional</li>
+                            <li><i class="fa fa-check"></i> Crecimiento y capacitación</li>
+                            <li><i class="fa fa-check"></i> Beneficios competitivos</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h4><i class="fa fa-clock-o"></i> Proceso Rápido</h4>
+                        <p>Revisamos tu solicitud en <strong>24-48 horas</strong> y te contactamos para coordinar una entrevista.</p>
+                    </div>
                 </div>
-                <div class="radioButton"><input class="gen" id="otro" type="radio" name="genero" value="O" />Otro</div>
             </div>
-            <div class="elemento-form">
-                <label>Area de trabajo:</label>
-                <select name="areatrabajo" id="areatrabajo" class="formItem comboBox">
-                    <option value="0">Seleccione..</option>
-                    <option value="1">Cocina</option>
-                    <option value="2">Atención al cliente</option>
-                    <option value="3">Servicio de mesas</option>
-                    <option value="4">Mantenimiento</option>
-                </select>
-            </div>
-            <div class="elemento-form">
-                <label>Experiencias previas de trabajo</label> <br>
-                <textarea class="form-control" id="texto" rows="2"></textarea>
-            </div>
-            <input type="submit" class="btn btn-primary" value="Enviar">
-            <input type="reset" class="btn btn-primary" value="Cancelar">
-        </form>
-    </div>
+        </div>
+    </section>
     <footer>
         <div class="footer-content">
             <h3>Síguenos en nuestras redes sociales</h3>

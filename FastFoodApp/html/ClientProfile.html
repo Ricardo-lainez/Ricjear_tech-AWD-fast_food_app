@@ -989,52 +989,7 @@
         </main>
     </div>
 
-    <!-- Modal para Cambiar Contraseña -->
-    <div id="passwordModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>
-                    <i class="fas fa-key"></i>
-                    Cambiar Contraseña
-                </h3>
-                <button class="modal-close" id="closePasswordModal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <form id="passwordForm" class="modal-form">
-                <div class="form-group">
-                    <label for="currentPassword">
-                        <i class="fas fa-lock"></i>
-                        Contraseña Actual
-                    </label>
-                    <input type="password" id="currentPassword" name="currentPassword" required>
-                </div>
-                <div class="form-group">
-                    <label for="newPassword">
-                        <i class="fas fa-key"></i>
-                        Nueva Contraseña
-                    </label>
-                    <input type="password" id="newPassword" name="newPassword" required minlength="6">
-                </div>
-                <div class="form-group">
-                    <label for="confirmPassword">
-                        <i class="fas fa-key"></i>
-                        Confirmar Nueva Contraseña
-                    </label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" required>
-                </div>
-                <div class="modal-actions">
-                    <button type="submit" class="btn-primary">
-                        <i class="fas fa-save"></i>
-                        Cambiar Contraseña
-                    </button>
-                    <button type="button" class="btn-secondary" id="cancelPasswordBtn">
-                        Cancelar
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <!-- NOTE: Eliminado modal duplicado 'passwordModal' (ya existe 'changePasswordModal' arriba). -->
 
     <!-- Loading Overlay -->
     <div id="loadingOverlay" class="loading-overlay">
@@ -1046,32 +1001,64 @@
 
     <!-- Scripts -->
     <script>
-        // Script básico para el dropdown del usuario
+        // Inicializaciones DOM una sola vez: dropdown de usuario y modal de contraseña
         document.addEventListener('DOMContentLoaded', function() {
+            // Dropdown de usuario
             const dropdownBtn = document.getElementById('userDropdownBtn');
             const dropdownMenu = document.getElementById('userDropdownMenu');
-            
+
             if (dropdownBtn && dropdownMenu) {
                 dropdownBtn.addEventListener('click', function(e) {
                     e.stopPropagation();
                     dropdownBtn.classList.toggle('active');
                     dropdownMenu.classList.toggle('active');
                 });
-                
+
                 // Cerrar dropdown al hacer clic fuera
                 document.addEventListener('click', function() {
                     dropdownBtn.classList.remove('active');
                     dropdownMenu.classList.remove('active');
                 });
-                
+
                 // Prevenir que el dropdown se cierre al hacer clic en él
                 dropdownMenu.addEventListener('click', function(e) {
                     e.stopPropagation();
                 });
             }
+
+            // Modal de cambio de contraseña
+            const changePasswordBtn = document.getElementById('changePasswordBtn');
+            const changePasswordModal = document.getElementById('changePasswordModal');
+            const changePasswordForm = document.getElementById('change-password-form');
+
+            function openPasswordModal() {
+                if (changePasswordModal) changePasswordModal.style.display = 'flex';
+            }
+
+            function closePasswordModal() {
+                if (changePasswordModal) changePasswordModal.style.display = 'none';
+                if (changePasswordForm) changePasswordForm.reset();
+            }
+
+            if (changePasswordBtn) {
+                changePasswordBtn.addEventListener('click', openPasswordModal);
+            }
+
+            // Cerrar modal al hacer click fuera del contenido
+            if (changePasswordModal) {
+                changePasswordModal.addEventListener('click', function(e) {
+                    if (e.target === changePasswordModal) {
+                        closePasswordModal();
+                    }
+                });
+            }
+
+            // Exponer funciones globales pequeñas (si otros scripts las usan)
+            window.openPasswordModal = openPasswordModal;
+            window.closePasswordModal = closePasswordModal;
         });
-        
-        // Función global para cambiar secciones (se usará en ClientProfile.js)
+
+        // Función global para cambiar secciones (se usa en markup y en ClientProfile.js)
         function switchSection(sectionName) {
             if (window.clientProfile) {
                 window.clientProfile.showSection(sectionName);
@@ -1079,34 +1066,6 @@
                 console.log('Switching to section:', sectionName);
             }
         }
-        
-        // Funciones para modal de contraseña
-        function openPasswordModal() {
-            document.getElementById('changePasswordModal').style.display = 'flex';
-        }
-        
-        function closePasswordModal() {
-            document.getElementById('changePasswordModal').style.display = 'none';
-            document.getElementById('change-password-form').reset();
-        }
-        
-        // Event listener para el botón de cambiar contraseña
-        document.addEventListener('DOMContentLoaded', function() {
-            const changePasswordBtn = document.getElementById('changePasswordBtn');
-            if (changePasswordBtn) {
-                changePasswordBtn.addEventListener('click', openPasswordModal);
-            }
-            
-            // Cerrar modal al hacer click fuera
-            const modal = document.getElementById('changePasswordModal');
-            if (modal) {
-                modal.addEventListener('click', function(e) {
-                    if (e.target === modal) {
-                        closePasswordModal();
-                    }
-                });
-            }
-        });
     </script>
     <script src="../js/api-client.js"></script>
     <script src="../js/auth-api.js"></script>

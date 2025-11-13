@@ -78,21 +78,6 @@
 				</button>
 			</form>
 
-			<div class="login-divider">
-				<span>o</span>
-			</div>
-
-			<div class="demo-credentials">
-				<p><strong>Credenciales de prueba:</strong></p>
-				<div class="demo-user">
-					<span><i class="fa fa-user"></i> Cliente:</span> 
-					<code>cliente@bocatto.com</code> / <code>cliente123</code>
-				</div>
-				<div class="demo-user">
-					<span><i class="fa fa-shield"></i> Admin:</span> 
-					<code>admin@adminbocatto.com</code> / <code>adminPass123</code>
-				</div>
-			</div>
 			<p class="register-link">¿No tienes una cuenta? <a href="#" id="openRegisterModal">Regístrate aquí</a></p>
 		</div>
 	</div>
@@ -215,92 +200,49 @@
 		</div>
 	</div>
 
-	<br>
-	<div class="contenedor">
-		<h1>Nuestro Menú</h1>
-		<div class="contenedor-platos">
-			<ul class="tipo-plato">
+	<!-- Sección principal del menú sin contenedor -->
+	<section class="menu-section">
+		<div class="menu-header">
+			<h1>Nuestro Menú</h1>
+			<p class="menu-subtitle">Descubre nuestros deliciosos sabores</p>
+		</div>
+		
+		<nav class="menu-nav">
+			<ul class="tipo-plato" id="categoriesFilter">
 				<li class="tipo-item tipo-item_activado" data-categoria="Todo">Todo</li>
-				<li class="tipo-item" data-categoria="Entradas">Entradas o Snacks</li>
-				<li class="tipo-item" data-categoria="Platos Principales">Platos Principales</li>
-				<li class="tipo-item" data-categoria="Combos">Combos o Especialidades</li>
+				<li class="tipo-item" data-categoria="Entradas y Snacks">Entradas</li>
+				<li class="tipo-item" data-categoria="Platos principales o combos">Platos</li>
 				<li class="tipo-item" data-categoria="Postres">Postres</li>
 				<li class="tipo-item" data-categoria="Bebidas">Bebidas</li>
+				<li class="tipo-item" data-categoria="Cócteles">Cócteles</li>
 			</ul>
-			<div class="lista-platos">
-				<!-- Entradas o Snacks -->
-				<div class="item" data-categoria="Entradas" data-descripcion="Deliciosas alitas de pollo crujientes con salsa BBQ y aderezo ranch">
-					<img src="../images/platos/Entradas_Snacks/snack1.jpg" alt="alitas">
-					<a href="#">Alitas BBQ (6 piezas)</a>
-					<a href="#">$7.50</a>
-				</div>
-				<div class="item" data-categoria="Entradas" data-descripcion="Nachos caseros con queso cheddar, jalapeños, guacamole y crema agria">
-					<img src="../images/platos/Entradas_Snacks/snack2.jpg" alt="nachos">
-					<a href="#">Nachos Supreme</a>
-					<a href="#">$6.75</a>
-				</div>
-
-				<!-- Platos Principales -->
-				<div class="item" data-categoria="Platos Principales" data-descripcion="Jugosa hamburguesa de carne angus con queso cheddar, lechuga, tomate y papas fritas">
-					<img src="../images/platos/Platos_Principales/principal1.jpg" alt="hamburguesa">
-					<a href="#">Hamburguesa Angus Premium</a>
-					<a href="#">$12.50</a>
-				</div>
-				<div class="item" data-categoria="Platos Principales" data-descripcion="Piernas de pollo marinado a la parrilla pilaf y vegetales salteados">
-					<img src="../images/platos/Platos_Principales/principal2.jpg" alt="pollo">
-					<a href="#">Pollo a la Parrilla</a>
-					<a href="#">$11.25</a>
-				</div>
-
-				<!-- Combos o Especialidades -->
-				<div class="item" data-categoria="Combos" data-descripcion="Hamburguesa doble con queso, papas fritas grandes y bebida de 500ml">
-					<img src="../images/platos/Combos_Especialidades/combo1.jpg" alt="combo1">
-					<a href="#">Combo Doble Deluxe</a>
-					<a href="#">$15.90</a>
-				</div>
-				<div class="item" data-categoria="Combos" data-descripcion="Pollo crispy, papas cajún, ensalada coleslaw y bebida refrescante">
-					<img src="../images/platos/Combos_Especialidades/combo2.jpg" alt="combo2">
-					<a href="#">Combo Crispy Chicken</a>
-					<a href="#">$14.50</a>
-				</div>
-
-				<!-- Postres -->
-				<div class="item" data-categoria="Postres" data-descripcion="Cremoso cheesecake de vainilla con coulis de frutos rojos">
-					<img src="../images/platos/postres/postre5.jpg" alt="cheesecake">
-					<a href="#">Cheesecake de Frutos Rojos</a>
-					<a href="#">$5.25</a>
-				</div>
-				<div class="item" data-categoria="Postres" data-descripcion="Brownie tibio con helado de vainilla y salsa de chocolate caliente">
-					<img src="../images/platos/postres/postre6.jpg" alt="brownie">
-					<a href="#">Brownie con Helado</a>
-					<a href="#">$4.75</a>
-				</div>
-
-				<!-- Bebidas -->
-				<div class="item" data-categoria="Bebidas" data-descripcion="Refrescante limonada natural con hierbas frescas y miel">
-					<img src="../images/platos/bebidas/bebida1.jpg" alt="limonada">
-					<a href="#">Limonada de Hierbas</a>
-					<a href="#">$3.50</a>
-				</div>
-				<div class="item" data-categoria="Bebidas" data-descripcion="Cerveza artesanal rubia con notas cítricas y amargor equilibrado">
-					<img src="../images/platos/bebidas/bebida2.jpg" alt="cerveza">
-					<a href="#">Cerveza Artesanal Rubia</a>
-					<a href="#">$4.25</a>
+		</nav>
+		
+		<div class="products-container">
+			<div class="lista-platos" id="productsList">
+				<!-- Productos cargados dinámicamente desde la API -->
+				<div class="loading-spinner" id="loadingSpinner">
+					<p>Cargando productos...</p>
 				</div>
 			</div>
 		</div>
-	</div>
+	</section>
     <!-- Modal para detalle del plato -->
     <div id="modalPlato" class="modal" aria-hidden="true">
         <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-nombre">
-            <span class="close" id="modal-close" title="Cerrar">&times;</span>
+            <!-- Header del modal -->
+            <div class="modal-header">
+                <h2 id="modal-nombre">Nombre Plato</h2>
+                <span class="close" id="modal-close" title="Cerrar">&times;</span>
+            </div>
+            
             <div class="modal-body">
                 <div class="modal-image-section">
                     <img id="modal-img" src="" alt="">
                 </div>
                 <div class="modal-info-section">
                     <div class="modal-details">
-                        <h2 id="modal-nombre">Nombre Plato</h2>
+                        <h2 id="modal-nombre-detalle">Nombre Plato</h2>
                         <p id="modal-descripcion">Descripción / contenido del plato</p>
                         <p id="modal-precio" class="precio">$0.00</p>
 
@@ -353,8 +295,6 @@
         </div>
     </div>
 
-	<script src="../js/filtro-platos.js"></script>
-	<script src="../js/modal-plato.js"></script>
 	<footer>
 		<div class="footer-content">
 			<h3>Síguenos en nuestras redes sociales</h3>
@@ -368,12 +308,14 @@
 		<p>reCAPTCHA y Google protegen este sitio</p>
 		<p>copyright &copy;2025 Bocatto Valley. Inc</p>
 	</div>
-</footer>
+	</footer>
+
+	<!-- Scripts en orden correcto -->
+	<script src="../js/config.js"></script>
 	<script src="../js/api-client.js"></script>
 	<script src="../js/auth-api.js"></script>
+	<script src="../js/modal-plato.js"></script>
 	<script src="../js/menu.js"></script>
 	<script src="../js/login-modal.js"></script>
 	<script src="../js/register-modal.js"></script>
-	<script src="../js/filtro-platos.js"></script>
-	<script src="../js/modal-plato.js"></script>
 </body></html>

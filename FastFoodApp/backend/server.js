@@ -12,6 +12,9 @@ import connectDB from './config/database.js';
 
 // Importar rutas
 import authRoutes from './routes/authRoutes.js';
+import ambienteRoutes from './routes/ambienteRoutes.js';
+import reservacionRoutes from './routes/reservacionRoutes.js';
+import productRoutes from './routes/productRoutes.js';
 
 // Cargar variables de entorno
 dotenv.config();
@@ -54,6 +57,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// Servir archivos estáticos (imágenes)
+app.use('/images', express.static('../images'));
+
 // Logging en desarrollo
 if (process.env.NODE_ENV === 'development') {
     app.use((req, res, next) => {
@@ -74,13 +80,24 @@ app.get('/', (req, res) => {
         version: '1.0.0',
         endpoints: {
             auth: '/api/auth',
-            // Agregar más endpoints aquí en el futuro
+            ambientes: '/api/ambientes',
+            reservaciones: '/api/reservaciones',
+            products: '/api/products'
         }
     });
 });
 
 // Rutas de autenticación
 app.use('/api/auth', authRoutes);
+
+// Rutas de ambientes
+app.use('/api/ambientes', ambienteRoutes);
+
+// Rutas de productos
+app.use('/api/products', productRoutes);
+
+// Rutas de reservaciones
+app.use('/api/reservaciones', reservacionRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
