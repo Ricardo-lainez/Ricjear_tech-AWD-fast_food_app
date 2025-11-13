@@ -25,11 +25,24 @@ const CONFIG = {
             REGISTER: '/auth/register',
             LOGOUT: '/auth/logout',
             ME: '/auth/me'
+        },
+        
+        // Endpoints para productos del menú
+        PRODUCTS: {
+            ALL: '/products',
+            BY_ID: '/products',
+            BY_CATEGORY: '/products/category',
+            BY_SUBCATEGORY: '/products/subcategory',
+            CATEGORIES: '/products/categories',
+            SUBCATEGORIES: '/products/category', // + /:categoria/subcategories
+            SEARCH: '/products/search',
+            POPULAR: '/products/popular',
+            STATS: '/products/stats'
         }
-        // Aquí puedes agregar más endpoints cuando los crees
-        // MENU: '/menu',
+        
+        // Otros endpoints futuros:
         // RESERVAS: '/reservas',
-        // etc.
+        // ORDERS: '/orders'
     },
 
     // Configuración de cookies/tokens

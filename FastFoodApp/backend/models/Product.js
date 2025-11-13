@@ -1,7 +1,4 @@
 /**
- * ========================================
- * MODELO PRODUCTO - BOCATTO VALLEY
- * ========================================
  * Modelo para gestionar productos del menú
  */
 

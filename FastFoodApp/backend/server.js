@@ -14,6 +14,7 @@ import connectDB from './config/database.js';
 import authRoutes from './routes/authRoutes.js';
 import ambienteRoutes from './routes/ambienteRoutes.js';
 import reservacionRoutes from './routes/reservacionRoutes.js';
+import productRoutes from './routes/productRoutes.js';
 
 // Cargar variables de entorno
 dotenv.config();
@@ -77,7 +78,8 @@ app.get('/', (req, res) => {
         endpoints: {
             auth: '/api/auth',
             ambientes: '/api/ambientes',
-            reservaciones: '/api/reservaciones'
+            reservaciones: '/api/reservaciones',
+            products: '/api/products'
         }
     });
 });
@@ -87,6 +89,9 @@ app.use('/api/auth', authRoutes);
 
 // Rutas de ambientes
 app.use('/api/ambientes', ambienteRoutes);
+
+// Rutas de productos
+app.use('/api/products', productRoutes);
 
 // Rutas de reservaciones
 app.use('/api/reservaciones', reservacionRoutes);
