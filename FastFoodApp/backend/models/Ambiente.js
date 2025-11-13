@@ -80,7 +80,8 @@ const ambienteSchema = new mongoose.Schema({
 });
 
 // Índices para mejorar búsquedas
-ambienteSchema.index({ nombre: 1 });
+// Nota: `nombre` ya declara `unique: true` en el schema, lo que crea
+// automáticamente un índice. Evitamos crear el mismo índice dos veces.
 ambienteSchema.index({ activo: 1, orden: 1 });
 
 // Virtual para generar el ID del ambiente (slug)

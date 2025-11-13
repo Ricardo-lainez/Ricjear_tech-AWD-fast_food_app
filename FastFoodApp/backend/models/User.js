@@ -243,8 +243,13 @@ userSchema.statics.getStatistics = async function() {
 
 // ==========================================
 // ÍNDICES PARA OPTIMIZAR CONSULTAS
+// Nota: algunos campos (por ejemplo `email`) ya declaran `unique: true`
+// lo que crea automáticamente un índice. Evitar definir el mismo índice
+// dos veces (p.ej. `unique:true` + `schema.index(...)`) para prevenir
+// warnings de Mongoose sobre índices duplicados.
 // ==========================================
-userSchema.index({ email: 1 });
+// Mantener índices compuestos y de rango; eliminar índice explícito
+// para `email` porque `unique: true` ya crea el índice.
 userSchema.index({ role: 1, isActive: 1 });
 userSchema.index({ registrationDate: -1 });
 

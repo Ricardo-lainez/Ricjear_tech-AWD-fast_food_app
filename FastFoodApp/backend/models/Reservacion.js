@@ -73,7 +73,9 @@ const reservacionSchema = new mongoose.Schema({
 });
 
 // Índices para mejorar rendimiento
-reservacionSchema.index({ numeroReservacion: 1 });
+// Nota: `numeroReservacion` se define con `unique: true` en el schema,
+// lo que ya crea un índice único. Evitar volver a declararlo con
+// `schema.index(...)` para no generar warnings de índices duplicados.
 reservacionSchema.index({ cliente: 1, fechaReservacion: -1 });
 reservacionSchema.index({ ambiente: 1, fechaReservacion: 1 });
 reservacionSchema.index({ estado: 1 });
