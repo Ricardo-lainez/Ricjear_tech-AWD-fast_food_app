@@ -12,16 +12,32 @@ body{
 
 /* Contactenos specific styles */
 header {
-	background-image: url('../images/slider/slider3.jpg');
+    background-image: url('../images/slider/slider3.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Overlay to improve text contrast on header image */
+header::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.6));
 }
 
 h1 {
-	color: #EE9B14;
-	font-family: 'Satisfy', cursive;
-	font-size: 80px;
-	text-align: center;
-	margin-top: 120px;
-	margin-bottom: 80px;
+    color: #EE9B14;
+    font-family: 'Satisfy', cursive;
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    text-align: center;
+    margin: 40px 0 30px;
+    position: relative;
+    z-index: 1; /* sit above header overlay */
 }
 
 
@@ -43,12 +59,10 @@ footer{
 }
 
 .footer-content h3{
-    font-size: 3rem;
-    font-weight: 20px auto;
-    line-height: 25px;
-    font-size: 30px;
+    font-size: 1.9rem;
+    line-height: 1.1;
     font-family: 'Satisfy', cursive;
-    margin-bottom: 30px;
+    margin-bottom: 18px;
 }
 
 .redes_sociales{
@@ -69,17 +83,12 @@ footer{
     margin-bottom: 20px;
 }
 
-a[href="https://www.facebook.com"],i[class="fa fa-facebook"]:hover{
-    color: #3b5998;
+.redes_sociales a:hover i{
+    transform: translateY(-4px);
 }
-
-a[href="https://www.instagram.com"],i[class="fa fa-instagram"]:hover{
-    color: #d628b0;
-}
-
-a[href="https://www.twitter.com"],i[class="fa fa-twitter"]:hover{
-    color: #00acee;
-}
+.redes_sociales a.facebook:hover i{ color: #3b5998; }
+.redes_sociales a.instagram:hover i{ color: #d628b0; }
+.redes_sociales a.twitter:hover i{ color: #00acee; }
 
 .derechos{
     background:  #000000;
@@ -95,95 +104,126 @@ a[href="https://www.twitter.com"],i[class="fa fa-twitter"]:hover{
 }
 
 /*estilos del formulario de contáctenos*/
-.formularios{
-    color: gray;
-    padding: 15px;
-    width: 80%;
-    height: 475px;
-    margin: 0 auto; 
-    margin-bottom: 60px;
+
+.contact-section{
+    max-width: 1100px;
+    margin: 0 auto 60px;
+    padding: 30px 20px;
 }
 
-.contenedor-formularios {
-    border-radius: 3px;
-    padding: 10px;
-    width: 75%;
-    margin: auto;
-    margin-bottom: 60px;
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 16px;
+.contact-card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,255,255,0.04);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border-radius: 10px;
+    padding: 28px;
+    color: #E6E6E6;
 }
 
 #formContactenos{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    padding: 20px;
-    grid-gap: 10px;
+    gap: 18px;
+    align-items: start;
 }
 
 #formContactenos label{
     display: block;
-    margin-bottom: 10px;
-    color: #ffffff;
+    margin-bottom: 8px;
+    color: #E6E6E6;
+    font-size: 0.95rem;
 }
 
-#formContactenos .elemento-form:nth-child(7){
-    grid-column-start: span 2;
-}
-
-#formContactenos .elemento-form{
-    margin-bottom: 25px;
+.elemento-form{ /* generic wrapper for inputs */
+    margin-bottom: 8px;
 }
 
 #formContactenos textarea{
     width: 100%;
-    height: 200px;
-    margin-bottom: 40px;
+    min-height: 160px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(0,0,0,0.25);
+    color: #fff;
+    resize: vertical;
 }
 
-#formContactenos .textbox{
-    width: 80%;
-    height: 35px;
-    border-radius: 4px;
+.textbox, .comboBox, #formContactenos input[type="text"], #formContactenos input[type="email"], #formContactenos input[type="tel"]{
+    width: 100%;
+    height: 42px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(0,0,0,0.2);
+    color: #fff;
+    transition: box-shadow 0.18s ease, transform 0.12s ease;
 }
 
-#formContactenos .textbox:focus{
-    border: 4px solid #fca311;
-    outline: none;
-    transition: 0.2s ease-out;
+.textbox:focus, .comboBox:focus, #formContactenos input:focus, #formContactenos textarea:focus{
+    outline: 3px solid rgba(252,163,17,0.12);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45) inset;
+    border-color: #fca311;
 }
 
-#formContactenos .comboBox{
-    width: 60%;
-    height: 35px;
-    margin-bottom: 30px;
-}
-
-#formContactenos .preg{
+.preg{
     margin-right: 10px;
     margin-bottom: 5px;
     cursor: pointer;
 }
 
-#formContactenos .radioButton{
+.radioButton{
     color: #fff;
 }
 
-#formContactenos .btn{
-    margin: auto;
-    width: 30%;
-    height: 45px;
-    border-radius: 0px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #000000;
-    border: none;
-    box-shadow: 0px  0px 3px 0px #ffffff;
-    cursor: pointer;
+.form-actions{
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    align-items: center;
+    margin-top: 6px;
 }
 
-#formContactenos .btn:hover{
-    background: #fca311;
+.btn{
+    padding: 10px 18px;
+    min-width: 140px;
+    height: 44px;
+    border-radius: 8px;
+    font-size: 1rem;
     color: #14213d;
+    background: linear-gradient(180deg,#fca311,#ffb74d);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(252,163,17,0.18);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.btn:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(252,163,17,0.2);
+}
+
+.btn:focus{
+    outline: 3px solid rgba(252,163,17,0.18);
+}
+
+/* make the message textarea span full width */
+#formContactenos .elemento-form.full-width{
+    grid-column: 1 / -1;
+}
+
+/* Responsive rules */
+@media (max-width: 900px){
+    #formContactenos{ grid-template-columns: 1fr; }
+    .form-actions{ justify-content: center; }
+    .contact-section{ padding: 18px; }
+}
+
+@media (max-width: 480px){
+    h1{ margin-top: 18px; margin-bottom: 18px; }
+    .textbox, .comboBox{ height: 40px; }
+    .btn{ width: 100%; min-width: auto; }
 }
 

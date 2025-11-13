@@ -215,45 +215,106 @@
 	</div>
 
 	<section class="ofertas">
-		<h1>Nuestras Ofertas</h1>
-		<div class="contenedor-ofertas" id="primero">
-			<img src="../images/promociones/promo1.jpeg" alt="promo" class="contenedor-imagen">
-			<div class="texto-imagen">
-				<h2>Lunes</h2>
-				<p style="text-shadow: 0 0 3px #b6b5b5">20% de Descuento en Todos los Platos</p>
-				<p style="text-shadow: 0 0 3px #b6b5b5">Jarro de cerveza 0.99 ctvs</p>
+		<h1>Ofertas de la Semana</h1>
+		<p class="ofertas-subtitle">Disfruta de promociones especiales solo los miércoles y sábados</p>
+		
+		<!-- OFERTA MIÉRCOLES - COMIDA -->
+		<div class="contenedor-ofertas oferta-miercoles" id="oferta-miercoles">
+			<div class="oferta-card">
+				<!-- CAROUSEL MIÉRCOLES -->
+				<div class="oferta-carousel">
+					<div class="carousel-container">
+						<div class="carousel-slide">
+							<img src="../images/promociones/hamburguesas.jpg" alt="Hamburguesas - Oferta Miércoles" class="oferta-imagen">
+						</div>
+						<div class="carousel-slide">
+							<img src="../images/promociones/alitas.jpg" alt="Alitas Picadas - Oferta Miércoles" class="oferta-imagen">
+						</div>
+					</div>
+					<!-- Botones de navegación -->
+					<button class="carousel-btn carousel-prev" onclick="cambiarSlide(event, -1, 'miercoles')">❮</button>
+					<button class="carousel-btn carousel-next" onclick="cambiarSlide(event, 1, 'miercoles')">❯</button>
+					
+					<!-- Indicadores de slides -->
+					<div class="carousel-indicators">
+						<span class="indicator active" onclick="irAlSlide(0, 'miercoles')"></span>
+						<span class="indicator" onclick="irAlSlide(1, 'miercoles')"></span>
+					</div>
+
+					<!-- Badge -->
+					<div class="oferta-badge miercoles-badge">
+						<span class="badge-day">MIÉRCOLES</span>
+						<span class="badge-emoji">🍔</span>
+					</div>
+				</div>
+
+				<!-- CONTENIDO MIÉRCOLES -->
+				<div class="oferta-contenido">
+					<h2>Oferta de Comida</h2>
+					<div class="oferta-items">
+						<div class="item-oferta">
+							<h3>Hamburguesas Premium</h3>
+							<p class="precio-oferta">50% Descuento</p>
+							<p class="descripcion">Deliciosas hamburguesas caseras</p>
+						</div>
+						<div class="item-oferta">
+							<h3>Alitas Picadas</h3>
+							<p class="precio-oferta">$0.50 c/u</p>
+							<p class="descripcion">Crujientes y sabrosas</p>
+						</div>
+					</div>
+					<button class="btn-oferta">Ver Más</button>
+				</div>
 			</div>
 		</div>
-		<div class="contenedor-ofertas" id="segundo">
-			<img src="../images/promociones/promo2.jpeg" alt="promo" class="contenedor-imagen">
-			<div class="texto-imagen">
-				<h2>Martes</h2>
-				<p style="text-shadow: 0 0 3px #b6b5b5">10% en piqueos</p>
-				<p style="text-shadow: 0 0 3px #b6b5b5">2x1 en Cocteles y Mojitos</p>
-			</div>
-		</div>
-		<div class="contenedor-ofertas" id="tercero">
-			<img src="../images/promociones/promo3.jpeg" alt="promo" class="contenedor-imagen">
-			<div class="texto-imagen">
-				<h2>Miércoles</h2>
-				<p style="text-shadow: 0 0 3px #b6b5b5">Alitas 0.50 ctvs c/u</p>
-				<p style="text-shadow: 0 0 3px #b6b5b5">Michelada $1.95</p>
-			</div>
-		</div>
-		<div class="contenedor-ofertas" id="cuarto">
-			<img src="../images/promociones/promo4.jpeg" alt="promo" class="contenedor-imagen">
-			<div class="texto-imagen">
-				<h2>Jueves</h2>
-				<p style="text-shadow: 0 0 3px #b6b5b5">Burguer Bites 20% de Descuento</p>
-				<p style="text-shadow: 0 0 3px #b6b5b5">Jarro de Cerverza 0.99 ctvs</p>
-			</div>
-		</div>
-		<div class="contenedor-ofertas" id="quinto">
-			<img src="../images/promociones/promo5.jpeg" alt="promo" class="contenedor-imagen">
-			<div class="texto-imagen">
-				<h2>Sábado</h2>
-				<p style="text-shadow: 0 0 3px #b6b5b5">Rockin Pops 20% de Descuento</p>
-				<p style="text-shadow: 0 0 3px #b6b5b5">Jarro de Cerverza 0.99 ctvs</p>
+
+		<!-- OFERTA SÁBADO - BEBIDAS -->
+		<div class="contenedor-ofertas oferta-sabado" id="oferta-sabado">
+			<div class="oferta-card">
+				<!-- CAROUSEL SÁBADO -->
+				<div class="oferta-carousel">
+					<div class="carousel-container">
+						<div class="carousel-slide">
+							<img src="../images/promociones/coctel.jpeg" alt="Cócteles Premium - Oferta Sábado" class="oferta-imagen">
+						</div>
+						<div class="carousel-slide">
+							<img src="../images/promociones/cerveza.jpg" alt="Cerveza Artesanal - Oferta Sábado" class="oferta-imagen">
+						</div>
+					</div>
+					<!-- Botones de navegación -->
+					<button class="carousel-btn carousel-prev" onclick="cambiarSlide(event, -1, 'sabado')">❮</button>
+					<button class="carousel-btn carousel-next" onclick="cambiarSlide(event, 1, 'sabado')">❯</button>
+					
+					<!-- Indicadores de slides -->
+					<div class="carousel-indicators">
+						<span class="indicator active" onclick="irAlSlide(0, 'sabado')"></span>
+						<span class="indicator" onclick="irAlSlide(1, 'sabado')"></span>
+					</div>
+
+					<!-- Badge -->
+					<div class="oferta-badge sabado-badge">
+						<span class="badge-day">SÁBADO</span>
+						<span class="badge-emoji">🍹</span>
+					</div>
+				</div>
+
+				<!-- CONTENIDO SÁBADO -->
+				<div class="oferta-contenido">
+					<h2>Oferta de Bebidas</h2>
+					<div class="oferta-items">
+						<div class="item-oferta">
+							<h3>Cócteles Premium</h3>
+							<p class="precio-oferta">2x1</p>
+							<p class="descripcion">Disfruta del doble</p>
+						</div>
+						<div class="item-oferta">
+							<h3>Cerveza Artesanal</h3>
+							<p class="precio-oferta">$0.99</p>
+							<p class="descripcion">Jarro frío y refrescante</p>
+						</div>
+					</div>
+					<button class="btn-oferta">Ver Más</button>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -276,4 +337,5 @@
 	<script src="../js/menu.js"></script>
 	<script src="../js/login-modal.js"></script>
 	<script src="../js/register-modal.js"></script>
+	<script src="../js/ofertas.js"></script>
 </body></html>
