@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos - Panel Admin</title>
+    <link rel="stylesheet" type="text/css" href="../../styles/stylesAdmin/stylesProductoAdmin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header del Panel de Admin -->
+    <header class="admin-header">
+        <div class="header-left">
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <span>Bocatto Valley</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="admin-user-info" id="adminUserInfo">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <span class="user-name">Administrador</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenedor Principal -->
+    <div class="admin-container">
+        <!-- Sidebar de Navegación -->
+        <aside class="admin-sidebar">
+            <nav class="sidebar-nav">
+                <a href="../AdminProfile.html" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </a>
+                <a href="reportesAdmin.html" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Reportes</span>
+                </a>
+                <a href="productosAdmin.html" class="nav-item active">
+                    <i class="fas fa-utensils"></i>
+                    <span>Productos</span>
+                </a>
+                <a href="reservacionesAdmin.html" class="nav-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Reservaciones</span>
+                </a>
+                <a href="pedidosAdmin.html" class="nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Pedidos</span>
+                </a>
+                <a href="clientesAdmin.html" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Clientes</span>
+                </a>
+                <a href="empleadosAdmin.html" class="nav-item">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Empleados</span>
+                </a>
+                <a href="configuracionAdmin.html" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Configuración</span>
+                </a>
+                <a href="../../index.html" class="nav-item nav-item-bottom">
+                    <i class="fas fa-globe"></i>
+                    <span>Ver Sitio Web</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main class="admin-main">
+            <div class="page-header">
+                <h1><i class="fas fa-utensils"></i> Gestión de Productos</h1>
+                <p>Administra el menú de tu restaurante</p>
+            </div>
+
+            <!-- Barra de Acciones -->
+            <div class="actions-bar">
+                <button class="btn-primary" onclick="abrirModalCrear()">
+                    <i class="fas fa-plus"></i> Nuevo Producto
+                </button>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar productos..." onkeyup="buscarProductos()">
+                </div>
+                <select id="filterCategoria" class="filter-select" onchange="filtrarPorCategoria()">
+                    <option value="">Todas las categorías</option>
+                    <option value="Entradas">Entradas</option>
+                    <option value="Platos Principales">Platos Principales</option>
+                    <option value="Bebidas">Bebidas</option>
+                    <option value="Postres">Postres</option>
+                    <option value="Combos">Combos</option>
+                </select>
+            </div>
+
+            <!-- Tabla de Productos -->
+            <div class="table-container">
+                <table class="data-table" id="productosTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productosTableBody">
+                        <!-- Productos cargados dinámicamente -->
+                        <tr>
+                            <td colspan="8" class="loading-row">
+                                <i class="fas fa-spinner fa-spin"></i> Cargando productos...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Paginación -->
+            <div class="pagination-container">
+                <button class="pagination-btn" id="btnPrev" onclick="cambiarPagina(-1)">
+                    <i class="fas fa-chevron-left"></i> Anterior
+                </button>
+                <span class="pagination-info" id="paginationInfo">Página 1 de 1</span>
+                <button class="pagination-btn" id="btnNext" onclick="cambiarPagina(1)">
+                    Siguiente <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Crear/Editar Producto -->
+    <div id="productoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">
+                    <i class="fas fa-plus-circle"></i> Nuevo Producto
+                </h2>
+                <button class="modal-close" onclick="cerrarModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="productoForm" onsubmit="guardarProducto(event)">
+                    <input type="hidden" id="productoId" value="">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombre">
+                                <i class="fas fa-tag"></i> Nombre del Producto *
+                            </label>
+                            <input type="text" id="nombre" name="nombre" required 
+                                   placeholder="Ej: Hamburguesa Clásica" maxlength="100">
+                            <span class="form-error" id="errorNombre"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="categoria">
+                                <i class="fas fa-list"></i> Categoría *
+                            </label>
+                            <select id="categoria" name="categoria" required>
+                                <option value="">Seleccionar categoría</option>
+                                <option value="Entradas">Entradas</option>
+                                <option value="Platos Principales">Platos Principales</option>
+                                <option value="Bebidas">Bebidas</option>
+                                <option value="Postres">Postres</option>
+                                <option value="Combos">Combos</option>
+                            </select>
+                            <span class="form-error" id="errorCategoria"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="precio">
+                                <i class="fas fa-dollar-sign"></i> Precio *
+                            </label>
+                            <input type="number" id="precio" name="precio" required 
+                                   placeholder="0.00" min="0" step="0.01">
+                            <span class="form-error" id="errorPrecio"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="stock">
+                                <i class="fas fa-boxes"></i> Stock Disponible *
+                            </label>
+                            <input type="number" id="stock" name="stock" required 
+                                   placeholder="0" min="0">
+                            <span class="form-error" id="errorStock"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion">
+                            <i class="fas fa-align-left"></i> Descripción
+                        </label>
+                        <textarea id="descripcion" name="descripcion" rows="4" 
+                                  placeholder="Describe el producto..." maxlength="500"></textarea>
+                        <span class="form-error" id="errorDescripcion"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imagen">
+                            <i class="fas fa-image"></i> URL de la Imagen
+                        </label>
+                        <input type="url" id="imagen" name="imagen" 
+                               placeholder="https://ejemplo.com/imagen.jpg">
+                        <span class="form-error" id="errorImagen"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="disponible" name="disponible" checked>
+                            <span><i class="fas fa-check-circle"></i> Producto disponible para venta</span>
+                        </label>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secondary" onclick="cerrarModal()">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> Guardar Producto
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Confirmar Eliminación -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header modal-header-danger">
+                <h2>
+                    <i class="fas fa-exclamation-triangle"></i> Confirmar Eliminación
+                </h2>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas eliminar el producto <strong id="deleteProductName"></strong>?</p>
+                <p class="text-danger">Esta acción no se puede deshacer.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="cerrarModalDelete()">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button type="button" class="btn-danger" onclick="confirmarEliminar()">
+                    <i class="fas fa-trash"></i> Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Operación exitosa</span>
+    </div>
+
+    <script src="../../js/jsAdmin/productosAdmin.js"></script>
+</body>
+</html>
