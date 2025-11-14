@@ -20,14 +20,19 @@ export const obtenerTodosLosProductos = async (req, res) => {
     try {
         const productos = await Product.find().sort({ creationDate: 1 });
         
-        // Mapear y agregar índice secuencial como productId si no existe
-        const productosConId = productos.map((producto, index) => {
+        // Actualizar productos sin productId en la base de datos
+        let needsUpdate = false;
+        const productosConId = await Promise.all(productos.map(async (producto, index) => {
             const productoObj = producto.toObject();
             if (!productoObj.productId || productoObj.productId === 0) {
-                productoObj.productId = index + 1;
+                const nuevoId = index + 1;
+                productoObj.productId = nuevoId;
+                // Actualizar en la base de datos
+                await Product.findByIdAndUpdate(producto._id, { productId: nuevoId });
+                needsUpdate = true;
             }
             return productoObj;
-        });
+        }));
         
         res.status(200).json({
             success: true,

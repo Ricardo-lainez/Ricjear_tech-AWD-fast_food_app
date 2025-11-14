@@ -3,7 +3,6 @@
  */
 
 import mongoose from 'mongoose';
-import Counter from './Counter.js';
 
 // Schema para información nutricional
 const nutritionalInfoSchema = new mongoose.Schema({
@@ -288,12 +287,20 @@ productSchema.pre('save', async function(next) {
     // Solo generar productId si es un documento nuevo
     if (this.isNew && !this.productId) {
         try {
-            const counter = await Counter.findByIdAndUpdate(
-                'productId',
-                { $inc: { sequence_value: 1 } },
-                { new: true, upsert: true }
-            );
-            this.productId = counter.sequence_value;
+            const Product = this.constructor;
+            
+            // Buscar el máximo productId actual
+            const maxProduct = await Product.findOne()
+                .sort({ productId: -1 })
+                .select('productId')
+                .lean();
+            
+            // Contar total de productos
+            const totalProductos = await Product.countDocuments();
+            
+            // Usar el mayor entre el max productId y el total de productos
+            const maxId = maxProduct?.productId || 0;
+            this.productId = Math.max(maxId, totalProductos) + 1;
         } catch (error) {
             return next(error);
         }

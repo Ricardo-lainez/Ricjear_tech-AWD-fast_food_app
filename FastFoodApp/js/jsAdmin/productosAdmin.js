@@ -201,10 +201,10 @@ function renderizarProductos() {
             </td>
             <td>
                 <div class="action-btns">
-                    <button class="btn-icon btn-edit" onclick="editarProducto(${producto.id})" title="Editar producto">
+                    <button class="btn-icon btn-edit" onclick="editarProducto('${producto.id}')" title="Editar producto">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button class="btn-icon btn-delete" onclick="confirmarEliminarProducto(${producto.id})" title="Eliminar producto">
+                    <button class="btn-icon btn-delete" onclick="confirmarEliminarProducto('${producto.id}')" title="Eliminar producto">
                         <i class="fas fa-trash"></i>
                     </button>
                 </div>
@@ -716,3 +716,17 @@ function formatearFecha(fecha) {
         day: 'numeric'
     }).format(new Date(fecha));
 }
+
+// ==========================================
+// EXPONER FUNCIONES GLOBALMENTE PARA ONCLICK
+// ==========================================
+window.abrirModalCrear = abrirModalCrear;
+window.editarProducto = editarProducto;
+window.confirmarEliminarProducto = confirmarEliminarProducto;
+window.confirmarEliminar = confirmarEliminar;
+window.cerrarModal = cerrarModal;
+window.cerrarModalDelete = cerrarModalDelete;
+window.guardarProducto = guardarProducto;
+window.cambiarPagina = cambiarPagina;
+window.buscarProductos = buscarProductos;
+window.filtrarPorCategoria = filtrarPorCategoria;
