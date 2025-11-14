@@ -20,19 +20,29 @@ export const obtenerTodosLosProductos = async (req, res) => {
     try {
         const productos = await Product.find().sort({ creationDate: 1 });
         
-        // Actualizar productos sin productId en la base de datos
-        let needsUpdate = false;
-        const productosConId = await Promise.all(productos.map(async (producto, index) => {
+        // Identificar productos que necesitan actualización
+        const productosParaActualizar = [];
+        const productosConId = productos.map((producto, index) => {
             const productoObj = producto.toObject();
+            const nuevoId = index + 1;
+            
             if (!productoObj.productId || productoObj.productId === 0) {
-                const nuevoId = index + 1;
                 productoObj.productId = nuevoId;
-                // Actualizar en la base de datos
-                await Product.findByIdAndUpdate(producto._id, { productId: nuevoId });
-                needsUpdate = true;
+                productosParaActualizar.push({
+                    updateOne: {
+                        filter: { _id: producto._id },
+                        update: { $set: { productId: nuevoId } }
+                    }
+                });
             }
             return productoObj;
-        }));
+        });
+        
+        // Actualizar en batch si hay productos sin ID
+        if (productosParaActualizar.length > 0) {
+            await Product.bulkWrite(productosParaActualizar);
+            console.log(`✅ ${productosParaActualizar.length} productos actualizados con productId`);
+        }
         
         res.status(200).json({
             success: true,
