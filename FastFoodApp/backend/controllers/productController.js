@@ -339,3 +339,194 @@ export const obtenerEstadisticasProductos = async (req, res) => {
         });
     }
 };
+
+// ==========================================
+// CREAR NUEVO PRODUCTO (ADMIN)
+// ==========================================
+
+/**
+ * @desc    Crear un nuevo producto
+ * @route   POST /api/products
+ * @access  Private/Admin
+ */
+export const crearProducto = async (req, res) => {
+    try {
+        const {
+            name,
+            description,
+            price,
+            img,
+            available,
+            currentStock,
+            category,
+            subcategory,
+            ingredients,
+            nutritionalInfo,
+            allergens,
+            spiceLevel,
+            preparationTime,
+            tags
+        } = req.body;
+
+        // Validar campos requeridos
+        if (!name || !description || !price || !img || !category) {
+            return res.status(400).json({
+                success: false,
+                message: 'Faltan campos requeridos: name, description, price, img, category'
+            });
+        }
+
+        // Crear producto
+        const producto = await Product.create({
+            name,
+            description,
+            price,
+            img,
+            available: available !== undefined ? available : true,
+            currentStock: currentStock || 0,
+            category,
+            subcategory,
+            ingredients,
+            nutritionalInfo,
+            allergens,
+            spiceLevel,
+            preparationTime,
+            tags
+        });
+
+        res.status(201).json({
+            success: true,
+            message: 'Producto creado exitosamente',
+            data: producto
+        });
+    } catch (error) {
+        console.error('Error al crear producto:', error);
+        
+        // Error de validación de Mongoose
+        if (error.name === 'ValidationError') {
+            const messages = Object.values(error.errors).map(err => err.message);
+            return res.status(400).json({
+                success: false,
+                message: 'Error de validación',
+                errors: messages
+            });
+        }
+
+        res.status(500).json({
+            success: false,
+            message: 'Error al crear el producto',
+            error: error.message
+        });
+    }
+};
+
+// ==========================================
+// ACTUALIZAR PRODUCTO (ADMIN)
+// ==========================================
+
+/**
+ * @desc    Actualizar un producto existente
+ * @route   PUT /api/products/:id
+ * @access  Private/Admin
+ */
+export const actualizarProducto = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updateData = req.body;
+
+        // Buscar y actualizar producto
+        const producto = await Product.findByIdAndUpdate(
+            id,
+            updateData,
+            {
+                new: true, // Devolver el documento actualizado
+                runValidators: true // Ejecutar validaciones del schema
+            }
+        );
+
+        if (!producto) {
+            return res.status(404).json({
+                success: false,
+                message: 'Producto no encontrado'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Producto actualizado exitosamente',
+            data: producto
+        });
+    } catch (error) {
+        console.error('Error al actualizar producto:', error);
+
+        // Error de ObjectId inválido
+        if (error.name === 'CastError') {
+            return res.status(400).json({
+                success: false,
+                message: 'ID de producto inválido'
+            });
+        }
+
+        // Error de validación
+        if (error.name === 'ValidationError') {
+            const messages = Object.values(error.errors).map(err => err.message);
+            return res.status(400).json({
+                success: false,
+                message: 'Error de validación',
+                errors: messages
+            });
+        }
+
+        res.status(500).json({
+            success: false,
+            message: 'Error al actualizar el producto',
+            error: error.message
+        });
+    }
+};
+
+// ==========================================
+// ELIMINAR PRODUCTO (ADMIN)
+// ==========================================
+
+/**
+ * @desc    Eliminar un producto
+ * @route   DELETE /api/products/:id
+ * @access  Private/Admin
+ */
+export const eliminarProducto = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const producto = await Product.findByIdAndDelete(id);
+
+        if (!producto) {
+            return res.status(404).json({
+                success: false,
+                message: 'Producto no encontrado'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Producto eliminado exitosamente',
+            data: producto
+        });
+    } catch (error) {
+        console.error('Error al eliminar producto:', error);
+
+        // Error de ObjectId inválido
+        if (error.name === 'CastError') {
+            return res.status(400).json({
+                success: false,
+                message: 'ID de producto inválido'
+            });
+        }
+
+        res.status(500).json({
+            success: false,
+            message: 'Error al eliminar el producto',
+            error: error.message
+        });
+    }
+};

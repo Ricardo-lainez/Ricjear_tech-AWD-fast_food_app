@@ -12,6 +12,28 @@ const BUSCAR_DEBOUNCE_MS = 150;
 let lastRenderKey = '';
 
 // ==========================================
+// UTILIDAD: OBTENER TOKEN DE AUTENTICACIÓN
+// ==========================================
+function obtenerToken() {
+    // Intentar obtener token de localStorage o sessionStorage
+    let sessionData = localStorage.getItem('bocatto_session') || sessionStorage.getItem('bocatto_session');
+    
+    if (!sessionData) {
+        throw new Error('NO_TOKEN');
+    }
+    
+    try {
+        const parsed = JSON.parse(sessionData);
+        if (!parsed.token) {
+            throw new Error('NO_TOKEN');
+        }
+        return parsed.token;
+    } catch (error) {
+        throw new Error('NO_TOKEN');
+    }
+}
+
+// ==========================================
 // INICIALIZACIÓN
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
@@ -41,14 +63,28 @@ async function cargarProductos() {
     try {
         mostrarCargando();
         
-        // Simulación de llamada a API (reemplazar con fetch real)
-        // const response = await fetch(`${API_BASE_URL}/products`);
-        // const data = await response.json();
+        const response = await fetch(`${API_BASE_URL}/products`);
+        const data = await response.json();
         
-        // Datos de ejemplo mientras se conecta al backend
-        productosData = generarProductosEjemplo();
+        if (!data.success) {
+            throw new Error(data.message || 'Error al cargar productos');
+        }
+        
+        // Mapear respuesta de MongoDB al formato del frontend
+        productosData = data.data.map(p => ({
+            id: p._id,
+            nombre: p.name,
+            categoria: p.category,
+            subcategoria: p.subcategory || '',
+            precio: p.price,
+            stock: p.currentStock,
+            disponible: p.available,
+            descripcion: p.description,
+            imagen: p.img,
+            ingredientes: p.ingredients || []
+        }));
+        
         productosFiltrados = [...productosData];
-        
         renderizarProductos();
     } catch (error) {
         console.error('Error al cargar productos:', error);
@@ -56,60 +92,7 @@ async function cargarProductos() {
     }
 }
 
-function generarProductosEjemplo() {
-    return [
-        {
-            id: 1,
-            nombre: 'Hamburguesa Clásica',
-            categoria: 'Platos Principales',
-            precio: 8.99,
-            stock: 45,
-            disponible: true,
-            descripcion: 'Deliciosa hamburguesa con carne de res, lechuga, tomate y queso',
-            imagen: '../images/platos/platos2.0/hmb_platos_1.jpg'
-        },
-        {
-            id: 2,
-            nombre: 'Alitas BBQ',
-            categoria: 'Entradas',
-            precio: 6.50,
-            stock: 30,
-            disponible: true,
-            descripcion: 'Alitas crujientes con salsa barbecue casera',
-            imagen: '../images/platos/platos2.0/alitas_clasicas_platos.jpg'
-        },
-        {
-            id: 3,
-            nombre: 'Coca Cola',
-            categoria: 'Bebidas',
-            precio: 2.50,
-            stock: 100,
-            disponible: true,
-            descripcion: 'Refresco clásico 500ml',
-            imagen: '../images/platos/bebidas/pepsi.jpg'
-        },
-        {
-            id: 4,
-            nombre: 'Brownie con Helado',
-            categoria: 'Postres',
-            precio: 5.99,
-            stock: 20,
-            disponible: true,
-            descripcion: 'Brownie de chocolate caliente con helado de vainilla',
-            imagen: '../images/platos/postres/brownie.jpg'
-        },
-        {
-            id: 5,
-            nombre: 'Combo Familiar',
-            categoria: 'Combos',
-            precio: 29.99,
-            stock: 15,
-            disponible: true,
-            descripcion: '4 hamburguesas + papas fritas grandes + 4 bebidas',
-            imagen: '../images/platos/Combos_Especialidades/combo1.jpg'
-        }
-    ];
-}
+
 
 function mostrarCargando() {
     const tbody = document.getElementById('productosTableBody');
@@ -249,12 +232,59 @@ function filtrarPorCategoria() {
 // ==========================================
 // CRUD - CREATE & UPDATE
 // ==========================================
+
+// Subcategorías válidas por categoría (deben coincidir con el schema de MongoDB)
+const subcategoriasPorCategoria = {
+    'Entradas y Snacks': ['Alitas', 'Nuggets', 'Dedos de queso', 'Aros de cebolla'],
+    'Platos principales o combos': [
+        'Combos de Alitas',
+        'Combos de Pizza', 
+        'Combos de Hamburguesas',
+        'Platos fuertes estilo americano',
+        'Combos Tex-Mex'
+    ],
+    'Postres': ['Brownies', 'Cheesecake'],
+    'Bebidas': ['Gaseosas', 'Agua natural'],
+    'Cócteles': ['Mojito', 'Margarita', 'Cuba libre']
+};
+
+function actualizarSubcategorias() {
+    const categoriaSelect = document.getElementById('categoria');
+    const subcategorySelect = document.getElementById('subcategory');
+    
+    if (!categoriaSelect || !subcategorySelect) return;
+    
+    const categoria = categoriaSelect.value;
+    const subcategorias = subcategoriasPorCategoria[categoria] || [];
+    
+    // Limpiar opciones actuales
+    subcategorySelect.innerHTML = '<option value="">Seleccionar subcategoría (opcional)</option>';
+    
+    // Agregar nuevas opciones
+    subcategorias.forEach(sub => {
+        const option = document.createElement('option');
+        option.value = sub;
+        option.textContent = sub;
+        subcategorySelect.appendChild(option);
+    });
+    
+    // Habilitar/deshabilitar según si hay opciones
+    subcategorySelect.disabled = subcategorias.length === 0;
+}
+
 function abrirModalCrear() {
     document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Nuevo Producto';
     document.getElementById('productoForm').reset();
     document.getElementById('productoId').value = '';
+    actualizarSubcategorias(); // Actualizar subcategorías al abrir
     limpiarErrores();
     mostrarModal();
+    
+    // Agregar listener para cambio de categoría
+    const categoriaSelect = document.getElementById('categoria');
+    if (categoriaSelect) {
+        categoriaSelect.addEventListener('change', actualizarSubcategorias);
+    }
 }
 
 function editarProducto(id) {
@@ -265,13 +295,31 @@ function editarProducto(id) {
     document.getElementById('productoId').value = producto.id;
     document.getElementById('nombre').value = producto.nombre;
     document.getElementById('categoria').value = producto.categoria;
+    
+    // Actualizar subcategorías basado en la categoría del producto
+    actualizarSubcategorias();
+    
+    // Luego establecer la subcategoría seleccionada
+    if (document.getElementById('subcategory')) {
+        document.getElementById('subcategory').value = producto.subcategoria || '';
+    }
+    
     document.getElementById('precio').value = producto.precio;
     document.getElementById('stock').value = producto.stock;
     document.getElementById('descripcion').value = producto.descripcion || '';
     document.getElementById('imagen').value = producto.imagen || '';
+    if (document.getElementById('ingredients')) {
+        document.getElementById('ingredients').value = producto.ingredientes ? producto.ingredientes.join(', ') : '';
+    }
     document.getElementById('disponible').checked = !!producto.disponible;
     limpiarErrores();
     mostrarModal();
+    
+    // Agregar listener para cambio de categoría
+    const categoriaSelect = document.getElementById('categoria');
+    if (categoriaSelect) {
+        categoriaSelect.addEventListener('change', actualizarSubcategorias);
+    }
 }
 
 async function guardarProducto(event) {
@@ -284,53 +332,122 @@ async function guardarProducto(event) {
     try {
         if (productoId) {
             await actualizarProducto(productoId, productoData);
+            mostrarToast('Producto actualizado exitosamente', 'success');
         } else {
             await crearProducto(productoData);
+            mostrarToast('Producto creado exitosamente', 'success');
         }
-        mostrarToast('Producto guardado exitosamente', 'success');
         cerrarModal();
         await cargarProductos();
     } catch (error) {
         console.error('Error al guardar producto:', error);
-        mostrarToast('Error al guardar el producto', 'error');
+        
+        // Manejar error de autenticación
+        if (error.message === 'NO_TOKEN') {
+            mostrarToast('Sesión expirada. Redirigiendo al inicio...', 'error');
+            setTimeout(() => {
+                window.location.href = '../../index.html';
+            }, 2000);
+            return;
+        }
+        
+        // Mostrar mensaje de error detallado
+        const mensajeError = error.message || 'Error al guardar el producto';
+        mostrarToast(mensajeError, 'error');
+        // NO cerrar el modal para que el usuario pueda corregir
     }
 }
 
 async function crearProducto(productoData) {
-    // Simulación - reemplazar con fetch real
-    // const response = await fetch(`${API_BASE_URL}/products`, {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(productoData)
-    // });
+    const token = obtenerToken();
     
-    const nuevoId = Math.max(...productosData.map(p => p.id), 0) + 1;
-    productosData.push({ ...productoData, id: nuevoId });
+    // Mapear datos del frontend al schema de MongoDB
+    const dataToSend = {
+        name: productoData.nombre,
+        description: productoData.descripcion,
+        price: productoData.precio,
+        img: productoData.imagen,
+        available: productoData.disponible,
+        currentStock: productoData.stock,
+        category: productoData.categoria,
+        subcategory: productoData.subcategoria || undefined,
+        ingredients: productoData.ingredientes || [],
+        creationDate: new Date().toISOString()
+    };
+    
+    const response = await fetch(`${API_BASE_URL}/products`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(dataToSend)
+    });
+    
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `Error ${response.status}: No se pudo crear el producto`);
+    }
+    
+    const data = await response.json();
+    
+    if (!data.success) {
+        throw new Error(data.message || 'Error al crear producto');
+    }
 }
 
 async function actualizarProducto(id, productoData) {
-    // Simulación - reemplazar con fetch real
-    // const response = await fetch(`${API_BASE_URL}/products/${id}`, {
-    //     method: 'PUT',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(productoData)
-    // });
+    const token = obtenerToken();
     
-    const index = productosData.findIndex(p => p.id == id);
-    if (index !== -1) {
-        productosData[index] = { ...productoData, id: parseInt(id) };
+    // Mapear datos del frontend al schema de MongoDB
+    const dataToSend = {
+        name: productoData.nombre,
+        description: productoData.descripcion,
+        price: productoData.precio,
+        img: productoData.imagen,
+        available: productoData.disponible,
+        currentStock: productoData.stock,
+        category: productoData.categoria,
+        subcategory: productoData.subcategoria || undefined,
+        ingredients: productoData.ingredientes || []
+    };
+    
+    const response = await fetch(`${API_BASE_URL}/products/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(dataToSend)
+    });
+    
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `Error ${response.status}: No se pudo actualizar el producto`);
+    }
+    
+    const data = await response.json();
+    
+    if (!data.success) {
+        throw new Error(data.message || 'Error al actualizar producto');
     }
 }
 
 function obtenerDatosFormulario() {
+    // Obtener ingredientes del textarea y convertir a array
+    const ingredientesText = document.getElementById('ingredients')?.value.trim() || '';
+    const ingredientes = ingredientesText ? ingredientesText.split(',').map(i => i.trim()).filter(i => i) : [];
+    
     return {
         nombre: document.getElementById('nombre').value.trim(),
         categoria: document.getElementById('categoria').value,
+        subcategoria: document.getElementById('subcategory')?.value || '',
         precio: parseFloat(document.getElementById('precio').value),
         stock: parseInt(document.getElementById('stock').value),
         descripcion: document.getElementById('descripcion').value.trim(),
         imagen: document.getElementById('imagen').value.trim(),
-        disponible: document.getElementById('disponible').checked
+        disponible: document.getElementById('disponible').checked,
+        ingredientes: ingredientes
     };
 }
 
@@ -361,14 +478,24 @@ async function confirmarEliminar() {
 }
 
 async function eliminarProducto(id) {
-    // Simulación - reemplazar con fetch real
-    // const response = await fetch(`${API_BASE_URL}/products/${id}`, {
-    //     method: 'DELETE'
-    // });
+    const token = obtenerToken();
     
-    const index = productosData.findIndex(p => p.id == id);
-    if (index !== -1) {
-        productosData.splice(index, 1);
+    const response = await fetch(`${API_BASE_URL}/products/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `Error ${response.status}: No se pudo eliminar el producto`);
+    }
+    
+    const data = await response.json();
+    
+    if (!data.success) {
+        throw new Error(data.message || 'Error al eliminar producto');
     }
 }
 

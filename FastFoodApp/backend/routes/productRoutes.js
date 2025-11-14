@@ -15,8 +15,12 @@ import {
     obtenerSubcategoriasPorCategoria,
     buscarProductos,
     obtenerProductosPopulares,
-    obtenerEstadisticasProductos
+    obtenerEstadisticasProductos,
+    crearProducto,
+    actualizarProducto,
+    eliminarProducto
 } from '../controllers/productController.js';
+import { protect, isAdmin } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -94,14 +98,31 @@ router.get('/subcategory/:subcategoria', obtenerProductosPorSubcategoria);
 router.get('/:id', obtenerProductoPorId);
 
 // ==========================================
-// MIDDLEWARE DE VALIDACIÓN (Futuro)
+// RUTAS PROTEGIDAS - SOLO ADMINISTRADORES
 // ==========================================
 
-// Aquí podrías agregar middleware para:
-// - Validar parámetros de entrada
-// - Limitar rate limiting
-// - Cachear respuestas
-// - Logs de acceso
+/**
+ * @route   POST /api/products
+ * @desc    Crear un nuevo producto
+ * @access  Private/Admin
+ */
+router.post('/', protect, isAdmin, crearProducto);
+
+/**
+ * @route   PUT /api/products/:id
+ * @desc    Actualizar un producto existente
+ * @params  id - ID del producto
+ * @access  Private/Admin
+ */
+router.put('/:id', protect, isAdmin, actualizarProducto);
+
+/**
+ * @route   DELETE /api/products/:id
+ * @desc    Eliminar un producto
+ * @params  id - ID del producto
+ * @access  Private/Admin
+ */
+router.delete('/:id', protect, isAdmin, eliminarProducto);
 
 // ==========================================
 // EXPORTAR ROUTER

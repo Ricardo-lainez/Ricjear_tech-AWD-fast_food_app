@@ -88,11 +88,11 @@
                 </div>
                 <select id="filterCategoria" class="filter-select" onchange="filtrarPorCategoria()">
                     <option value="">Todas las categorías</option>
-                    <option value="Entradas">Entradas</option>
-                    <option value="Platos Principales">Platos Principales</option>
+                    <option value="Entradas y Snacks">Entradas y Snacks</option>
+                    <option value="Platos principales o combos">Platos principales o combos</option>
                     <option value="Bebidas">Bebidas</option>
                     <option value="Postres">Postres</option>
-                    <option value="Combos">Combos</option>
+                    <option value="Cócteles">Cócteles</option>
                 </select>
             </div>
 
@@ -166,11 +166,11 @@
                             </label>
                             <select id="categoria" name="categoria" required>
                                 <option value="">Seleccionar categoría</option>
-                                <option value="Entradas">Entradas</option>
-                                <option value="Platos Principales">Platos Principales</option>
+                                <option value="Entradas y Snacks">Entradas y Snacks</option>
+                                <option value="Platos principales o combos">Platos principales o combos</option>
                                 <option value="Bebidas">Bebidas</option>
                                 <option value="Postres">Postres</option>
-                                <option value="Combos">Combos</option>
+                                <option value="Cócteles">Cócteles</option>
                             </select>
                             <span class="form-error" id="errorCategoria"></span>
                         </div>
@@ -196,22 +196,43 @@
                         </div>
                     </div>
 
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="subcategory">
+                                <i class="fas fa-layer-group"></i> Subcategoría
+                            </label>
+                            <select id="subcategory" name="subcategory">
+                                <option value="">Seleccionar subcategoría (opcional)</option>
+                            </select>
+                            <span class="form-error" id="errorSubcategory"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="imagen">
+                                <i class="fas fa-image"></i> URL de la Imagen *
+                            </label>
+                            <input type="url" id="imagen" name="imagen" required
+                                   placeholder="../images/platos/ejemplo.jpg">
+                            <span class="form-error" id="errorImagen"></span>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label for="descripcion">
-                            <i class="fas fa-align-left"></i> Descripción
+                            <i class="fas fa-align-left"></i> Descripción *
                         </label>
-                        <textarea id="descripcion" name="descripcion" rows="4" 
+                        <textarea id="descripcion" name="descripcion" rows="3" required
                                   placeholder="Describe el producto..." maxlength="500"></textarea>
                         <span class="form-error" id="errorDescripcion"></span>
                     </div>
 
                     <div class="form-group">
-                        <label for="imagen">
-                            <i class="fas fa-image"></i> URL de la Imagen
+                        <label for="ingredients">
+                            <i class="fas fa-list-ul"></i> Ingredientes (separados por comas)
                         </label>
-                        <input type="url" id="imagen" name="imagen" 
-                               placeholder="https://ejemplo.com/imagen.jpg">
-                        <span class="form-error" id="errorImagen"></span>
+                        <textarea id="ingredients" name="ingredients" rows="2" 
+                                  placeholder="Ej: carne de res, lechuga, tomate, queso cheddar"></textarea>
+                        <span class="form-error" id="errorIngredients"></span>
                     </div>
 
                     <div class="form-group">
