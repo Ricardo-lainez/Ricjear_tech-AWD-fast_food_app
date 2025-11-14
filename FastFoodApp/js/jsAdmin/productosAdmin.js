@@ -406,8 +406,10 @@ async function guardarProducto(event) {
         await cargarProductos();
     } catch (error) {
         console.error('Error al guardar producto:', error);
+        console.log('Tipo de error:', error.message);
+        console.log('Stack:', error.stack);
         
-        // Manejar error de autenticación
+        // Manejar error de autenticación - SOLO si realmente no hay token
         if (error.message === 'NO_TOKEN') {
             mostrarToast('Sesión expirada. Redirigiendo al inicio...', 'error');
             setTimeout(() => {
@@ -424,10 +426,13 @@ async function guardarProducto(event) {
 }
 
 async function crearProducto(productoData) {
-    const token = obtenerToken();
-    
-    // Mapear datos del frontend al schema de MongoDB
-    const dataToSend = {
+    try {
+        console.log('Intentando crear producto...');
+        const token = obtenerToken();
+        console.log('Token obtenido:', token ? 'Sí' : 'No');
+        
+        // Mapear datos del frontend al schema de MongoDB
+        const dataToSend = {
         name: productoData.nombre,
         description: productoData.descripcion,
         price: productoData.precio,
@@ -459,52 +464,63 @@ async function crearProducto(productoData) {
         throw new Error(errorData.message || `Error ${response.status}: No se pudo crear el producto`);
     }
     
-    const data = await response.json();
-    
-    if (!data.success) {
-        throw new Error(data.message || 'Error al crear producto');
+        const data = await response.json();
+        
+        if (!data.success) {
+            throw new Error(data.message || 'Error al crear producto');
+        }
+    } catch (error) {
+        console.error('Error en crearProducto:', error);
+        throw error; // Re-lanzar para que lo capture guardarProducto
     }
 }
 
 async function actualizarProducto(id, productoData) {
-    const token = obtenerToken();
-    
-    // Mapear datos del frontend al schema de MongoDB
-    const dataToSend = {
-        name: productoData.nombre,
-        description: productoData.descripcion,
-        price: productoData.precio,
-        img: productoData.imagen,
-        available: productoData.disponible,
-        currentStock: productoData.stock,
-        category: productoData.categoria,
-        subcategory: productoData.subcategoria || undefined,
-        ingredients: productoData.ingredientes || [],
-        nutritionalInfo: productoData.nutritionalInfo,
-        allergens: productoData.allergens,
-        spiceLevel: productoData.spiceLevel,
-        preparationTime: productoData.preparationTime,
-        tags: productoData.tags
-    };
-    
-    const response = await fetch(`${API_BASE_URL}/products/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(dataToSend)
-    });
-    
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || `Error ${response.status}: No se pudo actualizar el producto`);
-    }
-    
-    const data = await response.json();
-    
-    if (!data.success) {
-        throw new Error(data.message || 'Error al actualizar producto');
+    try {
+        console.log('Intentando actualizar producto:', id);
+        const token = obtenerToken();
+        console.log('Token obtenido:', token ? 'Sí' : 'No');
+        
+        // Mapear datos del frontend al schema de MongoDB
+        const dataToSend = {
+            name: productoData.nombre,
+            description: productoData.descripcion,
+            price: productoData.precio,
+            img: productoData.imagen,
+            available: productoData.disponible,
+            currentStock: productoData.stock,
+            category: productoData.categoria,
+            subcategory: productoData.subcategoria || undefined,
+            ingredients: productoData.ingredientes || [],
+            nutritionalInfo: productoData.nutritionalInfo,
+            allergens: productoData.allergens,
+            spiceLevel: productoData.spiceLevel,
+            preparationTime: productoData.preparationTime,
+            tags: productoData.tags
+        };
+        
+        const response = await fetch(`${API_BASE_URL}/products/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(dataToSend)
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || `Error ${response.status}: No se pudo actualizar el producto`);
+        }
+        
+        const data = await response.json();
+        
+        if (!data.success) {
+            throw new Error(data.message || 'Error al actualizar producto');
+        }
+    } catch (error) {
+        console.error('Error en actualizarProducto:', error);
+        throw error;
     }
 }
 
@@ -578,24 +594,31 @@ async function confirmarEliminar() {
 }
 
 async function eliminarProducto(id) {
-    const token = obtenerToken();
-    
-    const response = await fetch(`${API_BASE_URL}/products/${id}`, {
-        method: 'DELETE',
-        headers: {
-            'Authorization': `Bearer ${token}`
+    try {
+        console.log('Intentando eliminar producto:', id);
+        const token = obtenerToken();
+        console.log('Token obtenido:', token ? 'Sí' : 'No');
+        
+        const response = await fetch(`${API_BASE_URL}/products/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || `Error ${response.status}: No se pudo eliminar el producto`);
         }
-    });
-    
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || `Error ${response.status}: No se pudo eliminar el producto`);
-    }
-    
-    const data = await response.json();
-    
-    if (!data.success) {
-        throw new Error(data.message || 'Error al eliminar producto');
+        
+        const data = await response.json();
+        
+        if (!data.success) {
+            throw new Error(data.message || 'Error al eliminar producto');
+        }
+    } catch (error) {
+        console.error('Error en eliminarProducto:', error);
+        throw error;
     }
 }
 
