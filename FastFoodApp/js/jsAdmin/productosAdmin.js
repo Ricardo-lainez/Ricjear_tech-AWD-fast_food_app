@@ -1,7 +1,13 @@
 // ==========================================
 // CONFIGURACIÓN Y ESTADO GLOBAL
 // ==========================================
-const API_BASE_URL = 'http://localhost:3000/api';
+// Usar la configuración global del proyecto
+const API_BASE_URL = window.CONFIG && window.CONFIG.API 
+    ? window.CONFIG.API.BASE_URL 
+    : (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? 'http://localhost:3000/api'
+        : 'https://bocatto-valley-api.onrender.com/api');
+
 let productosData = [];
 let productosFiltrados = [];
 let paginaActual = 1;
@@ -64,10 +70,23 @@ async function cargarProductos() {
         mostrarCargando();
         
         const response = await fetch(`${API_BASE_URL}/products`);
+        
+        if (!response.ok) {
+            throw new Error(`Error ${response.status}: No se pudo conectar con el servidor`);
+        }
+        
         const data = await response.json();
         
         if (!data.success) {
             throw new Error(data.message || 'Error al cargar productos');
+        }
+        
+        // Si no hay productos, mostrar mensaje apropiado
+        if (!data.data || data.data.length === 0) {
+            productosData = [];
+            productosFiltrados = [];
+            renderizarProductos();
+            return;
         }
         
         // Mapear respuesta de MongoDB al formato del frontend
@@ -88,7 +107,17 @@ async function cargarProductos() {
         renderizarProductos();
     } catch (error) {
         console.error('Error al cargar productos:', error);
-        mostrarError('Error al cargar los productos. Intenta nuevamente.');
+        
+        // Mensaje de error específico según el tipo
+        let mensaje = 'Error al cargar los productos. ';
+        
+        if (error.message.includes('Failed to fetch') || error.name === 'TypeError') {
+            mensaje += 'Verifica que el servidor backend esté corriendo en http://localhost:3000';
+        } else {
+            mensaje += error.message;
+        }
+        
+        mostrarError(mensaje);
     }
 }
 
