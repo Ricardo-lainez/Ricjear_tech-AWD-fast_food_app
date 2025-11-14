@@ -106,10 +106,14 @@ class ClientProfile {
     initializeHeaderButtons() {
         // Usar setTimeout para asegurar que updateAuthUI haya terminado
         setTimeout(() => {
-            // Botón de logout (puede tener clase o ID)
-            const logoutBtns = document.querySelectorAll('.logout-btn, #logoutBtn, .logout-item');
+            // Botón de logout - ser más específico para evitar conflictos
+            const logoutBtns = document.querySelectorAll('#logoutBtn, .logout-item');
             logoutBtns.forEach(btn => {
-                btn.addEventListener('click', (e) => this.handleLogout(e));
+                // Verificar que realmente es el botón de logout por su texto
+                const text = btn.textContent.toLowerCase();
+                if (text.includes('cerrar sesión') || text.includes('logout')) {
+                    btn.addEventListener('click', (e) => this.handleLogout(e));
+                }
             });
 
             // Botón "Editar Perfil" - redirigir a sección profile
@@ -1253,7 +1257,8 @@ window.switchSection = function(sectionName) {
 };
 
 // Función global para volver al sitio principal
-window.returnToSite = function() {
+window.returnToSite = function(e) {
+    if (e) e.preventDefault(); // Prevenir comportamiento por defecto del link
     console.log('✅ Volviendo al sitio principal (manteniendo sesión)...');
     // Simplemente redirigir - la sesión ya está guardada en localStorage/sessionStorage
     window.location.href = '../index.html';
