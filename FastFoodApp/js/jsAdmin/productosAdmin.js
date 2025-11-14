@@ -91,7 +91,8 @@ async function cargarProductos() {
         
         // Mapear respuesta de MongoDB al formato del frontend
         productosData = data.data.map(p => ({
-            id: p._id,
+            id: p._id,  // MongoDB _id para operaciones CRUD
+            productId: p.productId || 0,  // ID numérico para mostrar al usuario
             nombre: p.name,
             categoria: p.category,
             subcategoria: p.subcategory || '',
@@ -100,7 +101,12 @@ async function cargarProductos() {
             disponible: p.available,
             descripcion: p.description,
             imagen: p.img,
-            ingredientes: p.ingredients || []
+            ingredientes: p.ingredients || [],
+            nutritionalInfo: p.nutritionalInfo,
+            allergens: p.allergens || [],
+            spiceLevel: p.spiceLevel || 'sin picante',
+            preparationTime: p.preparationTime,
+            tags: p.tags || []
         }));
         
         productosFiltrados = [...productosData];
@@ -176,7 +182,7 @@ function renderizarProductos() {
     const rows = productosPagina.map(producto => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td><strong>#${producto.id}</strong></td>
+            <td><strong>${producto.productId}</strong></td>
             <td>
                  <img src="${producto.imagen || '../images/placeholder.jpg'}" 
                      alt="${producto.nombre}" 
@@ -341,6 +347,36 @@ function editarProducto(id) {
         document.getElementById('ingredients').value = producto.ingredientes ? producto.ingredientes.join(', ') : '';
     }
     document.getElementById('disponible').checked = !!producto.disponible;
+    
+    // Cargar información nutricional
+    if (producto.nutritionalInfo) {
+        if (document.getElementById('calories')) document.getElementById('calories').value = producto.nutritionalInfo.calories || '';
+        if (document.getElementById('protein')) document.getElementById('protein').value = producto.nutritionalInfo.protein || '';
+        if (document.getElementById('carbs')) document.getElementById('carbs').value = producto.nutritionalInfo.carbs || '';
+        if (document.getElementById('fat')) document.getElementById('fat').value = producto.nutritionalInfo.fat || '';
+    }
+    
+    // Cargar alérgenos
+    if (producto.allergens) {
+        document.querySelectorAll('input[name="allergen"]').forEach(cb => {
+            cb.checked = producto.allergens.includes(cb.value);
+        });
+    }
+    
+    // Cargar nivel de picante
+    if (document.getElementById('spiceLevel')) {
+        document.getElementById('spiceLevel').value = producto.spiceLevel || 'sin picante';
+    }
+    
+    // Cargar tiempo de preparación
+    if (document.getElementById('preparationTime')) {
+        document.getElementById('preparationTime').value = producto.preparationTime || '';
+    }
+    
+    // Cargar tags
+    if (document.getElementById('tags') && producto.tags) {
+        document.getElementById('tags').value = producto.tags.join(', ');
+    }
     limpiarErrores();
     mostrarModal();
     
@@ -401,6 +437,11 @@ async function crearProducto(productoData) {
         category: productoData.categoria,
         subcategory: productoData.subcategoria || undefined,
         ingredients: productoData.ingredientes || [],
+        nutritionalInfo: productoData.nutritionalInfo,
+        allergens: productoData.allergens,
+        spiceLevel: productoData.spiceLevel,
+        preparationTime: productoData.preparationTime,
+        tags: productoData.tags,
         creationDate: new Date().toISOString()
     };
     
@@ -438,7 +479,12 @@ async function actualizarProducto(id, productoData) {
         currentStock: productoData.stock,
         category: productoData.categoria,
         subcategory: productoData.subcategoria || undefined,
-        ingredients: productoData.ingredientes || []
+        ingredients: productoData.ingredientes || [],
+        nutritionalInfo: productoData.nutritionalInfo,
+        allergens: productoData.allergens,
+        spiceLevel: productoData.spiceLevel,
+        preparationTime: productoData.preparationTime,
+        tags: productoData.tags
     };
     
     const response = await fetch(`${API_BASE_URL}/products/${id}`, {
@@ -467,6 +513,26 @@ function obtenerDatosFormulario() {
     const ingredientesText = document.getElementById('ingredients')?.value.trim() || '';
     const ingredientes = ingredientesText ? ingredientesText.split(',').map(i => i.trim()).filter(i => i) : [];
     
+    // Capturar alérgenos seleccionados
+    const allergenCheckboxes = document.querySelectorAll('input[name="allergen"]:checked');
+    const allergens = Array.from(allergenCheckboxes).map(cb => cb.value);
+    
+    // Capturar tags
+    const tagsInput = document.getElementById('tags')?.value.trim() || '';
+    const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()).filter(t => t) : [];
+    
+    // Información nutricional
+    const nutritionalInfo = {};
+    const calories = document.getElementById('calories')?.value;
+    const protein = document.getElementById('protein')?.value;
+    const carbs = document.getElementById('carbs')?.value;
+    const fat = document.getElementById('fat')?.value;
+    
+    if (calories) nutritionalInfo.calories = parseInt(calories);
+    if (protein) nutritionalInfo.protein = protein.trim();
+    if (carbs) nutritionalInfo.carbs = carbs.trim();
+    if (fat) nutritionalInfo.fat = fat.trim();
+    
     return {
         nombre: document.getElementById('nombre').value.trim(),
         categoria: document.getElementById('categoria').value,
@@ -476,7 +542,12 @@ function obtenerDatosFormulario() {
         descripcion: document.getElementById('descripcion').value.trim(),
         imagen: document.getElementById('imagen').value.trim(),
         disponible: document.getElementById('disponible').checked,
-        ingredientes: ingredientes
+        ingredientes: ingredientes,
+        nutritionalInfo: Object.keys(nutritionalInfo).length > 0 ? nutritionalInfo : undefined,
+        allergens: allergens.length > 0 ? allergens : undefined,
+        spiceLevel: document.getElementById('spiceLevel')?.value || 'sin picante',
+        preparationTime: document.getElementById('preparationTime')?.value ? parseInt(document.getElementById('preparationTime').value) : undefined,
+        tags: tags.length > 0 ? tags : undefined
     };
 }
 

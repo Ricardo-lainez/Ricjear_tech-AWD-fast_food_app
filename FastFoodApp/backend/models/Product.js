@@ -3,6 +3,7 @@
  */
 
 import mongoose from 'mongoose';
+import Counter from './Counter.js';
 
 // Schema para información nutricional
 const nutritionalInfoSchema = new mongoose.Schema({
@@ -26,6 +27,14 @@ const nutritionalInfoSchema = new mongoose.Schema({
 
 // Schema principal del producto
 const productSchema = new mongoose.Schema({
+    // ==========================================
+    // ID NUMÉRICO PERSONALIZADO
+    // ==========================================
+    productId: {
+        type: Number,
+        unique: true
+    },
+
     // ==========================================
     // INFORMACIÓN BÁSICA
     // ==========================================
@@ -274,8 +283,22 @@ productSchema.methods.enStock = function() {
 // MIDDLEWARE PRE-SAVE
 // ==========================================
 
-// Antes de guardar, validar consistencia
-productSchema.pre('save', function(next) {
+// Auto-incrementar productId antes de crear nuevo producto
+productSchema.pre('save', async function(next) {
+    // Solo generar productId si es un documento nuevo
+    if (this.isNew && !this.productId) {
+        try {
+            const counter = await Counter.findByIdAndUpdate(
+                'productId',
+                { $inc: { sequence_value: 1 } },
+                { new: true, upsert: true }
+            );
+            this.productId = counter.sequence_value;
+        } catch (error) {
+            return next(error);
+        }
+    }
+    
     // Si no hay stock, marcar como no disponible
     if (this.currentStock <= 0) {
         this.available = false;

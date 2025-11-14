@@ -18,12 +18,21 @@ import Product from '../models/Product.js';
  */
 export const obtenerTodosLosProductos = async (req, res) => {
     try {
-        const productos = await Product.obtenerDisponibles();
+        const productos = await Product.find().sort({ creationDate: 1 });
+        
+        // Mapear y agregar índice secuencial como productId si no existe
+        const productosConId = productos.map((producto, index) => {
+            const productoObj = producto.toObject();
+            if (!productoObj.productId || productoObj.productId === 0) {
+                productoObj.productId = index + 1;
+            }
+            return productoObj;
+        });
         
         res.status(200).json({
             success: true,
-            count: productos.length,
-            data: productos
+            count: productosConId.length,
+            data: productosConId
         });
     } catch (error) {
         console.error('Error al obtener productos:', error);

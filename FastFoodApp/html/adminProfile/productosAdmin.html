@@ -235,6 +235,100 @@
                         <span class="form-error" id="errorIngredients"></span>
                     </div>
 
+                    <!-- Información Nutricional -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="calories">
+                                <i class="fas fa-fire"></i> Calorías
+                            </label>
+                            <input type="number" id="calories" name="calories" min="0" placeholder="580">
+                        </div>
+                        <div class="form-group">
+                            <label for="protein">
+                                <i class="fas fa-drumstick-bite"></i> Proteínas
+                            </label>
+                            <input type="text" id="protein" name="protein" placeholder="35g">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="carbs">
+                                <i class="fas fa-bread-slice"></i> Carbohidratos
+                            </label>
+                            <input type="text" id="carbs" name="carbs" placeholder="25g">
+                        </div>
+                        <div class="form-group">
+                            <label for="fat">
+                                <i class="fas fa-bacon"></i> Grasas
+                            </label>
+                            <input type="text" id="fat" name="fat" placeholder="38g">
+                        </div>
+                    </div>
+
+                    <!-- Alérgenos -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-exclamation-triangle"></i> Alérgenos
+                        </label>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <label class="checkbox-label" style="flex: 0 0 auto;">
+                                <input type="checkbox" name="allergen" value="gluten">
+                                <span>Gluten</span>
+                            </label>
+                            <label class="checkbox-label" style="flex: 0 0 auto;">
+                                <input type="checkbox" name="allergen" value="lactosa">
+                                <span>Lactosa</span>
+                            </label>
+                            <label class="checkbox-label" style="flex: 0 0 auto;">
+                                <input type="checkbox" name="allergen" value="nueces">
+                                <span>Nueces</span>
+                            </label>
+                            <label class="checkbox-label" style="flex: 0 0 auto;">
+                                <input type="checkbox" name="allergen" value="mariscos">
+                                <span>Mariscos</span>
+                            </label>
+                            <label class="checkbox-label" style="flex: 0 0 auto;">
+                                <input type="checkbox" name="allergen" value="huevo">
+                                <span>Huevo</span>
+                            </label>
+                            <label class="checkbox-label" style="flex: 0 0 auto;">
+                                <input type="checkbox" name="allergen" value="soja">
+                                <span>Soja</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="spiceLevel">
+                                <i class="fas fa-pepper-hot"></i> Nivel de Picante
+                            </label>
+                            <select id="spiceLevel" name="spiceLevel">
+                                <option value="sin picante">Sin picante</option>
+                                <option value="suave">Suave</option>
+                                <option value="medio">Medio</option>
+                                <option value="picante">Picante</option>
+                                <option value="muy picante">Muy picante</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="preparationTime">
+                                <i class="fas fa-clock"></i> Tiempo de Preparación (min)
+                            </label>
+                            <input type="number" id="preparationTime" name="preparationTime" min="1" max="120" placeholder="15">
+                        </div>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="form-group">
+                        <label for="tags">
+                            <i class="fas fa-tags"></i> Etiquetas (separadas por comas)
+                        </label>
+                        <input type="text" id="tags" name="tags" placeholder="Ej: popular, crispy, bbq">
+                        <small style="color: var(--text-secondary); font-size: 12px;">Ejemplos: popular, nuevo, promoción, crispy, bbq, spicy</small>
+                    </div>
+
                     <div class="form-group">
                         <label class="checkbox-label">
                             <input type="checkbox" id="disponible" name="disponible" checked>

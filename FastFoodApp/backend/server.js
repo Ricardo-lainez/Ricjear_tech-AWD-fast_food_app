@@ -41,7 +41,12 @@ const corsOptions = {
     origin: function (origin, callback) {
         const allowedOrigins = process.env.CORS_ORIGIN 
             ? process.env.CORS_ORIGIN.split(',') 
-            : ['http://localhost:5500', 'http://127.0.0.1:5500'];
+            : [
+                'http://localhost:5500', 
+                'http://127.0.0.1:5500',
+                'http://bocatto-valley.vercel.app',
+                'https://bocatto-valley.vercel.app'
+              ];
 
         // Permitir requests sin origin (como mobile apps o curl)
         if (!origin || allowedOrigins.includes(origin)) {
